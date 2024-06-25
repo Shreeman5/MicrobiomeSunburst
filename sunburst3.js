@@ -185,18 +185,19 @@ function handleMouseOver(event, fileIndex, p, givenDataRoot, nodeName) {
 
     const hoveredPathId = "path-" + p.data.name;
 
-    // Reset the style of all paths
+    // // Reset the style of all paths
     d3.selectAll(".sunburst-path")
         .style("stroke", "none")
         .style("stroke-width", 0);
 
-    // Apply the style to the hovered path only
+    // // Apply the style to the hovered path only
     d3.selectAll(".sunburst-path")
         .filter(function(d) {
             return this.id === hoveredPathId;
         })
         .style("stroke", "black")
         .style("stroke-width", 5);
+    
 
 
     if (p.hasOwnProperty('children')){
@@ -291,16 +292,14 @@ function handleMouseOver(event, fileIndex, p, givenDataRoot, nodeName) {
 // Function to handle mouseout event
 function mouseout(event, p) {
     // Get the ID of the hovered path
-    const hoveredPathId = "path-" + p.data.name;
+    // const hoveredPathId = "path-" + p.data.name;
 
     // Select all paths with the same ID across all sunbursts
-    d3.selectAll(".sunburst-path")
-        .filter(function(d) {
-            // Check if the current path is the hovered path or one of its descendants
-            return this.id === hoveredPathId || d.ancestors().some(ancestor => ancestor.data.name === p.data.name);
-        })
-        .style("stroke", "grey") // Reset stroke color to white
-        .style("stroke-width", 1); // Reset stroke width to default
+    d3.selectAll(".sunburst-path").each(function(d, i) {
+            var element = d3.select(this);
+            element.style("stroke", element.attr("original-stroke"));
+            element.style("stroke-width", element.attr("original-stroke-width"));
+        });
 
                                     
     const tooltip = document.getElementById('tooltip');
@@ -314,26 +313,43 @@ function findTaxonCDFbyID(dataArray, taxonId) {
     return element ? element.CDF : null; // Return the taxon_rank_level if found, else return null
 }
 
+function findTaxonWeightbyID(dataArray, taxonId){
+    const element = dataArray.find(item => item.ncbi_taxon_id === taxonId)
+    return element ? element.weight : null
+}
+
 function findTaxonRAbyID(dataArray, taxonId){
     // console.log(dataArray)
     const element = dataArray.find(item => item.ncbi_taxon_id === taxonId);
+    // console.log(element)
     return element ? element.relative_abundance : 0; // Return the taxon_rank_level if found, else return null
 }
 
-function rendering(sliderMin, sliderMax){
+function rendering(sliderMin, sliderMax, indicatorValue){
     (async function () {
         sliderMin = sliderMin/100
         sliderMax = sliderMax/100
         
         console.log('Minimum Slider Value: ', sliderMin)
         console.log('Maximum Slider Value:', sliderMax)
-        let myFile = 'DiarrheaIndicators' //DiarrheaIndicators
-        let csvData = await d3.csv('CSVs/'+myFile+'.csv');
-        // console.log(csvData);
+
+        let myFile
+        let csvData
+        if (indicatorValue === 'dio'){
+            myFile = 'DiarrheaIndicators'
+            csvData = await d3.csv('CSVs/'+myFile+'.csv');
+        }
+        else if (indicatorValue === 'cio'){
+            myFile = 'CrohnIndicators'
+            csvData = await d3.csv('CSVs/'+myFile+'.csv');
+        }
+        
+        console.log(myFile)
+        console.log(csvData);
     
-        console.log('Here')
+        // console.log('Here')
     
-        for (let i = 0; i < files.length; i++) {
+        for (let i = 0; i < files.length - 16; i++) {
             // Using an IIFE (Immediately Invoked Function Expression) to create a closure
             await (async function(index) {
                 let data = await d3.json(files[index]);
@@ -494,6 +510,7 @@ function rendering(sliderMin, sliderMax){
                         return [aggregatedData, agg2Data];
                     }
                     // let point35
+                    
                     preLoadData().then(aggregatedData => {
                         path = svg.selectAll("path")
                             .data(root.descendants().slice(1))
@@ -502,7 +519,6 @@ function rendering(sliderMin, sliderMax){
                             .attr("id", (d, i) => "path-" + d.data.name) // Add a unique ID to each path
                             .attr("d", arc)
                             .style("fill", function(d) { 
-                                    // console.log(computedStyle.fill)
                                     let nodeName = d.data.name
                                     let taxonID
                                     if (d.data.hasOwnProperty('children')){
@@ -514,29 +530,56 @@ function rendering(sliderMin, sliderMax){
                                         taxonID = nodeName.substring(lastIndex + 1)
                                     }
                                     // console.log(taxonID)
-                                    let cdf = findTaxonCDFbyID(aggregatedData[0], taxonID)
-                                    // console.log(cdf)
-                                    if (cdf === null){
-                                        // console.log('yes')
-                                        return "white"
-                                    }
-                                    else{
-                                        if (cdf < 0){
-                                            return colorScaleLow(0)
-                                        }
-                                        else if (cdf >= 0 && cdf < sliderMin){
-                                            return colorScaleLow(cdf)
-                                        }
-                                        else if (cdf >= sliderMax && cdf <= 1){
-                                            return colorScaleHigh(cdf)
-                                        }
-                                        else if (cdf > 1){
-                                            return colorScaleHigh(1)
+
+
+                                    //part 1
+                                    if (indicatorValue !== 'ao'){
+                                        let myWeight = findTaxonWeightbyID(csvData, taxonID)
+                                        if (myWeight === null){
+                                            return "white"
                                         }
                                         else{
-                                            return "purple"
+    
+                                            let cdf = findTaxonCDFbyID(aggregatedData[0], taxonID)
+                                            if (cdf === null){
+                                                return "white"
+                                            }
+                                            else{
+                                                if (myWeight > 0){
+                                                    return "red"
+                                                }
+                                                else{
+                                                    return "blue"
+                                                }
+                                            }
                                         }
                                     }
+                                    //part 2    
+                                    else{
+                                        let cdf = findTaxonCDFbyID(aggregatedData[0], taxonID)
+                                        // console.log(cdf)
+                                        if (cdf === null){
+                                            // console.log('yes')
+                                            return "white"
+                                        }
+                                        else{
+                                            if (cdf < 0){
+                                                return colorScaleLow(0)
+                                            }
+                                            else if (cdf >= 0 && cdf < sliderMin){
+                                                return colorScaleLow(cdf)
+                                            }
+                                            else if (cdf >= sliderMax && cdf <= 1){
+                                                return colorScaleHigh(cdf)
+                                            }
+                                            else if (cdf > 1){
+                                                return colorScaleHigh(1)
+                                            }
+                                            else{
+                                                return "purple"
+                                            }
+                                        }
+                                    } 
                             })
                             .style("stroke", function(d){
                                 let nodeName = d.data.name
@@ -549,17 +592,35 @@ function rendering(sliderMin, sliderMax){
                                     let lastIndex = nodeName.lastIndexOf('?')
                                     taxonID = nodeName.substring(lastIndex + 1)
                                 }
-                                // console.log(taxonID)
-                                let cdf = findTaxonCDFbyID(aggregatedData[0], taxonID)
-                                // console.log(cdf)
-                                if (cdf === null){
-                                    // console.log('yes')
-                                    return "grey"
+
+                                //part 1
+                                if (indicatorValue !== 'ao'){
+                                    let myWeight = findTaxonWeightbyID(csvData, taxonID)
+                                    if (myWeight === null){
+                                        return "grey"
+                                    }
+                                    else{
+                                        let cdf = findTaxonCDFbyID(aggregatedData[0], taxonID)
+                                        if (cdf === null){
+                                            return "grey"
+                                        }
+                                        else{
+                                            return "black"
+                                        }
+                                    }
                                 }
+                                //part 2    
                                 else{
-                                    return "black"
-                                }
-                                // return "black"
+                                    let cdf = findTaxonCDFbyID(aggregatedData[0], taxonID)
+                                    // console.log(cdf)
+                                    if (cdf === null){
+                                        // console.log('yes')
+                                        return "grey"
+                                    }
+                                    else{
+                                        return "black"
+                                    }
+                                } 
                             })
                             .style("opacity", function(d){
                                 let nodeName = d.data.name
@@ -572,16 +633,40 @@ function rendering(sliderMin, sliderMax){
                                     let lastIndex = nodeName.lastIndexOf('?')
                                     taxonID = nodeName.substring(lastIndex + 1)
                                 }
-                                // console.log(taxonID)
-                                let cdf = findTaxonCDFbyID(aggregatedData[0], taxonID)
-                                // console.log(cdf)
-                                if (cdf === null){
-                                    // console.log('yes')
-                                    return "0.1"
+
+
+                                 //part 1
+                                 if (indicatorValue !== 'ao'){
+                                    let myWeight = findTaxonWeightbyID(csvData, taxonID)
+                                    if (myWeight === null){
+                                        return "0.1"
+                                    }
+                                    else{
+                                        let cdf = findTaxonCDFbyID(aggregatedData[0], taxonID)
+                                        if (cdf === null){
+                                            return "0.1"
+                                        }
+                                        else{
+                                            return "1"
+                                        }
+                                    }
                                 }
+                                //part 2    
                                 else{
-                                    return "1"
-                                }
+                                    let cdf = findTaxonCDFbyID(aggregatedData[0], taxonID)
+                                    // console.log(cdf)
+                                    if (cdf === null){
+                                        // console.log('yes')
+                                        return "0.1"
+                                    }
+                                    else{
+                                        return "1"
+                                    }
+                                } 
+
+
+                                // console.log(taxonID)
+                                
                                 // return "1"
                             }) 
                             .style("stroke-width", "1")
@@ -590,6 +675,13 @@ function rendering(sliderMin, sliderMax){
                                 handleMouseOver(event, index, d, givenDataRoot, nodeName)
                             })
                             .on("mouseout", mouseout);
+
+
+                            d3.selectAll(".sunburst-path").each(function(d, i) {
+                                var element = d3.select(this);
+                                element.attr("original-stroke", element.style("stroke"));
+                                element.attr("original-stroke-width", element.style("stroke-width"));
+                            });
                     })
     
                     
@@ -600,122 +692,132 @@ function rendering(sliderMin, sliderMax){
     })();
 }
 
-let sliderSVG = d3.select('.slider').append("svg")
+
+
+function renderSlider(){
+    let sliderSVG = d3.select('.slider').append("svg")
                     .attr("width", 1150)
                     .attr("height", 200)
                     .append("g")
                     .attr("transform", "translate(" + 0 + "," + 0 + ")");
 
-
-
-const x = d3.scaleLinear()
-    .domain([0, 100])
-    .range([100, 1050])
-    .clamp(true);
-
-sliderSVG.append('text')
-    .attr('class', 'slider-value')
-    .attr('text-anchor', 'middle')
-    .attr('transform', `translate(${x(35)}, ${160})`)
-    .attr("font-size", "48")
-    .text("35");
-
-sliderSVG.append('text')
-    .attr('class', 'slider-value')
-    .attr('text-anchor', 'middle')
-    .attr('transform', `translate(${x(65)}, ${160})`)
-    .attr("font-size", "48")
-    .text("65");
-
-const slider = sliderSVG.append('g')
-    .attr('class', 'slider')
-    .attr('transform', `translate(0, ${100})`);
-
-slider.append('line')
-    .attr('class', 'track')
-    .attr('x1', x.range()[0])
-    .attr('x2', x.range()[1]);
-
-slider.append('line')
-    .attr('class', 'track-inset')
-    .attr('x1', x.range()[0])
-    .attr('x2', x.range()[1]);
-
-slider.append('line')
-    .attr('class', 'track-overlay')
-    .attr('x1', x.range()[0])
-    .attr('x2', x.range()[1])
-    .call(d3.drag()
-        .on('start.interrupt', () => slider.interrupt())
-        .on('start drag', function(event) {
-            const xPos = x.invert(event.x);
-            if (draggingMin) {
-                minValue = Math.min(xPos, maxValue);
-                handleMin.attr('cx', x(minValue));
-            } else {
-                maxValue = Math.max(xPos, minValue);
-                handleMax.attr('cx', x(maxValue));
-            }
-            // updateValues();
-        })
-        .on('end', () => {
-            // draggingMin = false;
-            updateValues();
-        }));
-
-
-let minValue = 35;
-let maxValue = 65;
-let draggingMin = true;
-
-const handleMin = slider.append('circle')
-    .attr('class', 'handle')
-    .attr('r', 18)
-    .attr('cx', x(minValue))
-    .call(d3.drag()
-        .on('start', () => draggingMin = true)
-        .on('drag', function(event) {
-            minValue = Math.min(x.invert(event.x), maxValue);
-            d3.select(this).attr('cx', x(minValue));
-        })
-        .on('end', () => {
-            draggingMin = false;
-            updateValues();
-        }));
-
-const handleMax = slider.append('circle')
-    .attr('class', 'handle')
-    .attr('r', 18)
-    .attr('cx', x(maxValue))
-    .call(d3.drag()
-        .on('start', () => draggingMin = false)
-        .on('drag', function(event) {
-            maxValue = Math.max(x.invert(event.x), minValue);
-            d3.select(this).attr('cx', x(maxValue));
-        })
-        .on('end', () => {
-            draggingMin = false;
-            updateValues();
-        }));
-
-function updateValues() {
-    sliderSVG.selectAll('.slider-value').remove();
+    const x = d3.scaleLinear()
+        .domain([0, 100])
+        .range([100, 1050])
+        .clamp(true);
 
     sliderSVG.append('text')
         .attr('class', 'slider-value')
         .attr('text-anchor', 'middle')
-        .attr('transform', `translate(${x(minValue)}, ${160})`)
+        .attr('transform', `translate(${x(35)}, ${160})`)
         .attr("font-size", "48")
-        .text(minValue.toFixed(2));
+        .text("35");
 
     sliderSVG.append('text')
         .attr('class', 'slider-value')
         .attr('text-anchor', 'middle')
-        .attr('transform', `translate(${x(maxValue)}, ${160})`)
+        .attr('transform', `translate(${x(65)}, ${160})`)
         .attr("font-size", "48")
-        .text(maxValue.toFixed(2));
+        .text("65");
 
-    // Select all elements with the class 'your-class-name'
+    const slider = sliderSVG.append('g')
+        .attr('class', 'slider')
+        .attr('transform', `translate(0, ${100})`);
+
+    slider.append('line')
+        .attr('class', 'track')
+        .attr('x1', x.range()[0])
+        .attr('x2', x.range()[1]);
+
+    slider.append('line')
+        .attr('class', 'track-inset')
+        .attr('x1', x.range()[0])
+        .attr('x2', x.range()[1]);
+
+    slider.append('line')
+        .attr('class', 'track-overlay')
+        .attr('x1', x.range()[0])
+        .attr('x2', x.range()[1])
+        .call(d3.drag()
+            .on('start.interrupt', () => slider.interrupt())
+            .on('start drag', function(event) {
+                const xPos = x.invert(event.x);
+                if (draggingMin) {
+                    minValue = Math.min(xPos, maxValue);
+                    handleMin.attr('cx', x(minValue));
+                } else {
+                    maxValue = Math.max(xPos, minValue);
+                    handleMax.attr('cx', x(maxValue));
+                }
+                // updateValues();
+            })
+            .on('end', () => {
+                // draggingMin = false;
+                updateValues();
+            }));
+
+
+    let minValue = 35;
+    let maxValue = 65;
+    let draggingMin = true;
+
+    const handleMin = slider.append('circle')
+        .attr('class', 'handle')
+        .attr('r', 18)
+        .attr('cx', x(minValue))
+        .call(d3.drag()
+            .on('start', () => draggingMin = true)
+            .on('drag', function(event) {
+                minValue = Math.min(x.invert(event.x), maxValue);
+                d3.select(this).attr('cx', x(minValue));
+            })
+            .on('end', () => {
+                draggingMin = false;
+                updateValues();
+            }));
+
+    const handleMax = slider.append('circle')
+        .attr('class', 'handle')
+        .attr('r', 18)
+        .attr('cx', x(maxValue))
+        .call(d3.drag()
+            .on('start', () => draggingMin = false)
+            .on('drag', function(event) {
+                maxValue = Math.max(x.invert(event.x), minValue);
+                d3.select(this).attr('cx', x(maxValue));
+            })
+            .on('end', () => {
+                draggingMin = false;
+                updateValues();
+            }));
+
+    function updateValues() {
+        sliderSVG.selectAll('.slider-value').remove();
+
+        sliderSVG.append('text')
+            .attr('class', 'slider-value')
+            .attr('text-anchor', 'middle')
+            .attr('transform', `translate(${x(minValue)}, ${160})`)
+            .attr("font-size", "48")
+            .text(minValue.toFixed(2));
+
+        sliderSVG.append('text')
+            .attr('class', 'slider-value')
+            .attr('text-anchor', 'middle')
+            .attr('transform', `translate(${x(maxValue)}, ${160})`)
+            .attr("font-size", "48")
+            .text(maxValue.toFixed(2));
+
+        // Select all elements with the class 'your-class-name'
+        removeExistingContainers()
+        rendering(minValue, maxValue, 'ao')
+    }
+}
+
+
+
+
+function removeExistingContainers(){
     const elements = document.querySelector('.svg-container')
     elements.innerHTML = ''
     const elements2 = document.querySelector('.svg-container-2');
@@ -755,21 +857,68 @@ function updateValues() {
     elements17.innerHTML = ''
     const elements18 = document.querySelector('.svg-container-18');
     elements18.innerHTML = ''
-    // console.log('X:', elements2)
-
-    // elements.forEach(element => {
-    //     element.innerHTML = '';
-    // });
-    // // Iterate over each element and remove it from the DOM
-    // elements2.forEach(element => {
-    //     element.innerHTML = '';
-    // });
-
-    
-    rendering(minValue, maxValue)
 }
 
-rendering(35, 65)
+
+function removeSlider(){
+    const elements19 = document.querySelector('.slider')
+    elements19.innerHTML = ''
+}
+
+
+
+const tabsData = [
+    { id: 'tab1', label: 'Diarrhea Indicator Organisms'},
+    { id: 'tab2', label: 'All Organisms Heatmap'},
+    { id: 'tab3', label: 'Crohns Indicator Organisms'}
+];
+
+const tabsContainer = d3.select('#tabs');
+
+tabsData.forEach((tab, i) => {
+    // Create tab buttons
+    tabsContainer.append('div')
+        .attr('class', 'tab')
+        .attr('data-tab', tab.id)
+        .classed('active', i === 1)  // Set first tab as active
+        .text(tab.label)
+        .on('click', function() {
+
+            const clickedTab = d3.select(this);
+
+            // Remove active class from all tabs and contents
+            d3.selectAll('.tab').classed('active', false);
+            d3.selectAll('.tab-content').classed('active', false);
+
+            // Add active class to clicked tab and corresponding content
+            clickedTab.classed('active', true);
+            d3.select(`#${clickedTab.attr('data-tab')}-content`).classed('active', true);
+
+            let tabValue = clickedTab.attr('data-tab')
+            if (tabValue === 'tab1'){
+                removeExistingContainers()
+                removeSlider()
+                // renderSlider()
+                rendering(35, 65, 'dio')
+            }
+            else if (tabValue === 'tab2'){
+                removeExistingContainers()
+                removeSlider()
+                renderSlider()
+                rendering(35, 65, 'ao')
+            }
+            else if (tabValue === 'tab3'){
+                removeExistingContainers()
+                removeSlider()
+                // renderSlider()
+                rendering(35, 65, 'cio')
+            }   
+    });
+});
+
+
+renderSlider()
+rendering(35, 65, 'ao')
 
 
 

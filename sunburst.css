@@ -109,11 +109,13 @@ body {
     top: 2730px;
 }
 
+
+/* slider stuff */
 .slider {
     /* margin: 50px; */
     position: absolute;
-    left:1520px;
-    top:20px;
+    left:1920px;
+    top:80px;
 }
 .handle {
     fill: #666;
@@ -136,3 +138,37 @@ body {
     stroke-width: 50px;
     stroke: transparent;
 }
+/* slider stuff */
+
+/* tabbing */
+#tabs-container {
+    position: absolute;
+    top: 50px; /* Adjust this value as needed to position from the top */
+    left: 2000px; /* Position 1500px from the left of the screen */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+.tab {
+    display: inline-block;
+    padding: 10px;
+    cursor: pointer;
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    margin-right: 5px;
+    width: 300px;
+    height: 70px;
+    text-align: center;
+    line-height: 40px;
+    font-size: 30px; /* Increase font size */
+}
+.tab.active {
+    background-color: #ddd;
+    border-bottom: none;
+}
+/* tabbing */
