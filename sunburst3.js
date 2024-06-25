@@ -349,7 +349,7 @@ function rendering(sliderMin, sliderMax, indicatorValue){
     
         // console.log('Here')
     
-        for (let i = 0; i < files.length - 16; i++) {
+        for (let i = 0; i < files.length; i++) {
             // Using an IIFE (Immediately Invoked Function Expression) to create a closure
             await (async function(index) {
                 let data = await d3.json(files[index]);
