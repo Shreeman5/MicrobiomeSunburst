@@ -374,7 +374,7 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                     '.svg-container-16', '.svg-container-17', '.svg-container-18'
                 ];
     
-    
+                console.log('D:', data)
     
                 let svg = d3.select(containers[index]).append("svg")
                     .attr("width", width)
