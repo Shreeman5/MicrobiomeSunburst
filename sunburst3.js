@@ -162,7 +162,11 @@ function nameMapping(val){
 
 
 function handleMouseOver(event, fileIndex, p, givenDataRoot, nodeName) {
-
+    // console.log(event)
+    // console.log(fileIndex)
+    // console.log(p)
+    // console.log(givenDataRoot)
+    // console.log(nodeName)
     // Code on how to highlight all martching arcs ----------------------------------------------------
 
     // Get the ID of the hovered path
@@ -208,7 +212,7 @@ function handleMouseOver(event, fileIndex, p, givenDataRoot, nodeName) {
         }
         else{
             myVal = findNodeValueByName(givenDataRoot, nodeName)
-            // console.log(myVal)
+            console.log('A:', myVal)
             if (myVal === undefined){
                 myVal = 0 + '%'
             }
@@ -255,7 +259,7 @@ function handleMouseOver(event, fileIndex, p, givenDataRoot, nodeName) {
         }
         else{
             myVal = findNodeValueByName(givenDataRoot, nodeName)
-            // console.log(myVal)
+            console.log('B:', myVal)
             if (myVal === undefined){
                 myVal = 0 + '%'
             }
@@ -344,8 +348,8 @@ function rendering(sliderMin, sliderMax, indicatorValue){
             csvData = await d3.csv('CSVs/'+myFile+'.csv');
         }
         
-        console.log(myFile)
-        console.log(csvData);
+        // console.log(myFile)
+        // console.log(csvData);
     
         // console.log('Here')
     
@@ -374,7 +378,7 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                     '.svg-container-16', '.svg-container-17', '.svg-container-18'
                 ];
     
-                console.log('D:', data)
+                // console.log('D:', data)
     
                 let svg = d3.select(containers[index]).append("svg")
                     .attr("width", width)
@@ -386,18 +390,306 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                 // console.log(word)
     
                 if (index === 0){
-                    svg.append("text")
-                    .attr("x", 302)
-                    .attr("y", -705)
-                    .attr("font-size", "38")
-                    .attr("fill", "Black")
-                    // .text(myFile)
+
+                    if (indicatorValue === 'dio'){
+                        svg.append("text")
+                        .attr("x", -272)
+                        .attr("y", -455)
+                        .attr("font-size", "58")
+                        .attr("fill", "Black")
+                        .text("Diarrhea Indicators Organisms")
+
+                        // Append a rectangle to the SVG container and apply the gradient
+                        svg.append("rect")
+                            .attr("x", 282)    // x position of the rectangle
+                            .attr("y", -100)    // y position of the rectangle
+                            .attr("width", 400) // width of the rectangle
+                            .attr("height", 100) // height of the rectangle
+                            .attr("fill", "red") // fill color of the rectangle using the gradient
+                            .attr("stroke", "black")
+                            .attr("stroke-width", "3")
+
+                        svg.append("text")
+                            .attr("x", 272)
+                            .attr("y", -25)
+                            .attr("font-size", "58")
+                            .attr("fill", "Black")
+                            .attr("text-anchor", "end")
+                            .text(("High Abundance Indicator Organism"))
+
+                        // Append a rectangle to the SVG container and apply the gradient
+                        svg.append("rect")
+                            .attr("x", 282)    // x position of the rectangle
+                            .attr("y", 100)    // y position of the rectangle
+                            .attr("width", 400) // width of the rectangle
+                            .attr("height", 100) // height of the rectangle
+                            .attr("fill", "blue") // fill color of the rectangle using the gradient
+                            .attr("stroke", "black")
+                            .attr("stroke-width", "3")
+
+                        svg.append("text")
+                            .attr("x", 272)
+                            .attr("y", 175)
+                            .attr("font-size", "58")
+                            .attr("fill", "Black")
+                            .attr("text-anchor", "end")
+                            .text(("Low Abundance Indicator Organism"))
+
+                        // Append a rectangle to the SVG container and apply the gradient
+                        svg.append("rect")
+                            .attr("x", 282)    // x position of the rectangle
+                            .attr("y", 300)    // y position of the rectangle
+                            .attr("width", 400) // width of the rectangle
+                            .attr("height", 100) // height of the rectangle
+                            .attr("fill", "white") // fill color of the rectangle using the gradient
+                            .attr("stroke", "black")
+                            .attr("stroke-width", "3")
+
+                        svg.append("text")
+                            .attr("x", 272)
+                            .attr("y", 375)
+                            .attr("font-size", "58")
+                            .attr("fill", "Black")
+                            .attr("text-anchor", "end")
+                            .text(("Non-Indicator Organism"))
+                    }
+                    else if (indicatorValue === 'cio'){
+                        svg.append("text")
+                        .attr("x", -272)
+                        .attr("y", -455)
+                        .attr("font-size", "58")
+                        .attr("fill", "Black")
+                        .text("Crohns Indicator Organisms")
+
+
+                        // Append a rectangle to the SVG container and apply the gradient
+                        svg.append("rect")
+                            .attr("x", 282)    // x position of the rectangle
+                            .attr("y", -100)    // y position of the rectangle
+                            .attr("width", 400) // width of the rectangle
+                            .attr("height", 100) // height of the rectangle
+                            .attr("fill", "red") // fill color of the rectangle using the gradient
+                            .attr("stroke", "black")
+                            .attr("stroke-width", "3")
+
+                        svg.append("text")
+                            .attr("x", 272)
+                            .attr("y", -25)
+                            .attr("font-size", "58")
+                            .attr("fill", "Black")
+                            .attr("text-anchor", "end")
+                            .text(("High Abundance Indicator Organism"))
+
+                        // Append a rectangle to the SVG container and apply the gradient
+                        svg.append("rect")
+                            .attr("x", 282)    // x position of the rectangle
+                            .attr("y", 100)    // y position of the rectangle
+                            .attr("width", 400) // width of the rectangle
+                            .attr("height", 100) // height of the rectangle
+                            .attr("fill", "blue") // fill color of the rectangle using the gradient
+                            .attr("stroke", "black")
+                            .attr("stroke-width", "3")
+
+                        svg.append("text")
+                            .attr("x", 272)
+                            .attr("y", 175)
+                            .attr("font-size", "58")
+                            .attr("fill", "Black")
+                            .attr("text-anchor", "end")
+                            .text(("Low Abundance Indicator Organism"))
+
+                        // Append a rectangle to the SVG container and apply the gradient
+                        svg.append("rect")
+                            .attr("x", 282)    // x position of the rectangle
+                            .attr("y", 300)    // y position of the rectangle
+                            .attr("width", 400) // width of the rectangle
+                            .attr("height", 100) // height of the rectangle
+                            .attr("fill", "white") // fill color of the rectangle using the gradient
+                            .attr("stroke", "black")
+                            .attr("stroke-width", "3")
+
+                        svg.append("text")
+                            .attr("x", 272)
+                            .attr("y", 375)
+                            .attr("font-size", "58")
+                            .attr("fill", "Black")
+                            .attr("text-anchor", "end")
+                            .text(("Non-Indicator Organism"))
+                    }
+                    else{
+                        svg.append("text")
+                        .attr("x", -182)
+                        .attr("y", -455)
+                        .attr("font-size", "58")
+                        .attr("fill", "Black")
+                        .text("All Organisms Heatmap")
+
+                        const gradient = svg.append("defs")
+                            .append("linearGradient")
+                            .attr("id", "gradient")
+                            .attr("x1", "0%")
+                            .attr("y1", "0%")
+                            .attr("x2", "100%")
+                            .attr("y2", "100%");
+
+                        gradient.append("stop")
+                            .attr("offset", "0%")
+                            .attr("stop-color", "#0200b9")
+                            .attr("stop-opacity", 1);
+            
+                        gradient.append("stop")
+                                .attr("offset", "100%")
+                                .attr("stop-color", "#00fff3")
+                                .attr("stop-opacity", 1);
+                
+                        // Append a rectangle to the SVG container and apply the gradient
+                        svg.append("rect")
+                        .attr("x", 82)    // x position of the rectangle
+                        .attr("y", -350)    // y position of the rectangle
+                        .attr("width", 400) // width of the rectangle
+                        .attr("height", 100) // height of the rectangle
+                        .attr("fill", "url(#gradient)") // fill color of the rectangle using the gradient
+                        .attr("stroke", "black")
+                        .attr("stroke-width", "3")
+
+                        svg.append("text")
+                        .attr("x", 82)
+                        .attr("y", -200)
+                        .attr("font-size", "58")
+                        .attr("fill", "Black")
+                        .text("0")
+
+                        svg.append("text")
+                        .attr("x", 482)
+                        .attr("y", -200)
+                        .attr("font-size", "58")
+                        .attr("fill", "Black")
+                        .attr("text-anchor", "end")
+                        .text((sliderMin*100).toFixed(0))
+
+                        svg.append("text")
+                        .attr("x", 72)
+                        .attr("y", -275)
+                        .attr("font-size", "58")
+                        .attr("fill", "Black")
+                        .attr("text-anchor", "end")
+                        .text(("Low Abundance of Organism"))
+                
+                        // Append a rectangle to the SVG container and apply the gradient
+                        svg.append("rect")
+                            .attr("x", 82)    // x position of the rectangle
+                            .attr("y", -100)    // y position of the rectangle
+                            .attr("width", 400) // width of the rectangle
+                            .attr("height", 100) // height of the rectangle
+                            .attr("fill", "purple") // fill color of the rectangle using the gradient
+                            .attr("stroke", "black")
+                        .attr("stroke-width", "3")
+
+                        svg.append("text")
+                        .attr("x", 82)
+                        .attr("y", 50)
+                        .attr("font-size", "58")
+                        .attr("fill", "Black")
+                        .text((sliderMin*100).toFixed(0))
+
+                        svg.append("text")
+                        .attr("x", 482)
+                        .attr("y", 50)
+                        .attr("font-size", "58")
+                        .attr("fill", "Black")
+                        .attr("text-anchor", "end")
+                        .text((sliderMax*100).toFixed(0))
+
+                        svg.append("text")
+                        .attr("x", 72)
+                        .attr("y", -25)
+                        .attr("font-size", "58")
+                        .attr("fill", "Black")
+                        .attr("text-anchor", "end")
+                        .text(("Normal Abundance of Organism"))
+
+
+                        const gradient3 = svg.append("defs")
+                            .append("linearGradient")
+                            .attr("id", "gradient3")
+                            .attr("x1", "0%")
+                            .attr("y1", "0%")
+                            .attr("x2", "100%")
+                            .attr("y2", "100%");
+    
+                        gradient3.append("stop")
+                                .attr("offset", "0%")
+                                .attr("stop-color", "#ff0000")
+                                .attr("stop-opacity", 1);
+                
+                        gradient3.append("stop")
+                                .attr("offset", "100%")
+                                .attr("stop-color", "#7b0000")
+                                .attr("stop-opacity", 1);
+                
+                        // Append a rectangle to the SVG container and apply the gradient
+                        svg.append("rect")
+                            .attr("x", 82)    // x position of the rectangle
+                            .attr("y", 150)    // y position of the rectangle
+                            .attr("width", 400) // width of the rectangle
+                            .attr("height", 100) // height of the rectangle
+                            .attr("fill", "url(#gradient3)") // fill color of the rectangle using the gradient
+                            .attr("stroke", "black")
+                            .attr("stroke-width", "3")
+
+                        svg.append("text")
+                            .attr("x", 82)
+                            .attr("y", 300)
+                            .attr("font-size", "58")
+                            .attr("fill", "Black")
+                            .text((sliderMax*100).toFixed(0))
+    
+                        svg.append("text")
+                            .attr("x", 482)
+                            .attr("y", 300)
+                            .attr("font-size", "58")
+                            .attr("fill", "Black")
+                            .attr("text-anchor", "end")
+                            .text("100")
+
+                        svg.append("text")
+                            .attr("x", 72)
+                            .attr("y", 225)
+                            .attr("font-size", "58")
+                            .attr("fill", "Black")
+                            .attr("text-anchor", "end")
+                            .text(("High Abundance of Organism"))
+
+                        
+                        svg.append("rect")
+                            .attr("x", 82)    // x position of the rectangle
+                            .attr("y", 400)    // y position of the rectangle
+                            .attr("width", 400) // width of the rectangle
+                            .attr("height", 100) // height of the rectangle
+                            .attr("fill", "white") // fill color of the rectangle using the gradient
+                            .attr("stroke", "black")
+                            .attr("stroke-width", "3")
+
+                        svg.append("text")
+                            .attr("x", 72)
+                            .attr("y", 475)
+                            .attr("font-size", "58")
+                            .attr("fill", "Black")
+                            .attr("text-anchor", "end")
+                            .text("Organism Absent")
+                    }
+                    
+
+                    
+
+                    
+
                 }
                 else{
                     svg.append("text")
-                    .attr("x", -92)
-                    .attr("y", -575)
-                    .attr("font-size", "48")
+                    .attr("x", -352)
+                    .attr("y", -565)
+                    .attr("font-size", "58")
                     .attr("fill", "black")
                     .text(word)
                 }
