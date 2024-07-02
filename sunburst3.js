@@ -26,33 +26,113 @@ let height
 let radius
 
 
-function innerRadius(d, index){
-    if (d.depth === 7){
-        return index === 0 ? 570 : 426
+function innerRadius(d, index, checkedLevels){
+    if (checkedLevels.length === 7){
+        if (d.depth === 7){
+            return index === 0 ? 570 : 426
+        }
+        if (d.depth === 6){
+            return index === 0 ? 455 : 334
+        }
+        if (d.depth === 5){
+            return index === 0 ? 350 : 252
+        }
+        if (d.depth === 4){
+            return index === 0 ? 255 : 181
+        }
+        if (d.depth === 3){
+            return index === 0 ? 170 : 120
+        }
+        else if (d.depth === 2){
+            return index === 0 ? 95 : 70
+        }
+        else if (d.depth === 1){
+            return 30
+        }
     }
-    if (d.depth === 6){
-        return index === 0 ? 455 : 334
+    if (checkedLevels.length === 6){
+        if (d.depth === checkedLevels[5]){
+            return index === 0 ? 545 : 413
+        }
+        if (d.depth === checkedLevels[4]){
+            return index === 0 ? 414 : 310
+        }
+        if (d.depth === checkedLevels[3]){
+            return index === 0 ? 297 : 220
+        }
+        if (d.depth === checkedLevels[2]){
+            return index === 0 ? 194 : 143
+        }
+        if (d.depth === checkedLevels[1]){
+            return index === 0 ? 105 : 80
+        }
+        else if (d.depth === checkedLevels[0]){
+            return 30
+        }
     }
-    if (d.depth === 5){
-        return index === 0 ? 350 : 252
+    if (checkedLevels.length === 5){
+        if (d.depth === checkedLevels[4]){
+            return index === 0 ? 510 : 390
+        }
+        if (d.depth === checkedLevels[3]){
+            return index === 0 ? 355 : 270
+        }
+        if (d.depth === checkedLevels[2]){
+            return index === 0 ? 223 : 170
+        }
+        if (d.depth === checkedLevels[1]){
+            return index === 0 ? 115 : 90
+        }
+        else if (d.depth === checkedLevels[0]){
+            return 30
+        }
     }
-    if (d.depth === 4){
-        return index === 0 ? 255 : 181
+    if (checkedLevels.length === 4){
+        if (d.depth === checkedLevels[3]){
+            return index === 0 ? 454 : 350
+        }
+        if (d.depth === checkedLevels[2]){
+            return index === 0 ? 266 : 206
+        }
+        if (d.depth === checkedLevels[1]){
+            return index === 0 ? 125 : 100
+        }
+        if (d.depth === checkedLevels[0]){
+            return 30
+        }
     }
-    if (d.depth === 3){
-        return index === 0 ? 170 : 120
+    if (checkedLevels.length === 3){
+        if (d.depth === checkedLevels[2]){
+            return index === 0 ? 355 : 276
+        }
+        if (d.depth === checkedLevels[1]){
+            return index === 0 ? 135 : 110
+        }
+        else if (d.depth === checkedLevels[0]){
+            return 30
+        }
     }
-    else if (d.depth === 2){
-        return index === 0 ? 95 : 70
+    if (checkedLevels.length === 2){
+        if (d.depth === checkedLevels[1]){
+            return index === 0 ? 145 : 470
+        }
+        else if (d.depth === checkedLevels[0]){
+            return 30
+        }
     }
-    else if (d.depth === 1){
-        return 30
+    if (checkedLevels.length === 1){
+        if (d.depth === checkedLevels[0]){
+            return 30
+        }
+    }
+    if (checkedLevels.length === 0){
+        return 0
     }
     // return d.y0
 }
 
 
-function outerRadius(d, index, csvData){
+function outerRadius(d, index, csvData, checkedLevels){
     // let nameContainsAnyValue = csvData.find(element => {
     //     return d.data.name.includes(element['organism']) && d.data.name.includes(element['ncbi_taxon_id'])
     // });
@@ -67,47 +147,127 @@ function outerRadius(d, index, csvData){
     //         return index === 0 ? 750 : 575
     //     }
     // }
-    if (d.depth === 7){
-        // if (!d.hasOwnProperty('children')){
-        //     return 750/575
-        // }
-        return index === 0 ? 690 : 530
+    if (checkedLevels.length === 7){
+        if (d.depth === 7){
+            // if (!d.hasOwnProperty('children')){
+            //     return 750/575
+            // }
+            return index === 0 ? 690 : 530
+        }
+        if (d.depth === 6){
+            // if (!d.hasOwnProperty('children')){
+            //     return 750/575
+            // }
+            return index === 0 ? 570 : 426
+        }
+        if (d.depth === 5){
+            // if (!d.hasOwnProperty('children')){
+            //     return 750/575
+            // }
+            return index === 0 ? 455 : 334
+        }
+        if (d.depth === 4){
+            // if (!d.hasOwnProperty('children')){
+            //     return 750/575
+            // }
+            return index === 0 ? 350 : 252
+        }
+        if (d.depth === 3){
+            // if (!d.hasOwnProperty('children')){
+            //     return 750/575
+            // }
+            return index === 0 ? 255 : 181
+        }
+        else if (d.depth === 2){
+            // if (!d.hasOwnProperty('children')){
+            //     return 750/575
+            // }
+            return index === 0 ? 170 : 120
+        }
+        else if (d.depth === 1){
+            // if (!d.hasOwnProperty('children')){
+            //     return 750/575
+            // }
+            return index === 0 ? 95 : 70
+        }
     }
-    if (d.depth === 6){
-        // if (!d.hasOwnProperty('children')){
-        //     return 750/575
-        // }
-        return index === 0 ? 570 : 426
+    if (checkedLevels.length === 6){
+        if (d.depth === checkedLevels[5]){
+            return index === 0 ? 690 : 530
+        }
+        if (d.depth === checkedLevels[4]){
+            return index === 0 ? 545 : 413
+        }
+        if (d.depth === checkedLevels[3]){
+            return index === 0 ? 414 : 310
+        }
+        if (d.depth === checkedLevels[2]){
+            return index === 0 ? 297 : 220
+        }
+        if (d.depth === checkedLevels[1]){
+            return index === 0 ? 194 : 143
+        }
+        else if (d.depth === checkedLevels[0]){
+            return index === 0 ? 105 : 80
+        }
     }
-    if (d.depth === 5){
-        // if (!d.hasOwnProperty('children')){
-        //     return 750/575
-        // }
-        return index === 0 ? 455 : 334
+    if (checkedLevels.length === 5){
+        if (d.depth === checkedLevels[4]){
+            return index === 0 ? 690 : 530
+        }
+        if (d.depth === checkedLevels[3]){
+            return index === 0 ? 510 : 390
+        }
+        if (d.depth === checkedLevels[2]){
+            return index === 0 ? 355 : 270
+        }
+        if (d.depth === checkedLevels[1]){
+            return index === 0 ? 223 : 170
+        }
+        else if (d.depth === checkedLevels[0]){
+            return index === 0 ? 115 : 90
+        }
     }
-    if (d.depth === 4){
-        // if (!d.hasOwnProperty('children')){
-        //     return 750/575
-        // }
-        return index === 0 ? 350 : 252
+    if (checkedLevels.length === 4){
+        if (d.depth === checkedLevels[3]){
+            return index === 0 ? 690 : 530
+        }
+        if (d.depth === checkedLevels[2]){
+            return index === 0 ? 454 : 350
+        }
+        if (d.depth === checkedLevels[1]){
+            return index === 0 ? 266 : 206
+        }
+        if (d.depth === checkedLevels[0]){
+            return index === 0 ? 125 : 100
+        }
     }
-    if (d.depth === 3){
-        // if (!d.hasOwnProperty('children')){
-        //     return 750/575
-        // }
-        return index === 0 ? 255 : 181
+    if (checkedLevels.length === 3){
+        if (d.depth === checkedLevels[2]){
+            return index === 0 ? 690 : 530
+        }
+        if (d.depth === checkedLevels[1]){
+            return index === 0 ? 355 : 276
+        }
+        else if (d.depth === checkedLevels[0]){
+            return index === 0 ? 135 : 110
+        }
     }
-    else if (d.depth === 2){
-        // if (!d.hasOwnProperty('children')){
-        //     return 750/575
-        // }
-        return index === 0 ? 170 : 120
+    if (checkedLevels.length === 2){
+        if (d.depth === checkedLevels[1]){
+            return index === 0 ? 690 : 530
+        }
+        else if (d.depth === checkedLevels[0]){
+            return index === 0 ? 145 : 470
+        }
     }
-    else if (d.depth === 1){
-        // if (!d.hasOwnProperty('children')){
-        //     return 750/575
-        // }
-        return index === 0 ? 95 : 70
+    if (checkedLevels.length === 1){
+        if (d.depth === checkedLevels[0]){
+            return index === 0 ? 690 : 530
+        }
+    }
+    if (checkedLevels.length === 0){
+        return 0
     }
     // return d.y1
 }
@@ -212,7 +372,7 @@ function handleMouseOver(event, fileIndex, p, givenDataRoot, nodeName) {
         }
         else{
             myVal = findNodeValueByName(givenDataRoot, nodeName)
-            console.log('A:', myVal)
+            // console.log('A:', myVal)
             if (myVal === undefined){
                 myVal = 0 + '%'
             }
@@ -259,7 +419,7 @@ function handleMouseOver(event, fileIndex, p, givenDataRoot, nodeName) {
         }
         else{
             myVal = findNodeValueByName(givenDataRoot, nodeName)
-            console.log('B:', myVal)
+            // console.log('B:', myVal)
             if (myVal === undefined){
                 myVal = 0 + '%'
             }
@@ -353,7 +513,7 @@ function rendering(sliderMin, sliderMax, indicatorValue){
     
         // console.log('Here')
     
-        for (let i = 0; i < files.length; i++) {
+        for (let i = 0; i < files.length - 16; i++) {
             // Using an IIFE (Immediately Invoked Function Expression) to create a closure
             await (async function(index) {
                 let data = await d3.json(files[index]);
@@ -680,10 +840,6 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                     }
                     
 
-                    
-
-                    
-
                 }
                 else{
                     svg.append("text")
@@ -762,6 +918,16 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                     })
                     .sort(function(a, b) { return b.value - a.value; });
                 }
+
+
+                let checkedLevels = []
+                const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+                checkboxes.forEach(function(checkbox) {
+                    if (checkbox.checked) {
+                        checkedLevels.push(parseInt(checkbox.id))
+                    }
+                });
+                console.log(checkedLevels)
     
                 let arc = d3.arc()
                 .startAngle(function(d) { 
@@ -771,13 +937,11 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                     return d.x1; 
                 })
                 .innerRadius(function(d) { 
-                    let val = innerRadius(d, index);
-                    // console.log('Y: ', d)
-                    // console.log('X:', val)
+                    let val = innerRadius(d, index, checkedLevels);
                     return val; 
                 })
                 .outerRadius(function(d) { 
-                    let val = outerRadius(d, index, csvData);
+                    let val = outerRadius(d, index, csvData, checkedLevels);
                     return val; 
                 });
     
@@ -1018,6 +1182,7 @@ function renderSlider(){
 
     slider.append('line')
         .attr('class', 'track')
+        .attr('id', 'line1')
         .attr('x1', x.range()[0])
         .attr('x2', x.range()[1]);
 
@@ -1056,6 +1221,7 @@ function renderSlider(){
     const handleMin = slider.append('circle')
         .attr('class', 'handle')
         .attr('r', 18)
+        .attr('id', 'circle1')
         .attr('cx', x(minValue))
         .call(d3.drag()
             .on('start', () => draggingMin = true)
@@ -1071,6 +1237,7 @@ function renderSlider(){
     const handleMax = slider.append('circle')
         .attr('class', 'handle')
         .attr('r', 18)
+        .attr('id', 'circle2')
         .attr('cx', x(maxValue))
         .call(d3.drag()
             .on('start', () => draggingMin = false)
@@ -1158,6 +1325,87 @@ function removeSlider(){
 }
 
 
+function renderCheckboxes(){
+    // console.log('here')
+
+    const data = [
+        { label: 'Level 1(Phylum)', value: '1', x: 50, y: 50},
+        { label: 'Level 2(Class)', value: '2', x: 500, y: 50},
+        { label: 'Level 3(Order)', value: '3', x: 900, y: 50 },
+        { label: 'Level 4(Family)', value: '4', x: 1300, y: 50},
+        { label: 'Level 5(Genus)', value: '5', x: 50, y: 120},
+        { label: 'Level 6(Species)', value: '6', x: 500, y: 120},
+        { label: 'Level 7(Strain)', value: '7', x: 950, y: 120}
+    ];
+
+    // Select the container where the checkboxes will be appended
+    const container = d3.select('#checkboxes');
+
+    // Create a checkbox for each data item with specified coordinates
+    container.selectAll('div')
+        .data(data)
+        .enter()
+        .append('div')
+        .attr('class', 'checkbox-container')
+        .style('left', d => `${d.x}px`)
+        .style('top', d => `${d.y}px`)
+        .each(function(d) {
+            // Append the checkbox input
+            d3.select(this)
+                .append('input')
+                .attr('type', 'checkbox')
+                .attr('id', d.value)
+                .attr('value', d.value)
+                .attr('checked', true)  // Set the checkbox to be checked by default
+                .on('change', function() {
+                    // Call a function whenever the checkbox is clicked
+                    checkboxClicked(d.value, this.checked);
+                });
+
+            // Append the label
+            d3.select(this)
+                .append('label')
+                .attr('for', d.value)
+                .text(d.label);
+        });
+}
+
+
+function checkboxClicked(value, isChecked) {
+    let activeTab = document.querySelector('.tab.active');
+    console.log(activeTab.textContent);
+
+    if (activeTab.textContent === 'All Organisms Heatmap'){
+        let circle1 = document.getElementById('circle1');
+        let cxValue1 = parseFloat(circle1.getAttribute('cx'))
+        let circle2 = document.getElementById('circle2');
+        let cxValue2 = parseFloat(circle2.getAttribute('cx'))
+    
+        let line1 = document.getElementById('line1');
+        let linex1 = parseFloat(line1.getAttribute('x1'))
+        let linex2 = parseFloat(line1.getAttribute('x2'))
+    
+        cxValue1 = (((cxValue1 - linex1)/(linex2 - linex1)) * 100).toFixed(2)
+        cxValue2 = (((cxValue2 - linex1)/(linex2 - linex1)) * 100).toFixed(2)
+        removeExistingContainers()
+        rendering(cxValue1, cxValue2, 'ao')
+    }
+    else if (activeTab.textContent === 'Diarrhea Indicator Organisms'){
+        removeExistingContainers()
+        rendering(35, 65, 'dio')
+    }
+    else{
+        removeExistingContainers()
+        rendering(35, 65, 'cio')
+    }
+}
+
+function removeCheckBoxes(){
+    const elements19 = document.getElementById('checkboxes')
+    elements19.innerHTML = ''
+}
+
+
 
 const tabsData = [
     { id: 'tab1', label: 'Diarrhea Indicator Organisms'},
@@ -1172,7 +1420,7 @@ tabsData.forEach((tab, i) => {
     tabsContainer.append('div')
         .attr('class', 'tab')
         .attr('data-tab', tab.id)
-        .classed('active', i === 1)  // Set first tab as active
+        .classed('active', i === 1)  // Set second tab as active
         .text(tab.label)
         .on('click', function() {
 
@@ -1191,18 +1439,24 @@ tabsData.forEach((tab, i) => {
                 removeExistingContainers()
                 removeSlider()
                 // renderSlider()
+                removeCheckBoxes()
+                renderCheckboxes()
                 rendering(35, 65, 'dio')
             }
             else if (tabValue === 'tab2'){
                 removeExistingContainers()
                 removeSlider()
                 renderSlider()
+                removeCheckBoxes()
+                renderCheckboxes()
                 rendering(35, 65, 'ao')
             }
             else if (tabValue === 'tab3'){
                 removeExistingContainers()
                 removeSlider()
                 // renderSlider()
+                removeCheckBoxes()
+                renderCheckboxes()
                 rendering(35, 65, 'cio')
             }   
     });
@@ -1210,6 +1464,7 @@ tabsData.forEach((tab, i) => {
 
 
 renderSlider()
+renderCheckboxes()
 rendering(35, 65, 'ao')
 
 

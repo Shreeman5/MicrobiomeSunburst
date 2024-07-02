@@ -6,6 +6,8 @@ body {
     text-anchor: middle;
     pointer-events: none;
 }
+
+/* tooltip stuff */
 .tooltip {
     position: absolute;
     background-color: black;
@@ -17,6 +19,10 @@ body {
     pointer-events: none; /* Ensures the tooltip does not interfere with mouse events */
     font-size: 34px; /* Increased font size */
 }
+/* tooltip stuff */
+
+
+/* svgs */
 .svg-container {
     position: absolute;
     left: 10px;
@@ -108,7 +114,7 @@ body {
     left: 6160px;
     top: 2730px;
 }
-
+/* svgs */
 
 /* slider stuff */
 .slider {
@@ -172,3 +178,18 @@ body {
     border-bottom: none;
 }
 /* tabbing */
+
+
+/* checkboxes */
+.checkbox-container {
+    position: absolute;
+}
+label {
+    font-size: 50px; /* Increase label font size */
+    margin-left: 10px;
+}
+input[type="checkbox"] {
+    width: 50px; /* Increase checkbox size */
+    height: 50px;
+}
+/* checkboxes */
