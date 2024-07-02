@@ -103,10 +103,10 @@ function innerRadius(d, index, checkedLevels){
     }
     if (checkedLevels.length === 3){
         if (d.depth === checkedLevels[2]){
-            return index === 0 ? 355 : 276
+            return index === 0 ? 355 : 470
         }
         if (d.depth === checkedLevels[1]){
-            return index === 0 ? 135 : 110
+            return index === 0 ? 135 : 370
         }
         else if (d.depth === checkedLevels[0]){
             return 30
@@ -247,10 +247,10 @@ function outerRadius(d, index, csvData, checkedLevels){
             return index === 0 ? 690 : 530
         }
         if (d.depth === checkedLevels[1]){
-            return index === 0 ? 355 : 276
+            return index === 0 ? 355 : 470
         }
         else if (d.depth === checkedLevels[0]){
-            return index === 0 ? 135 : 110
+            return index === 0 ? 135 : 370
         }
     }
     if (checkedLevels.length === 2){
@@ -513,7 +513,7 @@ function rendering(sliderMin, sliderMax, indicatorValue){
     
         // console.log('Here')
     
-        for (let i = 0; i < files.length - 16; i++) {
+        for (let i = 0; i < files.length; i++) {
             // Using an IIFE (Immediately Invoked Function Expression) to create a closure
             await (async function(index) {
                 let data = await d3.json(files[index]);
@@ -927,7 +927,7 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                         checkedLevels.push(parseInt(checkbox.id))
                     }
                 });
-                console.log(checkedLevels)
+                // console.log(checkedLevels)
     
                 let arc = d3.arc()
                 .startAngle(function(d) { 
