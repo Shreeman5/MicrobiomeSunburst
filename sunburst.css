@@ -29,6 +29,9 @@ body {
     top: 10px;
 }
 
+
+
+
 .svg-container-2 {
     position: absolute;
     left: 1520px;
@@ -54,6 +57,9 @@ body {
     left: 6160px;
     top: 270px;
 }
+
+
+
 .svg-container-7 {
     position: absolute;
     left: 360px;
@@ -84,6 +90,11 @@ body {
     left: 6160px;
     top: 1500px;
 }
+
+
+
+
+
 .svg-container-13 {
     position: absolute;
     left: 360px;
@@ -114,6 +125,108 @@ body {
     left: 6160px;
     top: 2730px;
 }
+
+
+
+.svg-container-19 {
+    position: absolute;
+    left: 360px;
+    top: 3960px;
+}
+.svg-container-20 {
+    position: absolute;
+    left: 1520px;
+    top: 3960px;
+}
+
+
+
+
+.svg-container-21 {
+    position: absolute;
+    left: 360px;
+    top: 5190px;
+}
+.svg-container-22 {
+    position: absolute;
+    left: 1520px;
+    top: 5190px;
+}
+.svg-container-23 {
+    position: absolute;
+    left: 2680px;
+    top: 5190px;
+}
+.svg-container-24 {
+    position: absolute;
+    left: 3840px;
+    top: 5190px;
+}
+.svg-container-25 {
+    position: absolute;
+    left: 5000px;
+    top: 5190px;
+}
+
+
+
+
+.svg-container-26 {
+    position: absolute;
+    left: 360px;
+    top: 6420px;
+}
+.svg-container-27 {
+    position: absolute;
+    left: 1520px;
+    top: 6420px;
+}
+.svg-container-28 {
+    position: absolute;
+    left: 2680px;
+    top: 6420px;
+}
+.svg-container-29 {
+    position: absolute;
+    left: 3840px;
+    top: 6420px;
+}
+.svg-container-30 {
+    position: absolute;
+    left: 5000px;
+    top: 6420px;
+}
+
+
+.svg-container-31 {
+    position: absolute;
+    left: 360px;
+    top: 7650px;
+}
+.svg-container-32 {
+    position: absolute;
+    left: 1520px;
+    top: 7650px;
+}
+.svg-container-33 {
+    position: absolute;
+    left: 2680px;
+    top: 7650px;
+}
+.svg-container-34 {
+    position: absolute;
+    left: 3840px;
+    top: 7650px;
+}
+.svg-container-35 {
+    position: absolute;
+    left: 5000px;
+    top: 7650px;
+}
+
+
+
+
 /* svgs */
 
 /* slider stuff */

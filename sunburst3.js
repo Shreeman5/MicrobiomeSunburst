@@ -1,22 +1,47 @@
 let files = [
     "JSONswithStandardRanks/MergedJSONfile/merged_tree.json",
+
+    "JSONswithStandardRanks/BetterIndivJSONfiles/Jim_Walsh_before.json",
+    "JSONswithStandardRanks/BetterIndivJSONfiles/Jim_Walsh_after.json",
+
     "JSONswithStandardRanks/BetterIndivJSONfiles/SRR1215593_Crohn's Disease.json", 
     "JSONswithStandardRanks/BetterIndivJSONfiles/SRR5936079_Crohn's Disease.json",
     "JSONswithStandardRanks/BetterIndivJSONfiles/SRR5950737_Crohn's Disease.json",
     "JSONswithStandardRanks/BetterIndivJSONfiles/SRR5983330_Crohn's Disease.json", 
     "JSONswithStandardRanks/BetterIndivJSONfiles/SRR5983386_Crohn's Disease.json",
+
     "JSONswithStandardRanks/BetterIndivJSONfiles/ERR260506_Diarrhea.json",
     "JSONswithStandardRanks/BetterIndivJSONfiles/ERR262943_Diarrhea.json",
     "JSONswithStandardRanks/BetterIndivJSONfiles/ERR262958_Diarrhea.json",
     "JSONswithStandardRanks/BetterIndivJSONfiles/SRR5831593_Diarrhea.json", 
     "JSONswithStandardRanks/BetterIndivJSONfiles/SRR5831595_Diarrhea.json",
     "JSONswithStandardRanks/BetterIndivJSONfiles/SRR5831603_Diarrhea.json",
+
     "JSONswithStandardRanks/BetterIndivJSONfiles/ERR478967_Healthy.json",
     "JSONswithStandardRanks/BetterIndivJSONfiles/ERR719231_Healthy.json",
     "JSONswithStandardRanks/BetterIndivJSONfiles/ERR1190638_Healthy.json", 
     "JSONswithStandardRanks/BetterIndivJSONfiles/SRR341621_Healthy.json",  
     "JSONswithStandardRanks/BetterIndivJSONfiles/SRR6474217_Healthy.json",
-    "JSONswithStandardRanks/BetterIndivJSONfiles/SRR6474279_Healthy.json"
+    "JSONswithStandardRanks/BetterIndivJSONfiles/SRR6474279_Healthy.json",
+
+
+    "JSONswithStandardRanks/BetterIndivJSONfiles/ERR478985_Bowel Cancer.json",
+    "JSONswithStandardRanks/BetterIndivJSONfiles/ERR479334_Bowel Cancer.json", 
+    "JSONswithStandardRanks/BetterIndivJSONfiles/ERR479517_Bowel Cancer.json",  
+    "JSONswithStandardRanks/BetterIndivJSONfiles/ERR480854_Bowel Cancer.json",
+    "JSONswithStandardRanks/BetterIndivJSONfiles/ERR2726653_Bowel Cancer.json",
+
+    "JSONswithStandardRanks/BetterIndivJSONfiles/ERR527150_Liver Cirrhosis.json",
+    "JSONswithStandardRanks/BetterIndivJSONfiles/ERR528318_Liver Cirrhosis.json", 
+    "JSONswithStandardRanks/BetterIndivJSONfiles/ERR532384_Liver Cirrhosis.json",  
+    "JSONswithStandardRanks/BetterIndivJSONfiles/ERR532392_Liver Cirrhosis.json",
+    "JSONswithStandardRanks/BetterIndivJSONfiles/ERR532623_Liver Cirrhosis.json",
+
+    "JSONswithStandardRanks/BetterIndivJSONfiles/ERR1912974_Parkinson's Disease.json",
+    "JSONswithStandardRanks/BetterIndivJSONfiles/ERR1913019_Parkinson's Disease.json", 
+    "JSONswithStandardRanks/BetterIndivJSONfiles/ERR1913069_Parkinson's Disease.json",  
+    "JSONswithStandardRanks/BetterIndivJSONfiles/ERR1913124_Parkinson's Disease.json",
+    "JSONswithStandardRanks/BetterIndivJSONfiles/ERR1913188_Parkinson's Disease.json",
 ]
 
 
@@ -29,22 +54,22 @@ let radius
 function innerRadius(d, index, checkedLevels){
     if (checkedLevels.length === 7){
         if (d.depth === 7){
-            return index === 0 ? 570 : 426
+            return index === 0 ? 620 : 480
         }
         if (d.depth === 6){
-            return index === 0 ? 455 : 334
+            return index === 0 ? 550 : 430
         }
         if (d.depth === 5){
-            return index === 0 ? 350 : 252
+            return index === 0 ? 480 : 380
         }
         if (d.depth === 4){
-            return index === 0 ? 255 : 181
+            return index === 0 ? 400 : 330
         }
         if (d.depth === 3){
-            return index === 0 ? 170 : 120
+            return index === 0 ? 320 : 280
         }
         else if (d.depth === 2){
-            return index === 0 ? 95 : 70
+            return index === 0 ? 230 : 230
         }
         else if (d.depth === 1){
             return 30
@@ -52,19 +77,19 @@ function innerRadius(d, index, checkedLevels){
     }
     if (checkedLevels.length === 6){
         if (d.depth === checkedLevels[5]){
-            return index === 0 ? 545 : 413
+            return index === 0 ? 600 : 470
         }
         if (d.depth === checkedLevels[4]){
-            return index === 0 ? 414 : 310
+            return index === 0 ? 510 : 410
         }
         if (d.depth === checkedLevels[3]){
-            return index === 0 ? 297 : 220
+            return index === 0 ? 420 : 350
         }
         if (d.depth === checkedLevels[2]){
-            return index === 0 ? 194 : 143
+            return index === 0 ? 330 : 290
         }
         if (d.depth === checkedLevels[1]){
-            return index === 0 ? 105 : 80
+            return index === 0 ? 230 : 230
         }
         else if (d.depth === checkedLevels[0]){
             return 30
@@ -72,16 +97,16 @@ function innerRadius(d, index, checkedLevels){
     }
     if (checkedLevels.length === 5){
         if (d.depth === checkedLevels[4]){
-            return index === 0 ? 510 : 390
+            return index === 0 ? 590 : 470
         }
         if (d.depth === checkedLevels[3]){
-            return index === 0 ? 355 : 270
+            return index === 0 ? 480 : 400
         }
         if (d.depth === checkedLevels[2]){
-            return index === 0 ? 223 : 170
+            return index === 0 ? 360 : 320
         }
         if (d.depth === checkedLevels[1]){
-            return index === 0 ? 115 : 90
+            return index === 0 ? 230 : 230
         }
         else if (d.depth === checkedLevels[0]){
             return 30
@@ -89,13 +114,13 @@ function innerRadius(d, index, checkedLevels){
     }
     if (checkedLevels.length === 4){
         if (d.depth === checkedLevels[3]){
-            return index === 0 ? 454 : 350
+            return index === 0 ? 590 : 470
         }
         if (d.depth === checkedLevels[2]){
-            return index === 0 ? 266 : 206
+            return index === 0 ? 480 : 400
         }
         if (d.depth === checkedLevels[1]){
-            return index === 0 ? 125 : 100
+            return index === 0 ? 360 : 320
         }
         if (d.depth === checkedLevels[0]){
             return 30
@@ -103,10 +128,10 @@ function innerRadius(d, index, checkedLevels){
     }
     if (checkedLevels.length === 3){
         if (d.depth === checkedLevels[2]){
-            return index === 0 ? 355 : 470
+            return index === 0 ? 590 : 470
         }
         if (d.depth === checkedLevels[1]){
-            return index === 0 ? 135 : 370
+            return index === 0 ? 480 : 400
         }
         else if (d.depth === checkedLevels[0]){
             return 30
@@ -114,7 +139,7 @@ function innerRadius(d, index, checkedLevels){
     }
     if (checkedLevels.length === 2){
         if (d.depth === checkedLevels[1]){
-            return index === 0 ? 145 : 470
+            return index === 0 ? 590 : 470
         }
         else if (d.depth === checkedLevels[0]){
             return 30
@@ -158,37 +183,37 @@ function outerRadius(d, index, csvData, checkedLevels){
             // if (!d.hasOwnProperty('children')){
             //     return 750/575
             // }
-            return index === 0 ? 570 : 426
+            return index === 0 ? 620 : 480
         }
         if (d.depth === 5){
             // if (!d.hasOwnProperty('children')){
             //     return 750/575
             // }
-            return index === 0 ? 455 : 334
+            return index === 0 ? 550 : 430
         }
         if (d.depth === 4){
             // if (!d.hasOwnProperty('children')){
             //     return 750/575
             // }
-            return index === 0 ? 350 : 252
+            return index === 0 ? 480 : 380
         }
         if (d.depth === 3){
             // if (!d.hasOwnProperty('children')){
             //     return 750/575
             // }
-            return index === 0 ? 255 : 181
+            return index === 0 ? 400 : 330
         }
         else if (d.depth === 2){
             // if (!d.hasOwnProperty('children')){
             //     return 750/575
             // }
-            return index === 0 ? 170 : 120
+            return index === 0 ? 320 : 280
         }
         else if (d.depth === 1){
             // if (!d.hasOwnProperty('children')){
             //     return 750/575
             // }
-            return index === 0 ? 95 : 70
+            return index === 0 ? 230 : 230
         }
     }
     if (checkedLevels.length === 6){
@@ -196,19 +221,19 @@ function outerRadius(d, index, csvData, checkedLevels){
             return index === 0 ? 690 : 530
         }
         if (d.depth === checkedLevels[4]){
-            return index === 0 ? 545 : 413
+            return index === 0 ? 600 : 470
         }
         if (d.depth === checkedLevels[3]){
-            return index === 0 ? 414 : 310
+            return index === 0 ? 510 : 410
         }
         if (d.depth === checkedLevels[2]){
-            return index === 0 ? 297 : 220
+            return index === 0 ? 420 : 350
         }
         if (d.depth === checkedLevels[1]){
-            return index === 0 ? 194 : 143
+            return index === 0 ? 330 : 290
         }
         else if (d.depth === checkedLevels[0]){
-            return index === 0 ? 105 : 80
+            return index === 0 ? 230 : 230
         }
     }
     if (checkedLevels.length === 5){
@@ -216,16 +241,16 @@ function outerRadius(d, index, csvData, checkedLevels){
             return index === 0 ? 690 : 530
         }
         if (d.depth === checkedLevels[3]){
-            return index === 0 ? 510 : 390
+            return index === 0 ? 590 : 470
         }
         if (d.depth === checkedLevels[2]){
-            return index === 0 ? 355 : 270
+            return index === 0 ? 480 : 400
         }
         if (d.depth === checkedLevels[1]){
-            return index === 0 ? 223 : 170
+            return index === 0 ? 360 : 320
         }
         else if (d.depth === checkedLevels[0]){
-            return index === 0 ? 115 : 90
+            return index === 0 ? 230 : 230
         }
     }
     if (checkedLevels.length === 4){
@@ -233,13 +258,13 @@ function outerRadius(d, index, csvData, checkedLevels){
             return index === 0 ? 690 : 530
         }
         if (d.depth === checkedLevels[2]){
-            return index === 0 ? 454 : 350
+            return index === 0 ? 590 : 470
         }
         if (d.depth === checkedLevels[1]){
-            return index === 0 ? 266 : 206
+            return index === 0 ? 480 : 400
         }
         if (d.depth === checkedLevels[0]){
-            return index === 0 ? 125 : 100
+            return index === 0 ? 360 : 320
         }
     }
     if (checkedLevels.length === 3){
@@ -247,10 +272,10 @@ function outerRadius(d, index, csvData, checkedLevels){
             return index === 0 ? 690 : 530
         }
         if (d.depth === checkedLevels[1]){
-            return index === 0 ? 355 : 470
+            return index === 0 ? 590 : 470
         }
         else if (d.depth === checkedLevels[0]){
-            return index === 0 ? 135 : 370
+            return index === 0 ? 480 : 400
         }
     }
     if (checkedLevels.length === 2){
@@ -258,7 +283,7 @@ function outerRadius(d, index, csvData, checkedLevels){
             return index === 0 ? 690 : 530
         }
         else if (d.depth === checkedLevels[0]){
-            return index === 0 ? 145 : 470
+            return index === 0 ? 590 : 470
         }
     }
     if (checkedLevels.length === 1){
@@ -365,6 +390,8 @@ function handleMouseOver(event, fileIndex, p, givenDataRoot, nodeName) {
 
 
     if (p.hasOwnProperty('children')){
+
+        
         // console.log(p)
         let myVal
         if (fileIndex === 0){
@@ -373,6 +400,9 @@ function handleMouseOver(event, fileIndex, p, givenDataRoot, nodeName) {
         else{
             myVal = findNodeValueByName(givenDataRoot, nodeName)
             // console.log('A:', myVal)
+            if (fileIndex === 14){
+                console.log(givenDataRoot)
+            }
             if (myVal === undefined){
                 myVal = 0 + '%'
             }
@@ -513,7 +543,7 @@ function rendering(sliderMin, sliderMax, indicatorValue){
     
         // console.log('Here')
     
-        for (let i = 0; i < files.length; i++) {
+        for (let i = 0; i < files.length - 32; i++) {
             // Using an IIFE (Immediately Invoked Function Expression) to create a closure
             await (async function(index) {
                 let data = await d3.json(files[index]);
@@ -535,7 +565,13 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                     '.svg-container-7', '.svg-container-8', '.svg-container-9', 
                     '.svg-container-10', '.svg-container-11', '.svg-container-12', 
                     '.svg-container-13', '.svg-container-14', '.svg-container-15', 
-                    '.svg-container-16', '.svg-container-17', '.svg-container-18'
+                    '.svg-container-16', '.svg-container-17', '.svg-container-18',
+                    '.svg-container-19', '.svg-container-20', '.svg-container-21',
+                    '.svg-container-22', '.svg-container-23', '.svg-container-24',
+                    '.svg-container-25', '.svg-container-26', '.svg-container-27',
+                    '.svg-container-28', '.svg-container-29', '.svg-container-30',
+                    '.svg-container-31', '.svg-container-32', '.svg-container-33',
+                    '.svg-container-34', '.svg-container-35'
                 ];
     
                 // console.log('D:', data)
@@ -1125,7 +1161,14 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                                 
                                 // return "1"
                             }) 
-                            .style("stroke-width", "1")
+                            .style("stroke-width", function(d){
+                                if (d.depth === 1){
+                                    return "10"
+                                }
+                                else{
+                                    return "1"
+                                }
+                            })
                             .on("mouseover", function (event, d){
                                 let nodeName = d.data.name
                                 handleMouseOver(event, index, d, givenDataRoot, nodeName)
