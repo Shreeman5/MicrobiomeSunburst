@@ -1,6 +1,7 @@
 let files = [
     "JSONswithStandardRanks/MergedJSONfile/merged_tree.json",
 
+
     "JSONswithStandardRanks/BetterIndivJSONfiles/Jim_Walsh_before.json",
     "JSONswithStandardRanks/BetterIndivJSONfiles/Jim_Walsh_after.json",
 
@@ -23,7 +24,6 @@ let files = [
     "JSONswithStandardRanks/BetterIndivJSONfiles/SRR341621_Healthy.json",  
     "JSONswithStandardRanks/BetterIndivJSONfiles/SRR6474217_Healthy.json",
     "JSONswithStandardRanks/BetterIndivJSONfiles/SRR6474279_Healthy.json",
-
 
     "JSONswithStandardRanks/BetterIndivJSONfiles/ERR478985_Bowel Cancer.json",
     "JSONswithStandardRanks/BetterIndivJSONfiles/ERR479334_Bowel Cancer.json", 
@@ -346,7 +346,8 @@ function nameMapping(val){
 }
 
 
-function handleMouseOver(event, fileIndex, p, givenDataRoot, nodeName) {
+function handleMouseOver(event, fileIndex, p, givenDataRoot, nodeName, cdfContainerData) {
+    // console.log(cdfContainerData)
     // console.log(event)
     // console.log(fileIndex)
     // console.log(p)
@@ -420,6 +421,20 @@ function handleMouseOver(event, fileIndex, p, givenDataRoot, nodeName) {
             substringBeforeUnderscore = nameMapping(myVar.substring(0, index));
         } 
 
+        let lastIndex = nodeName.lastIndexOf('__')
+        let taxonID = nodeName.substring(lastIndex + 2)
+        let cdf = findTaxonCDFbyID(cdfContainerData, taxonID)
+        // console.log(typeof cdf)
+        if (cdf === null){
+            cdf = 'N/A'
+        }
+        else{
+            cdf = (parseFloat(cdf) * 100).toFixed(3) + '%'
+        }
+        // console.log(cdf)
+
+
+
         let mytext 
         if (fileIndex === 0){
             mytext = 'Name : ' + myNames[1] + "<br>" +
@@ -432,6 +447,7 @@ function handleMouseOver(event, fileIndex, p, givenDataRoot, nodeName) {
             mytext = 'Name : ' + myNames[1] + "<br>" +
             // 'Aggregated Abundance[Across 17 datasets] : ' + agVal + "<br>" +
             'Relative Abundance in this dataset : ' + myVal+ "<br>" + 
+            'Percentile Value : ' + cdf + "<br>" +
             'Rank : ' + substringBeforeUnderscore + "<br>" +
             'NCBI Taxon ID: ' + myNames[2] + "<br>"
         }
@@ -458,8 +474,22 @@ function handleMouseOver(event, fileIndex, p, givenDataRoot, nodeName) {
             }
         }
         // let agVal = (p.value).toFixed(6)
+        let lastIndex = nodeName.lastIndexOf('?')
+        let taxonID = nodeName.substring(lastIndex + 1)
+        let cdf = findTaxonCDFbyID(cdfContainerData, taxonID)
+        // console.log(cdf)
+        if (cdf === null){
+            cdf = 'N/A'
+        }
+        else{
+            cdf = (parseFloat(cdf) * 100).toFixed(3) + '%'
+        }
+
         let myVar = p.data.name
         let myNames = myVar.split('?')
+
+
+
 
         let mytext 
         if (fileIndex === 0){
@@ -471,6 +501,7 @@ function handleMouseOver(event, fileIndex, p, givenDataRoot, nodeName) {
         else{
             mytext = 'Name : ' + myNames[0] + "<br>" +
             'Relative Abundance in this dataset: ' + myVal+ "<br>" + 
+            'Percentile Value : ' + cdf + "<br>" +
             'Rank : ' + myNames[1]+ "<br>" +
             'NCBI Taxon ID: ' + myNames[2] + "<br>"
         }
@@ -508,8 +539,19 @@ function findTaxonCDFbyID(dataArray, taxonId) {
 }
 
 function findTaxonWeightbyID(dataArray, taxonId){
-    const element = dataArray.find(item => item.ncbi_taxon_id === taxonId)
-    return element ? element.weight : null
+    // console.log(typeof taxonId)
+    // console.log(dataArray)
+    // console.log(taxonId)
+    // const element = dataArray.find(item => item.ncbi_taxon_id === taxonId)
+    // console.log(element)
+    // return element ? element.weight : null
+    for (let obj of dataArray) {
+        if (obj.ncbi_taxon_id === taxonId) {
+            // console.log('yes')
+            return obj.weight;
+        }
+    }
+    return null; // Return null if no match found
 }
 
 function findTaxonRAbyID(dataArray, taxonId){
@@ -527,22 +569,96 @@ function rendering(sliderMin, sliderMax, indicatorValue){
         console.log('Minimum Slider Value: ', sliderMin)
         console.log('Maximum Slider Value:', sliderMax)
 
-        let myFile
+        // let myFile
+        let myRow
         let csvData
-        if (indicatorValue === 'dio'){
-            myFile = 'DiarrheaIndicators'
-            csvData = await d3.csv('CSVs/'+myFile+'.csv');
+        let transformedData
+
+        if (indicatorValue !== 'ao'){
+            if (indicatorValue === 'dio'){
+                // myFile = 'DiarrheaIndicators'
+                csvData = await d3.csv('CSVs/Diseases.csv');
+                for (const row in csvData){
+                    if (csvData[row].Name === 'Diarrhea'){
+                        myRow = csvData[row]
+                    }
+                }
+            }
+            else if (indicatorValue === 'cio'){
+                // myFile = 'CrohnIndicators'
+                csvData = await d3.csv('CSVs/Diseases.csv');
+                for (const row in csvData){
+                    if (csvData[row].Name === 'Crohn Disease'){
+                        myRow = csvData[row]
+                    }
+                }
+            }
+            else if (indicatorValue === 'bcio'){
+                // myFile = 'CrohnIndicators'
+                csvData = await d3.csv('CSVs/Diseases.csv');
+                for (const row in csvData){
+                    if (csvData[row].Name === 'Colorectal Neoplasms'){
+                        myRow = csvData[row]
+                    }
+                }
+            }
+            else if (indicatorValue === 'pio'){
+                // myFile = 'CrohnIndicators'
+                csvData = await d3.csv('CSVs/Diseases.csv');
+                for (const row in csvData){
+                    if (csvData[row].Name === 'Parkinson Disease'){
+                        myRow = csvData[row]
+                    }
+                }
+            }
+            else if (indicatorValue === 'lcio'){
+                // myFile = 'CrohnIndicators'
+                csvData = await d3.csv('CSVs/Diseases.csv');
+                for (const row in csvData){
+                    if (csvData[row].Name === 'Liver Cirrhosis'){
+                        myRow = csvData[row]
+                    }
+                }
+            }
+    
+    
+            // Function to transform the data object
+            function transformObject(obj) {
+                const transformedObjects = [];
+                // Loop through keys starting from 'C'
+                Object.keys(obj).forEach((key, index) => {
+                    if (index > 1){
+                        let value = obj[key]
+    
+                        const firstCloseBracketIndex = value.indexOf(']')
+                        const firstOpenParenIndex = value.indexOf('(');
+                        const result = value.substring(firstCloseBracketIndex+1, firstOpenParenIndex).trim();
+    
+                        let match2 = value.match(/\[(\d+)\]/);
+                        let number = match2 ? match2[1] : null;
+                        if (number === null){
+                            number = '620'
+                        }
+    
+                        let match3 = value.match(/\((-?\d+(?:\.\d+)?)\)/);
+                        let number2 = match3 ? match3[1] : null;
+    
+    
+                        const transformedObj = {};
+                        transformedObj.organism = result; // Example transformation
+                        transformedObj.ncbi_taxon_id = number; // Example transformation for key2
+                        transformedObj.weight = number2; // Example transformation for key3
+                        transformedObjects.push(transformedObj);
+                    }
+                });
+                return transformedObjects;
+            }
+            
+            transformedData = transformObject(myRow);
         }
-        else if (indicatorValue === 'cio'){
-            myFile = 'CrohnIndicators'
-            csvData = await d3.csv('CSVs/'+myFile+'.csv');
-        }
+        // console.log(transformedData)
         
-        // console.log(myFile)
-        // console.log(csvData);
-    
-        // console.log('Here')
-    
+        
         for (let i = 0; i < files.length - 32; i++) {
             // Using an IIFE (Immediately Invoked Function Expression) to create a closure
             await (async function(index) {
@@ -586,131 +702,101 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                 // console.log(word)
     
                 if (index === 0){
+                    if (indicatorValue === 'dio' || indicatorValue === 'cio' || indicatorValue === 'bcio'
+                        || indicatorValue === 'pio' || indicatorValue === 'lcio'){
+                            if (indicatorValue === 'dio'){
+                                svg.append("text")
+                                .attr("x", -272)
+                                .attr("y", -455)
+                                .attr("font-size", "58")
+                                .attr("fill", "Black")
+                                .text("Diarrhea Indicators Organisms")
+                            }
+                            else if (indicatorValue === 'cio'){
+                                svg.append("text")
+                                .attr("x", -272)
+                                .attr("y", -455)
+                                .attr("font-size", "58")
+                                .attr("fill", "Black")
+                                .text("Crohns Indicator Organisms")
+                            }
+                            else if (indicatorValue === 'bcio'){
+                                svg.append("text")
+                                .attr("x", -272)
+                                .attr("y", -455)
+                                .attr("font-size", "58")
+                                .attr("fill", "Black")
+                                .text("Bowel Cancer Indicator Organisms")
+                            }
+                            else if (indicatorValue === 'pio'){
+                                svg.append("text")
+                                .attr("x", -272)
+                                .attr("y", -455)
+                                .attr("font-size", "58")
+                                .attr("fill", "Black")
+                                .text("Parkinsons Indicator Organisms")
+                            }
+                            else if (indicatorValue === 'lcio'){
+                                svg.append("text")
+                                .attr("x", -272)
+                                .attr("y", -455)
+                                .attr("font-size", "58")
+                                .attr("fill", "Black")
+                                .text("Liver Cirrhosis Indicator Organisms")
+                            }
 
-                    if (indicatorValue === 'dio'){
-                        svg.append("text")
-                        .attr("x", -272)
-                        .attr("y", -455)
-                        .attr("font-size", "58")
-                        .attr("fill", "Black")
-                        .text("Diarrhea Indicators Organisms")
+                            svg.append("rect")
+                                .attr("x", 282)    // x position of the rectangle
+                                .attr("y", -100)    // y position of the rectangle
+                                .attr("width", 400) // width of the rectangle
+                                .attr("height", 100) // height of the rectangle
+                                .attr("fill", "red") // fill color of the rectangle using the gradient
+                                .attr("stroke", "black")
+                                .attr("stroke-width", "3")
 
-                        // Append a rectangle to the SVG container and apply the gradient
-                        svg.append("rect")
-                            .attr("x", 282)    // x position of the rectangle
-                            .attr("y", -100)    // y position of the rectangle
-                            .attr("width", 400) // width of the rectangle
-                            .attr("height", 100) // height of the rectangle
-                            .attr("fill", "red") // fill color of the rectangle using the gradient
-                            .attr("stroke", "black")
-                            .attr("stroke-width", "3")
+                            svg.append("text")
+                                .attr("x", 272)
+                                .attr("y", -25)
+                                .attr("font-size", "58")
+                                .attr("fill", "Black")
+                                .attr("text-anchor", "end")
+                                .text(("High Abundance Indicator Organism"))
 
-                        svg.append("text")
-                            .attr("x", 272)
-                            .attr("y", -25)
-                            .attr("font-size", "58")
-                            .attr("fill", "Black")
-                            .attr("text-anchor", "end")
-                            .text(("High Abundance Indicator Organism"))
+                            // Append a rectangle to the SVG container and apply the gradient
+                            svg.append("rect")
+                                .attr("x", 282)    // x position of the rectangle
+                                .attr("y", 100)    // y position of the rectangle
+                                .attr("width", 400) // width of the rectangle
+                                .attr("height", 100) // height of the rectangle
+                                .attr("fill", "blue") // fill color of the rectangle using the gradient
+                                .attr("stroke", "black")
+                                .attr("stroke-width", "3")
 
-                        // Append a rectangle to the SVG container and apply the gradient
-                        svg.append("rect")
-                            .attr("x", 282)    // x position of the rectangle
-                            .attr("y", 100)    // y position of the rectangle
-                            .attr("width", 400) // width of the rectangle
-                            .attr("height", 100) // height of the rectangle
-                            .attr("fill", "blue") // fill color of the rectangle using the gradient
-                            .attr("stroke", "black")
-                            .attr("stroke-width", "3")
+                            svg.append("text")
+                                .attr("x", 272)
+                                .attr("y", 175)
+                                .attr("font-size", "58")
+                                .attr("fill", "Black")
+                                .attr("text-anchor", "end")
+                                .text(("Low Abundance Indicator Organism"))
 
-                        svg.append("text")
-                            .attr("x", 272)
-                            .attr("y", 175)
-                            .attr("font-size", "58")
-                            .attr("fill", "Black")
-                            .attr("text-anchor", "end")
-                            .text(("Low Abundance Indicator Organism"))
+                            // Append a rectangle to the SVG container and apply the gradient
+                            svg.append("rect")
+                                .attr("x", 282)    // x position of the rectangle
+                                .attr("y", 300)    // y position of the rectangle
+                                .attr("width", 400) // width of the rectangle
+                                .attr("height", 100) // height of the rectangle
+                                .attr("fill", "white") // fill color of the rectangle using the gradient
+                                .attr("stroke", "black")
+                                .attr("stroke-width", "3")
 
-                        // Append a rectangle to the SVG container and apply the gradient
-                        svg.append("rect")
-                            .attr("x", 282)    // x position of the rectangle
-                            .attr("y", 300)    // y position of the rectangle
-                            .attr("width", 400) // width of the rectangle
-                            .attr("height", 100) // height of the rectangle
-                            .attr("fill", "white") // fill color of the rectangle using the gradient
-                            .attr("stroke", "black")
-                            .attr("stroke-width", "3")
-
-                        svg.append("text")
-                            .attr("x", 272)
-                            .attr("y", 375)
-                            .attr("font-size", "58")
-                            .attr("fill", "Black")
-                            .attr("text-anchor", "end")
-                            .text(("Non-Indicator Organism"))
-                    }
-                    else if (indicatorValue === 'cio'){
-                        svg.append("text")
-                        .attr("x", -272)
-                        .attr("y", -455)
-                        .attr("font-size", "58")
-                        .attr("fill", "Black")
-                        .text("Crohns Indicator Organisms")
-
-
-                        // Append a rectangle to the SVG container and apply the gradient
-                        svg.append("rect")
-                            .attr("x", 282)    // x position of the rectangle
-                            .attr("y", -100)    // y position of the rectangle
-                            .attr("width", 400) // width of the rectangle
-                            .attr("height", 100) // height of the rectangle
-                            .attr("fill", "red") // fill color of the rectangle using the gradient
-                            .attr("stroke", "black")
-                            .attr("stroke-width", "3")
-
-                        svg.append("text")
-                            .attr("x", 272)
-                            .attr("y", -25)
-                            .attr("font-size", "58")
-                            .attr("fill", "Black")
-                            .attr("text-anchor", "end")
-                            .text(("High Abundance Indicator Organism"))
-
-                        // Append a rectangle to the SVG container and apply the gradient
-                        svg.append("rect")
-                            .attr("x", 282)    // x position of the rectangle
-                            .attr("y", 100)    // y position of the rectangle
-                            .attr("width", 400) // width of the rectangle
-                            .attr("height", 100) // height of the rectangle
-                            .attr("fill", "blue") // fill color of the rectangle using the gradient
-                            .attr("stroke", "black")
-                            .attr("stroke-width", "3")
-
-                        svg.append("text")
-                            .attr("x", 272)
-                            .attr("y", 175)
-                            .attr("font-size", "58")
-                            .attr("fill", "Black")
-                            .attr("text-anchor", "end")
-                            .text(("Low Abundance Indicator Organism"))
-
-                        // Append a rectangle to the SVG container and apply the gradient
-                        svg.append("rect")
-                            .attr("x", 282)    // x position of the rectangle
-                            .attr("y", 300)    // y position of the rectangle
-                            .attr("width", 400) // width of the rectangle
-                            .attr("height", 100) // height of the rectangle
-                            .attr("fill", "white") // fill color of the rectangle using the gradient
-                            .attr("stroke", "black")
-                            .attr("stroke-width", "3")
-
-                        svg.append("text")
-                            .attr("x", 272)
-                            .attr("y", 375)
-                            .attr("font-size", "58")
-                            .attr("fill", "Black")
-                            .attr("text-anchor", "end")
-                            .text(("Non-Indicator Organism"))
+                            svg.append("text")
+                                .attr("x", 272)
+                                .attr("y", 375)
+                                .attr("font-size", "58")
+                                .attr("fill", "Black")
+                                .attr("text-anchor", "end")
+                                .text(("Non-Indicator Organism"))
                     }
                     else{
                         svg.append("text")
@@ -874,8 +960,6 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                             .attr("text-anchor", "end")
                             .text("Organism Absent")
                     }
-                    
-
                 }
                 else{
                     svg.append("text")
@@ -1026,12 +1110,11 @@ function rendering(sliderMin, sliderMax, indicatorValue){
 
                                     //part 1
                                     if (indicatorValue !== 'ao'){
-                                        let myWeight = findTaxonWeightbyID(csvData, taxonID)
+                                        let myWeight = findTaxonWeightbyID(transformedData, taxonID)
                                         if (myWeight === null){
                                             return "white"
                                         }
                                         else{
-    
                                             let cdf = findTaxonCDFbyID(aggregatedData[0], taxonID)
                                             if (cdf === null){
                                                 return "white"
@@ -1087,7 +1170,7 @@ function rendering(sliderMin, sliderMax, indicatorValue){
 
                                 //part 1
                                 if (indicatorValue !== 'ao'){
-                                    let myWeight = findTaxonWeightbyID(csvData, taxonID)
+                                    let myWeight = findTaxonWeightbyID(transformedData, taxonID)
                                     if (myWeight === null){
                                         return "grey"
                                     }
@@ -1129,7 +1212,7 @@ function rendering(sliderMin, sliderMax, indicatorValue){
 
                                  //part 1
                                  if (indicatorValue !== 'ao'){
-                                    let myWeight = findTaxonWeightbyID(csvData, taxonID)
+                                    let myWeight = findTaxonWeightbyID(transformedData, taxonID)
                                     if (myWeight === null){
                                         return "0.1"
                                     }
@@ -1171,7 +1254,7 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                             })
                             .on("mouseover", function (event, d){
                                 let nodeName = d.data.name
-                                handleMouseOver(event, index, d, givenDataRoot, nodeName)
+                                handleMouseOver(event, index, d, givenDataRoot, nodeName, aggregatedData[0])
                             })
                             .on("mouseout", mouseout);
 
@@ -1322,6 +1405,7 @@ function renderSlider(){
 function removeExistingContainers(){
     const elements = document.querySelector('.svg-container')
     elements.innerHTML = ''
+
     const elements2 = document.querySelector('.svg-container-2');
     elements2.innerHTML = ''
     const elements3 = document.querySelector('.svg-container-3');
@@ -1333,7 +1417,6 @@ function removeExistingContainers(){
     const elements6 = document.querySelector('.svg-container-6');
     elements6.innerHTML = ''
     
-
     const elements7 = document.querySelector('.svg-container-7');
     elements7.innerHTML = ''
     const elements8 = document.querySelector('.svg-container-8');
@@ -1359,6 +1442,44 @@ function removeExistingContainers(){
     elements17.innerHTML = ''
     const elements18 = document.querySelector('.svg-container-18');
     elements18.innerHTML = ''
+
+    const elements19 = document.querySelector('.svg-container-19');
+    elements19.innerHTML = ''
+    const elements20 = document.querySelector('.svg-container-20');
+    elements20.innerHTML = ''
+
+    const elements21 = document.querySelector('.svg-container-21');
+    elements21.innerHTML = ''
+    const elements22 = document.querySelector('.svg-container-22');
+    elements22.innerHTML = ''
+    const elements23 = document.querySelector('.svg-container-23');
+    elements23.innerHTML = ''
+    const elements24 = document.querySelector('.svg-container-24');
+    elements24.innerHTML = ''
+    const elements25 = document.querySelector('.svg-container-25');
+    elements25.innerHTML = ''
+
+    const elements26 = document.querySelector('.svg-container-26');
+    elements26.innerHTML = ''
+    const elements27 = document.querySelector('.svg-container-27');
+    elements27.innerHTML = ''
+    const elements28 = document.querySelector('.svg-container-28');
+    elements28.innerHTML = ''
+    const elements29 = document.querySelector('.svg-container-29');
+    elements29.innerHTML = ''
+    const elements30 = document.querySelector('.svg-container-30');
+    elements30.innerHTML = ''
+
+    const elements31 = document.querySelector('.svg-container-31');
+    elements31.innerHTML = ''
+    const elements32 = document.querySelector('.svg-container-32');
+    elements32.innerHTML = ''
+    const elements33 = document.querySelector('.svg-container-33');
+    elements33.innerHTML = ''
+    const elements34 = document.querySelector('.svg-container-34');
+    elements34.innerHTML = ''
+    const elements35 = document.querySelector('.svg-container-35');
+    elements35.innerHTML = ''
 }
 
 
@@ -1437,9 +1558,21 @@ function checkboxClicked(value, isChecked) {
         removeExistingContainers()
         rendering(35, 65, 'dio')
     }
-    else{
+    else if (activeTab.textContent === 'Crohns Indicator Organisms'){
         removeExistingContainers()
         rendering(35, 65, 'cio')
+    }
+    else if (activeTab.textContent === 'Bowel Cancer Indicator Organisms'){
+        removeExistingContainers()
+        rendering(35, 65, 'bcio')
+    }
+    else if (activeTab.textContent === 'Parkinsons Indicator Organisms'){
+        removeExistingContainers()
+        rendering(35, 65, 'pio')
+    }
+    else if (activeTab.textContent === 'Cirrhosis Indicator Organisms'){
+        removeExistingContainers()
+        rendering(35, 65, 'lcio')
     }
 }
 
@@ -1453,7 +1586,10 @@ function removeCheckBoxes(){
 const tabsData = [
     { id: 'tab1', label: 'Diarrhea Indicator Organisms'},
     { id: 'tab2', label: 'All Organisms Heatmap'},
-    { id: 'tab3', label: 'Crohns Indicator Organisms'}
+    { id: 'tab3', label: 'Crohns Indicator Organisms'},
+    { id: 'tab4', label: 'Bowel Cancer Indicator Organisms'},
+    { id: 'tab5', label: 'Parkinsons Indicator Organisms'},
+    { id: 'tab6', label: 'Cirrhosis Indicator Organisms'},
 ];
 
 const tabsContainer = d3.select('#tabs');
@@ -1502,6 +1638,30 @@ tabsData.forEach((tab, i) => {
                 renderCheckboxes()
                 rendering(35, 65, 'cio')
             }   
+            else if (tabValue === 'tab4'){
+                removeExistingContainers()
+                removeSlider()
+                // renderSlider()
+                removeCheckBoxes()
+                renderCheckboxes()
+                rendering(35, 65, 'bcio')
+            }   
+            else if (tabValue === 'tab5'){
+                removeExistingContainers()
+                removeSlider()
+                // renderSlider()
+                removeCheckBoxes()
+                renderCheckboxes()
+                rendering(35, 65, 'pio')
+            }  
+            else if (tabValue === 'tab6'){
+                removeExistingContainers()
+                removeSlider()
+                // renderSlider()
+                removeCheckBoxes()
+                renderCheckboxes()
+                rendering(35, 65, 'lcio')
+            }  
     });
 });
 
