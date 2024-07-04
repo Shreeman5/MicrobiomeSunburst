@@ -1,7 +1,6 @@
 let files = [
     "JSONswithStandardRanks/MergedJSONfile/merged_tree.json",
 
-
     "JSONswithStandardRanks/BetterIndivJSONfiles/Jim_Walsh_before.json",
     "JSONswithStandardRanks/BetterIndivJSONfiles/Jim_Walsh_after.json",
 
@@ -24,6 +23,8 @@ let files = [
     "JSONswithStandardRanks/BetterIndivJSONfiles/SRR341621_Healthy.json",  
     "JSONswithStandardRanks/BetterIndivJSONfiles/SRR6474217_Healthy.json",
     "JSONswithStandardRanks/BetterIndivJSONfiles/SRR6474279_Healthy.json",
+
+
 
     "JSONswithStandardRanks/BetterIndivJSONfiles/ERR478985_Bowel Cancer.json",
     "JSONswithStandardRanks/BetterIndivJSONfiles/ERR479334_Bowel Cancer.json", 
@@ -571,13 +572,12 @@ function rendering(sliderMin, sliderMax, indicatorValue){
 
         // let myFile
         let myRow
-        let csvData
+        let csvData = await d3.csv('CSVs/Diseases.csv');
         let transformedData
 
         if (indicatorValue !== 'ao'){
             if (indicatorValue === 'dio'){
                 // myFile = 'DiarrheaIndicators'
-                csvData = await d3.csv('CSVs/Diseases.csv');
                 for (const row in csvData){
                     if (csvData[row].Name === 'Diarrhea'){
                         myRow = csvData[row]
@@ -586,7 +586,6 @@ function rendering(sliderMin, sliderMax, indicatorValue){
             }
             else if (indicatorValue === 'cio'){
                 // myFile = 'CrohnIndicators'
-                csvData = await d3.csv('CSVs/Diseases.csv');
                 for (const row in csvData){
                     if (csvData[row].Name === 'Crohn Disease'){
                         myRow = csvData[row]
@@ -595,7 +594,6 @@ function rendering(sliderMin, sliderMax, indicatorValue){
             }
             else if (indicatorValue === 'bcio'){
                 // myFile = 'CrohnIndicators'
-                csvData = await d3.csv('CSVs/Diseases.csv');
                 for (const row in csvData){
                     if (csvData[row].Name === 'Colorectal Neoplasms'){
                         myRow = csvData[row]
@@ -604,7 +602,6 @@ function rendering(sliderMin, sliderMax, indicatorValue){
             }
             else if (indicatorValue === 'pio'){
                 // myFile = 'CrohnIndicators'
-                csvData = await d3.csv('CSVs/Diseases.csv');
                 for (const row in csvData){
                     if (csvData[row].Name === 'Parkinson Disease'){
                         myRow = csvData[row]
@@ -613,14 +610,12 @@ function rendering(sliderMin, sliderMax, indicatorValue){
             }
             else if (indicatorValue === 'lcio'){
                 // myFile = 'CrohnIndicators'
-                csvData = await d3.csv('CSVs/Diseases.csv');
                 for (const row in csvData){
                     if (csvData[row].Name === 'Liver Cirrhosis'){
                         myRow = csvData[row]
                     }
                 }
             }
-    
     
             // Function to transform the data object
             function transformObject(obj) {
@@ -656,7 +651,7 @@ function rendering(sliderMin, sliderMax, indicatorValue){
             
             transformedData = transformObject(myRow);
         }
-        // console.log(transformedData)
+        console.log(transformedData)
         
         
         for (let i = 0; i < files.length - 32; i++) {
@@ -993,19 +988,365 @@ function rendering(sliderMin, sliderMax, indicatorValue){
     
                 let root = partition(hierarchy);
     
-                function calculateLeafDescendants(node) {
+                function calculateLeafDescendantsAndNames(node, namesArray) {
                     if (!node.children || node.children.length === 0) {
                         node.totalLeafDescendants = 1; // Leaf node has 1 leaf descendant (itself)
+
+                        let myVal = node.data.name
+                        let myNames = myVal.split('?')
+                        node.nameFound = namesArray.includes(myNames[2]) ? 1 : 0; // Check if the leaf node's name is in the names array
                     } else {
                         node.totalLeafDescendants = node.children.reduce(function(sum, child) {
-                            return sum + calculateLeafDescendants(child);
+                            return sum + calculateLeafDescendantsAndNames(child, namesArray);
                         }, 0);
+
+                        let myVal = node.data.name
+                        let myNames = myVal.split('__')
+                        node.nameFound = node.children.reduce(function(sum, child) {
+                            return sum + child.nameFound;
+                        }, namesArray.includes(myNames[2]) ? 1 : 0); // Add 1 if the node's own name is in the names array
                     }
                     return node.totalLeafDescendants;
                 }
     
                 // Calculate leaf descendants for each node starting from the root
-                calculateLeafDescendants(root);
+                let myArray = []
+                for (let i = 0; i < csvData.length; i++) {
+                    const obj = csvData[i];
+                    for (const key in obj) {
+                      if (obj.hasOwnProperty(key)) {
+                        if (key !== "Collection" && key !== "Name"){
+                            // console.log(obj[key])
+                            let myVal = obj[key]
+
+                            const firstCloseBracketIndex = myVal.indexOf('[')
+                            const firstOpenParenIndex = myVal.indexOf(']');
+                            const result = myVal.substring(firstCloseBracketIndex+1, firstOpenParenIndex).trim();
+                            
+                            if (result !== ''){
+                                let bool = /^\d+$/.test(result);
+                                if (bool){
+                                    // let myNumber = parseInt(result)
+                                    if (myArray.includes(result)){
+
+                                    }
+                                    else{
+                                        myArray.push(result)
+                                    }
+                                }
+                                else{
+                                    // console.log(myVal)
+                                    // // counter2 += 1
+                                    const firstStop = myVal.indexOf(']')
+                                    const secondStop = myVal.indexOf('(');
+                                    const result2 = myVal.substring(firstStop+1, secondStop).trim();
+                                    if (result2 === 'Shigella'){
+                                        if (myArray.includes('620')){
+
+                                        }
+                                        else{
+                                            myArray.push('620')
+                                        }
+                                    }
+                                    else if (result2 === 'Akkermansia muciniphila'){
+                                        if (myArray.includes('239935')){
+
+                                        }
+                                        else{
+                                            myArray.push('239935')
+                                        }
+                                    }
+                                    else if (result2 === 'Bifidobacterium bifidum'){
+                                        if (myArray.includes('1681')){
+
+                                        }
+                                        else{
+                                            myArray.push('1681')
+                                        }
+                                    }
+                                    else if (result2 === 'Bifidobacterium breve'){
+                                        if (myArray.includes('1685')){
+
+                                        }
+                                        else{
+                                            myArray.push('1685')
+                                        }
+                                    }
+                                    else if (result2 === 'Bifidobacterium longum subsp. infantis'){
+                                        if (myArray.includes('1682')){
+
+                                        }
+                                        else{
+                                            myArray.push('1682')
+                                        }
+                                    }
+                                    else if (result2 === 'Bifidobacterium longum'){
+                                        if (myArray.includes('216816')){
+
+                                        }
+                                        else{
+                                            myArray.push('216816')
+                                        }
+                                    }
+                                    else if (result2 === 'Bifidobacterium animalis'){
+                                        if (myArray.includes('28025')){
+
+                                        }
+                                        else{
+                                            myArray.push('28025')
+                                        }
+                                    }
+                                    else if (result2 === 'Lactobacillus acidophilus'){
+                                        if (myArray.includes('1579')){
+
+                                        }
+                                        else{
+                                            myArray.push('1579')
+                                        }
+                                    }
+                                    else if (result2 === 'Levilactobacillus brevis'){
+                                        if (myArray.includes('1580')){
+
+                                        }
+                                        else{
+                                            myArray.push('1580')
+                                        }
+                                    }
+                                    else if (result2 === 'Pediococcus acidilactici'){
+                                        if (myArray.includes('1254')){
+
+                                        }
+                                        else{
+                                            myArray.push('1254')
+                                        }
+                                    }
+                                    else if (result2 === 'Bifidobacterium animalis subsp. lactis Bl-04'){
+                                        if (myArray.includes('580050')){
+
+                                        }
+                                        else{
+                                            myArray.push('580050')
+                                        }
+                                    }
+                                    else if (result2 === 'Ligilactobacillus salivarius'){
+                                        if (myArray.includes('1624')){
+
+                                        }
+                                        else{
+                                            myArray.push('1624')
+                                        }
+                                    }
+                                    else if (result2 === 'Streptococcus salivarius'){
+                                        if (myArray.includes('1304')){
+
+                                        }
+                                        else{
+                                            myArray.push('1304')
+                                        }
+                                    }
+                                    else if (result2 === 'Campylobacter'){
+                                        if (myArray.includes('194')){
+
+                                        }
+                                        else{
+                                            myArray.push('194')
+                                        }
+                                    }
+                                    else if (result2 === 'Clostridioides difficile'){
+                                        if (myArray.includes('1496')){
+
+                                        }
+                                        else{
+                                            myArray.push('1496')
+                                        }
+                                    }
+                                    else if (result2 === 'Latilactobacillus sakei'){
+                                        if (myArray.includes('1599')){
+
+                                        }
+                                        else{
+                                            myArray.push('1599')
+                                        }
+                                    }
+                                    else if (result2 === 'Lactobacillus gasseri'){
+                                        if (myArray.includes('1596')){
+
+                                        }
+                                        else{
+                                            myArray.push('1596')
+                                        }
+                                    }
+                                    else if (result2 === 'Klebsiella oxytoca'){
+                                        if (myArray.includes('571')){
+
+                                        }
+                                        else{
+                                            myArray.push('571')
+                                        }
+                                    }
+                                    else if (result2 === 'Lacticaseibacillus paracasei'){
+                                        if (myArray.includes('1597')){
+
+                                        }
+                                        else{
+                                            myArray.push('1597')
+                                        }
+                                    }
+                                    else if (result2 === 'Lactiplantibacillus plantarum'){
+                                        if (myArray.includes('1590')){
+
+                                        }
+                                        else{
+                                            myArray.push('1590')
+                                        }
+                                    }
+                                    else if (result2 === 'Streptococcus thermophilus'){
+                                        if (myArray.includes('1308')){
+
+                                        }
+                                        else{
+                                            myArray.push('1308')
+                                        }
+                                    }
+                                    else if (result2 === 'Lactobacillus crispatus'){
+                                        if (myArray.includes('47770')){
+
+                                        }
+                                        else{
+                                            myArray.push('47770')
+                                        }
+                                    }
+                                    else if (result2 === 'Bacillus subtilis'){
+                                        if (myArray.includes('1423')){
+
+                                        }
+                                        else{
+                                            myArray.push('1423')
+                                        }
+                                    }
+                                    else if (result2 === 'Clostridium perfringens'){
+                                        if (myArray.includes('1502')){
+
+                                        }
+                                        else{
+                                            myArray.push('1502')
+                                        }
+                                    }
+                                    else if (result2 === 'Staphylococcus aureus'){
+                                        if (myArray.includes('1280')){
+
+                                        }
+                                        else{
+                                            myArray.push('1280')
+                                        }
+                                    }
+                                    else if (result2 === 'Lactococcus lactis'){
+                                        if (myArray.includes('1358')){
+
+                                        }
+                                        else{
+                                            myArray.push('1358')
+                                        }
+                                    }
+                                    else if (result2 === 'Vibrio cholerae'){
+                                        if (myArray.includes('666')){
+
+                                        }
+                                        else{
+                                            myArray.push('666')
+                                        }
+                                    }
+                                    else if (result2 === 'Yersinia enterocolitica'){
+                                        if (myArray.includes('630')){
+
+                                        }
+                                        else{
+                                            myArray.push('630')
+                                        }
+                                    }
+                                    else if (result2 === 'Salmonella enterica'){
+                                        if (myArray.includes('28901')){
+
+                                        }
+                                        else{
+                                            myArray.push('28901')
+                                        }
+                                    }
+                                    // else{
+                                    //     console.log(result2)
+                                    // }
+                                }
+                            }
+                        }
+                      }
+                    }
+                }
+                // console.log(myArray)
+                calculateLeafDescendantsAndNames(root, myArray);
+
+                console.log(root)
+
+
+
+                function findMaxValueNodeAtDepth1(root, key) {
+                    let maxValueNode = null;
+                    let maxValue = -Infinity;
+                  
+                    // Traverse the hierarchy to find the node at depth = 1 with the maximum value for the given key
+                    root.each(node => {
+                      if (node.depth === 1 && node[key] > maxValue) {
+                        maxValueNode = node;
+                        maxValue = node[key];
+                      }
+                    });
+                  
+                    return maxValueNode.data.name;
+                }
+                  
+                // Example usage
+                let maxNodeName = findMaxValueNodeAtDepth1(root, 'nameFound');
+                console.log(maxNodeName)
+
+                function isDescendantOfFirstNodeAtDepthOne(node, maxNodeName){
+                    if (node.data.name === maxNodeName){
+                        // console.log('yes')
+                        return true
+                    }
+                    else{
+                        // console.log('no')
+                    }
+                    let parent = node.parent
+                    while (parent){
+                        if (parent.data.name === maxNodeName){
+                            // console.log(parent.data.name)
+                            return true
+                        }
+                        parent = parent.parent
+                    }
+                    return false
+                }
+
+
+                function sortHierarchy(node, maxNodeName) {
+                    // console.log(maxNodeName)
+                    if (node.children) {               
+                        // if (node.depth >= 1){
+                            // if (isDescendantOfFirstNodeAtDepthOne(node, maxNodeName)){
+                            //     node.children.sort((a, b) => a.nameFound - b.nameFound);
+                            // }
+                            // else{
+                        //         node.children.sort((a, b) => b.nameFound - a.nameFound);
+                        //     }
+                        // }
+                        // else{
+                        node.children.sort((a, b) => b.nameFound - a.nameFound);
+                        // }
+                        node.children.forEach(child => sortHierarchy(child, maxNodeName));
+                    }
+                }
+
+                sortHierarchy(root, maxNodeName);
+                console.log(root)
     
     
                 root.each(function(d) {
