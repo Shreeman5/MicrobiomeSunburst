@@ -1,8 +1,20 @@
 let files = [
-    "JSONswithStandardRanks/MergedJSONfile/merged_tree.json",
+    // "JSONswithStandardRanks/MergedJSONfile/merged_tree.json",
+    "JSONswithStandardRanks/MergedJSONfile/taxonomy.json",
+
 
     "JSONswithStandardRanks/BetterIndivJSONfiles/Jim_Walsh_before.json",
     "JSONswithStandardRanks/BetterIndivJSONfiles/Jim_Walsh_after.json",
+
+    "JSONswithStandardRanks/BetterIndivJSONfiles/Rainey_Dunham_1.json",
+    "JSONswithStandardRanks/BetterIndivJSONfiles/Maclay_Ramsey_1.json",
+    "JSONswithStandardRanks/BetterIndivJSONfiles/Leo_Grady_2.json",
+    "JSONswithStandardRanks/BetterIndivJSONfiles/Leo_Grady_1.json",
+    "JSONswithStandardRanks/BetterIndivJSONfiles/Jill_Sue_1.json",
+    "JSONswithStandardRanks/BetterIndivJSONfiles/Jaclyn_Kawwas_1.json",
+    "JSONswithStandardRanks/BetterIndivJSONfiles/Audra_Walker_1.json",
+
+
 
     "JSONswithStandardRanks/BetterIndivJSONfiles/SRR1215593_Crohn's Disease.json", 
     "JSONswithStandardRanks/BetterIndivJSONfiles/SRR5936079_Crohn's Disease.json",
@@ -23,7 +35,6 @@ let files = [
     "JSONswithStandardRanks/BetterIndivJSONfiles/SRR341621_Healthy.json",  
     "JSONswithStandardRanks/BetterIndivJSONfiles/SRR6474217_Healthy.json",
     "JSONswithStandardRanks/BetterIndivJSONfiles/SRR6474279_Healthy.json",
-
 
 
     "JSONswithStandardRanks/BetterIndivJSONfiles/ERR478985_Bowel Cancer.json",
@@ -154,66 +165,30 @@ function innerRadius(d, index, checkedLevels){
     if (checkedLevels.length === 0){
         return 0
     }
-    // return d.y0
 }
 
 
 function outerRadius(d, index, csvData, checkedLevels){
-    // let nameContainsAnyValue = csvData.find(element => {
-    //     return d.data.name.includes(element['organism']) && d.data.name.includes(element['ncbi_taxon_id'])
-    // });
-    // // console.log(csvData)
-    // if (nameContainsAnyValue !== undefined){
-    //     if (nameContainsAnyValue['feature'] === 'value'){
-    //         if (d.data.hasOwnProperty('value')){
-    //             return index === 0 ? 750 : 575
-    //         }
-    //     }
-    //     else{
-    //         return index === 0 ? 750 : 575
-    //     }
-    // }
     if (checkedLevels.length === 7){
         if (d.depth === 7){
-            // if (!d.hasOwnProperty('children')){
-            //     return 750/575
-            // }
             return index === 0 ? 690 : 530
         }
         if (d.depth === 6){
-            // if (!d.hasOwnProperty('children')){
-            //     return 750/575
-            // }
             return index === 0 ? 620 : 480
         }
         if (d.depth === 5){
-            // if (!d.hasOwnProperty('children')){
-            //     return 750/575
-            // }
             return index === 0 ? 550 : 430
         }
         if (d.depth === 4){
-            // if (!d.hasOwnProperty('children')){
-            //     return 750/575
-            // }
             return index === 0 ? 480 : 380
         }
         if (d.depth === 3){
-            // if (!d.hasOwnProperty('children')){
-            //     return 750/575
-            // }
             return index === 0 ? 400 : 330
         }
         else if (d.depth === 2){
-            // if (!d.hasOwnProperty('children')){
-            //     return 750/575
-            // }
             return index === 0 ? 320 : 280
         }
         else if (d.depth === 1){
-            // if (!d.hasOwnProperty('children')){
-            //     return 750/575
-            // }
             return index === 0 ? 230 : 230
         }
     }
@@ -295,27 +270,9 @@ function outerRadius(d, index, csvData, checkedLevels){
     if (checkedLevels.length === 0){
         return 0
     }
-    // return d.y1
 }
 
 
-function findNodeValueByName(node, name) {
-    // console.log(node)
-    if (node.data.name === name) {
-        return node.value;
-    }
-
-    // If the node has children, recursively search them
-    if (node.children) {
-        for (let child of node.children) {
-            const value = findNodeValueByName(child, name);
-            if (value !== undefined) {
-                return value;
-            }
-        }
-    }
-    return undefined;
-}
 
 
 function nameMapping(val){
@@ -348,33 +305,9 @@ function nameMapping(val){
 
 
 function handleMouseOver(event, fileIndex, p, givenDataRoot, nodeName, cdfContainerData) {
-    // console.log(cdfContainerData)
-    // console.log(event)
-    // console.log(fileIndex)
-    // console.log(p)
-    // console.log(givenDataRoot)
-    // console.log(nodeName)
-    // Code on how to highlight all martching arcs ----------------------------------------------------
 
-    // Get the ID of the hovered path
-    // const hoveredPathId = "path-" + p.data.name;
-    // // console.log('A:', hoveredPathId)
-
-    // // Select all paths with the same ID across all sunbursts
-    // d3.selectAll(".sunburst-path")
-    //     .filter(function(d) {
-    //         // Check if the current path is the hovered path or one of its descendants
-    //         // + ", Index: " + index
-    //         // console.log("B: ", this.id)
-    //         return this.id === hoveredPathId 
-    //         // || d.ancestors().some(ancestor => ancestor.data.name === p.data.name);
-    //     })
-    //     .style("stroke", "black")
-    //     .style("stroke-width", 5);
-
-    //--------------------------------------------------------------------------------------------------
-
-    const hoveredPathId = "path-" + p.data.name;
+    const hoveredPathId = "path-" + p.data.name + '-' + fileIndex
+    // console.log(hoveredPathId)
 
     // // Reset the style of all paths
     d3.selectAll(".sunburst-path")
@@ -387,140 +320,65 @@ function handleMouseOver(event, fileIndex, p, givenDataRoot, nodeName, cdfContai
             return this.id === hoveredPathId;
         })
         .style("stroke", "black")
-        .style("stroke-width", 5);
+        .style("stroke-width", 3);
     
+    let myVar = p.data.name
+    let myNames = myVar.split("__")
+    let index = myVar.indexOf("_")
+    let substringBeforeUnderscore = ''
+    if (index !== -1) {
+        substringBeforeUnderscore = nameMapping(myVar.substring(0, index));
+    } 
 
-
-    if (p.hasOwnProperty('children')){
-
-        
-        // console.log(p)
-        let myVal
-        if (fileIndex === 0){
-            myVal = (p.value * 100/ 17).toFixed(6) + '%'
-        }
-        else{
-            myVal = findNodeValueByName(givenDataRoot, nodeName)
-            // console.log('A:', myVal)
-            if (fileIndex === 14){
-                console.log(givenDataRoot)
-            }
-            if (myVal === undefined){
-                myVal = 0 + '%'
-            }
-            else{
-                myVal = (myVal * 100).toFixed(6) + '%'
-            }
-        }
-        // console.log(myVal)
-        // let agVal = (p.value).toFixed(6)
-        let myVar = p.data.name
-        let myNames = myVar.split("__")
-        let index = myVar.indexOf("_")
-        let substringBeforeUnderscore = ''
-        if (index !== -1) {
-            substringBeforeUnderscore = nameMapping(myVar.substring(0, index));
-        } 
-
-        let lastIndex = nodeName.lastIndexOf('__')
-        let taxonID = nodeName.substring(lastIndex + 2)
-        let cdf = findTaxonCDFbyID(cdfContainerData, taxonID)
-        // console.log(typeof cdf)
-        if (cdf === null){
-            cdf = 'N/A'
-        }
-        else{
-            cdf = (parseFloat(cdf) * 100).toFixed(3) + '%'
-        }
-        // console.log(cdf)
-
-
-
-        let mytext 
-        if (fileIndex === 0){
-            mytext = 'Name : ' + myNames[1] + "<br>" +
-            // 'Aggregated Abundance[Across 17 datasets] : ' + agVal + "<br>" +
-            'Average of Relative Abundance[Across 17 datasets] : ' + myVal+ "<br>" + 
-            'Rank : ' + substringBeforeUnderscore + "<br>" +
-            'NCBI Taxon ID: ' + myNames[2] + "<br>"
-        }
-        else{
-            mytext = 'Name : ' + myNames[1] + "<br>" +
-            // 'Aggregated Abundance[Across 17 datasets] : ' + agVal + "<br>" +
-            'Relative Abundance in this dataset : ' + myVal+ "<br>" + 
-            'Percentile Value : ' + cdf + "<br>" +
-            'Rank : ' + substringBeforeUnderscore + "<br>" +
-            'NCBI Taxon ID: ' + myNames[2] + "<br>"
-        }
-
-        tooltip.innerHTML = mytext
-        tooltip.style.left = `${event.pageX + 5}px`; // Position tooltip next to the mouse pointer
-        tooltip.style.top = `${event.pageY + 5}px`;
-        tooltip.style.visibility = 'visible';
+    let lastIndex = nodeName.lastIndexOf('__')
+    let taxonID = nodeName.substring(lastIndex + 2)
+    let cdf = findTaxonCDFbyID(cdfContainerData, taxonID)
+    if (cdf === null){
+        cdf = 'N/A'
     }
     else{
-        // const tooltip = document.getElementById('tooltip');
-        let myVal
-        if (fileIndex === 0){
-            myVal = (p.value * 100/ 17).toFixed(6) + '%'
-        }
-        else{
-            myVal = findNodeValueByName(givenDataRoot, nodeName)
-            // console.log('B:', myVal)
-            if (myVal === undefined){
-                myVal = 0 + '%'
-            }
-            else{
-                myVal = (myVal * 100).toFixed(6) + '%'
-            }
-        }
-        // let agVal = (p.value).toFixed(6)
-        let lastIndex = nodeName.lastIndexOf('?')
-        let taxonID = nodeName.substring(lastIndex + 1)
-        let cdf = findTaxonCDFbyID(cdfContainerData, taxonID)
-        // console.log(cdf)
-        if (cdf === null){
-            cdf = 'N/A'
-        }
-        else{
-            cdf = (parseFloat(cdf) * 100).toFixed(3) + '%'
-        }
-
-        let myVar = p.data.name
-        let myNames = myVar.split('?')
-
-
-
-
-        let mytext 
-        if (fileIndex === 0){
-            mytext = 'Name : ' + myNames[0] + "<br>" +
-            'Percentage Abundance[Across 17 datasets] : ' + myVal+ "<br>" + 
-            'Rank : ' + myNames[1]+ "<br>" +
-            'NCBI Taxon ID: ' + myNames[2] + "<br>"
-        }
-        else{
-            mytext = 'Name : ' + myNames[0] + "<br>" +
-            'Relative Abundance in this dataset: ' + myVal+ "<br>" + 
-            'Percentile Value : ' + cdf + "<br>" +
-            'Rank : ' + myNames[1]+ "<br>" +
-            'NCBI Taxon ID: ' + myNames[2] + "<br>"
-        }
-
-        tooltip.innerHTML = mytext
-        tooltip.style.left = `${event.pageX + 5}px`; // Position tooltip next to the mouse pointer
-        tooltip.style.top = `${event.pageY + 5}px`;
-        tooltip.style.visibility = 'visible';
+        cdf = (parseFloat(cdf) * 100).toFixed(3) + '%'
     }
+
+    let myVal
+    if (fileIndex === 0){
+        myVal = (p.value * 100/ 17).toFixed(6) + '%'
+    }
+    else{
+        myVal = findNodeValueByName(cdfContainerData, taxonID)
+        if (myVal === undefined){
+            myVal = 0 + '%'
+        }
+        else{
+            myVal = (myVal * 100).toFixed(6) + '%'
+        }
+    }
+
+
+    let mytext 
+    if (fileIndex === 0){
+        mytext = 'Name : ' + myNames[1] + "<br>" +
+        'Average of Relative Abundance[Across 17 datasets] : ' + myVal+ "<br>" + 
+        'Rank : ' + substringBeforeUnderscore + "<br>" +
+        'NCBI Taxon ID: ' + myNames[2] + "<br>"
+    }
+    else{
+        mytext = 'Name : ' + myNames[1] + "<br>" +
+        'Relative Abundance in this dataset : ' + myVal+ "<br>" + 
+        'Percentile Value : ' + cdf + "<br>" +
+        'Rank : ' + substringBeforeUnderscore + "<br>" +
+        'NCBI Taxon ID: ' + myNames[2] + "<br>"
+    }
+
+    tooltip.innerHTML = mytext
+    tooltip.style.left = `${event.pageX + 5}px`;
+    tooltip.style.top = `${event.pageY + 5}px`;
+    tooltip.style.visibility = 'visible';
 }
 
 
 // Function to handle mouseout event
 function mouseout(event, p) {
-    // Get the ID of the hovered path
-    // const hoveredPathId = "path-" + p.data.name;
-
-    // Select all paths with the same ID across all sunbursts
     d3.selectAll(".sunburst-path").each(function(d, i) {
             var element = d3.select(this);
             element.style("stroke", element.attr("original-stroke"));
@@ -539,16 +397,15 @@ function findTaxonCDFbyID(dataArray, taxonId) {
     return element ? element.CDF : null; // Return the taxon_rank_level if found, else return null
 }
 
+
+function findNodeValueByName(dataArray, taxonId) {
+    const element = dataArray.find(item => item.ncbi_taxon_id === taxonId);
+    return element ? element.relative_abundance : null; // Return the taxon_rank_level if found, else return null
+}
+
 function findTaxonWeightbyID(dataArray, taxonId){
-    // console.log(typeof taxonId)
-    // console.log(dataArray)
-    // console.log(taxonId)
-    // const element = dataArray.find(item => item.ncbi_taxon_id === taxonId)
-    // console.log(element)
-    // return element ? element.weight : null
     for (let obj of dataArray) {
         if (obj.ncbi_taxon_id === taxonId) {
-            // console.log('yes')
             return obj.weight;
         }
     }
@@ -556,9 +413,7 @@ function findTaxonWeightbyID(dataArray, taxonId){
 }
 
 function findTaxonRAbyID(dataArray, taxonId){
-    // console.log(dataArray)
     const element = dataArray.find(item => item.ncbi_taxon_id === taxonId);
-    // console.log(element)
     return element ? element.relative_abundance : 0; // Return the taxon_rank_level if found, else return null
 }
 
@@ -577,7 +432,6 @@ function rendering(sliderMin, sliderMax, indicatorValue){
 
         if (indicatorValue !== 'ao'){
             if (indicatorValue === 'dio'){
-                // myFile = 'DiarrheaIndicators'
                 for (const row in csvData){
                     if (csvData[row].Name === 'Diarrhea'){
                         myRow = csvData[row]
@@ -585,7 +439,6 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                 }
             }
             else if (indicatorValue === 'cio'){
-                // myFile = 'CrohnIndicators'
                 for (const row in csvData){
                     if (csvData[row].Name === 'Crohn Disease'){
                         myRow = csvData[row]
@@ -593,7 +446,6 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                 }
             }
             else if (indicatorValue === 'bcio'){
-                // myFile = 'CrohnIndicators'
                 for (const row in csvData){
                     if (csvData[row].Name === 'Colorectal Neoplasms'){
                         myRow = csvData[row]
@@ -601,7 +453,6 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                 }
             }
             else if (indicatorValue === 'pio'){
-                // myFile = 'CrohnIndicators'
                 for (const row in csvData){
                     if (csvData[row].Name === 'Parkinson Disease'){
                         myRow = csvData[row]
@@ -609,7 +460,6 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                 }
             }
             else if (indicatorValue === 'lcio'){
-                // myFile = 'CrohnIndicators'
                 for (const row in csvData){
                     if (csvData[row].Name === 'Liver Cirrhosis'){
                         myRow = csvData[row]
@@ -620,7 +470,6 @@ function rendering(sliderMin, sliderMax, indicatorValue){
             // Function to transform the data object
             function transformObject(obj) {
                 const transformedObjects = [];
-                // Loop through keys starting from 'C'
                 Object.keys(obj).forEach((key, index) => {
                     if (index > 1){
                         let value = obj[key]
@@ -651,10 +500,9 @@ function rendering(sliderMin, sliderMax, indicatorValue){
             
             transformedData = transformObject(myRow);
         }
-        console.log(transformedData)
         
         
-        for (let i = 0; i < files.length - 32; i++) {
+        for (let i = 0; i < files.length - 39; i++) {
             // Using an IIFE (Immediately Invoked Function Expression) to create a closure
             await (async function(index) {
                 let data = await d3.json(files[index]);
@@ -682,7 +530,9 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                     '.svg-container-25', '.svg-container-26', '.svg-container-27',
                     '.svg-container-28', '.svg-container-29', '.svg-container-30',
                     '.svg-container-31', '.svg-container-32', '.svg-container-33',
-                    '.svg-container-34', '.svg-container-35'
+                    '.svg-container-34', '.svg-container-35', '.svg-container-36',
+                    '.svg-container-37', '.svg-container-38', '.svg-container-39',
+                    '.svg-container-40', '.svg-container-41', '.svg-container-42',
                 ];
     
                 // console.log('D:', data)
@@ -807,7 +657,7 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                             .attr("x1", "0%")
                             .attr("y1", "0%")
                             .attr("x2", "100%")
-                            .attr("y2", "100%");
+                            .attr("y2", "0%");
 
                         gradient.append("stop")
                             .attr("offset", "0%")
@@ -827,7 +677,7 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                         .attr("height", 100) // height of the rectangle
                         .attr("fill", "url(#gradient)") // fill color of the rectangle using the gradient
                         .attr("stroke", "black")
-                        .attr("stroke-width", "3")
+                        .attr("stroke-width", "1")
 
                         svg.append("text")
                         .attr("x", 82)
@@ -860,7 +710,7 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                             .attr("height", 100) // height of the rectangle
                             .attr("fill", "purple") // fill color of the rectangle using the gradient
                             .attr("stroke", "black")
-                        .attr("stroke-width", "3")
+                        .attr("stroke-width", "1")
 
                         svg.append("text")
                         .attr("x", 82)
@@ -892,7 +742,7 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                             .attr("x1", "0%")
                             .attr("y1", "0%")
                             .attr("x2", "100%")
-                            .attr("y2", "100%");
+                            .attr("y2", "0%");
     
                         gradient3.append("stop")
                                 .attr("offset", "0%")
@@ -912,7 +762,7 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                             .attr("height", 100) // height of the rectangle
                             .attr("fill", "url(#gradient3)") // fill color of the rectangle using the gradient
                             .attr("stroke", "black")
-                            .attr("stroke-width", "3")
+                            .attr("stroke-width", "1")
 
                         svg.append("text")
                             .attr("x", 82)
@@ -945,7 +795,7 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                             .attr("height", 100) // height of the rectangle
                             .attr("fill", "white") // fill color of the rectangle using the gradient
                             .attr("stroke", "black")
-                            .attr("stroke-width", "3")
+                            .attr("stroke-width", "1")
 
                         svg.append("text")
                             .attr("x", 72)
@@ -979,6 +829,7 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                 else{
                     hierarchy = d3.hierarchy(mainData)
                     .sum(function(d) { 
+                        // console.log(d.value)
                         return d.value; 
                     })
                     .sort(function(a, b) { return b.value - a.value; });
@@ -987,17 +838,22 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                 }
     
                 let root = partition(hierarchy);
+                console.log(root)
     
-                function calculateLeafDescendantsAndNames(node, namesArray) {
+                function calculateLeafDescendantsAndNames(node, namesArray, namesArray2, namesArray3, namesArray4) {
                     if (!node.children || node.children.length === 0) {
                         node.totalLeafDescendants = 1; // Leaf node has 1 leaf descendant (itself)
 
                         let myVal = node.data.name
                         let myNames = myVal.split('?')
                         node.nameFound = namesArray.includes(myNames[2]) ? 1 : 0; // Check if the leaf node's name is in the names array
-                    } else {
+                        // node.positiveInd = namesArray2.includes(myNames[2]) ? 1 : 0; // Check if the leaf node's name is in the names array
+                        // node.negativeInd = namesArray3.includes(myNames[2]) ? 1 : 0; // Check if the leaf node's name is in the names array
+                        node.nameFoundTotal = (foundObject = namesArray4.find(obj => obj.hasOwnProperty(myNames[2]))) ? foundObject[myNames[2]] : 0
+                    } 
+                    else {
                         node.totalLeafDescendants = node.children.reduce(function(sum, child) {
-                            return sum + calculateLeafDescendantsAndNames(child, namesArray);
+                            return sum + calculateLeafDescendantsAndNames(child, namesArray, namesArray2, namesArray3, namesArray4);
                         }, 0);
 
                         let myVal = node.data.name
@@ -1005,12 +861,26 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                         node.nameFound = node.children.reduce(function(sum, child) {
                             return sum + child.nameFound;
                         }, namesArray.includes(myNames[2]) ? 1 : 0); // Add 1 if the node's own name is in the names array
+                        // node.positiveInd = node.children.reduce(function(sum, child) {
+                        //     return sum + child.positiveInd;
+                        // }, namesArray2.includes(myNames[2]) ? 1 : 0); // Add 1 if the node's own name is in the names array
+                        // node.negativeInd = node.children.reduce(function(sum, child) {
+                        //     return sum + child.negativeInd;
+                        // }, namesArray3.includes(myNames[2]) ? 1 : 0); // Add 1 if the node's own name is in the names array
+                        node.nameFoundTotal = node.children.reduce(function(sum, child) {
+                            return sum + child.nameFoundTotal;
+                        }, (foundObject = namesArray4.find(obj => obj.hasOwnProperty(myNames[2]))) ? foundObject[myNames[2]] : 0); // Add 1 if the node's own name is in the names array
                     }
                     return node.totalLeafDescendants;
                 }
     
                 // Calculate leaf descendants for each node starting from the root
                 let myArray = []
+                let myArray2 = []
+                let myArray3 = []
+                let myArray4 = []
+
+
                 for (let i = 0; i < csvData.length; i++) {
                     const obj = csvData[i];
                     for (const key in obj) {
@@ -1022,17 +892,48 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                             const firstCloseBracketIndex = myVal.indexOf('[')
                             const firstOpenParenIndex = myVal.indexOf(']');
                             const result = myVal.substring(firstCloseBracketIndex+1, firstOpenParenIndex).trim();
+
+                            let match3 = myVal.match(/\((-?\d+(?:\.\d+)?)\)/);
+                            let number2 = match3 ? match3[1] : null;
+                            
                             
                             if (result !== ''){
                                 let bool = /^\d+$/.test(result);
                                 if (bool){
                                     // let myNumber = parseInt(result)
                                     if (myArray.includes(result)){
-
+                                        for (let obj of myArray4) {
+                                            if (obj.hasOwnProperty(result)){
+                                                obj[result] += 1
+                                            }
+                                        }
                                     }
                                     else{
                                         myArray.push(result)
+                                        if (parseFloat(number2) > 0){
+                                            myArray2.push(result)
+                                        }
+                                        else if (parseFloat(number2) < 0){
+                                            myArray3.push(result)
+                                        }
+                                        if (parseFloat(number2) === 0){
+                                            if (number2.length === 3){
+                                                myArray2.push(result)
+                                            }
+                                            else if (number2.length === 4){
+                                                myArray3.push(result)
+                                            }
+                                            // console.log(number2.length)
+                                        }
+                                        let keyValuePair = {}
+                                        keyValuePair[result] = 1
+                                        myArray4.push(keyValuePair)
                                     }
+
+                                    
+                                    // else{
+                                    //     console.log('no')
+                                    // }
                                 }
                                 else{
                                     // console.log(myVal)
@@ -1040,236 +941,879 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                                     const firstStop = myVal.indexOf(']')
                                     const secondStop = myVal.indexOf('(');
                                     const result2 = myVal.substring(firstStop+1, secondStop).trim();
+
+                                    let match3 = myVal.match(/\((-?\d+(?:\.\d+)?)\)/);
+                                    let number2 = match3 ? match3[1] : null;
+
+
                                     if (result2 === 'Shigella'){
                                         if (myArray.includes('620')){
-
+                                            for (let obj of myArray4) {
+                                                if (obj.hasOwnProperty('620')){
+                                                    obj['620'] += 1
+                                                }
+                                            }
                                         }
                                         else{
                                             myArray.push('620')
+                                            if (parseFloat(number2) > 0){
+                                                myArray2.push('620')
+                                            }
+                                            else if (parseFloat(number2) < 0){
+                                                myArray3.push('620')
+                                            }
+                                            if (parseFloat(number2) === 0){
+                                                if (number2.length === 3){
+                                                    myArray2.push('620')
+                                                }
+                                                else if (number2.length === 4){
+                                                    myArray3.push('620')
+                                                }
+                                                // console.log(number2.length)
+                                            }
+                                            let keyValuePair = {}
+                                            keyValuePair['620'] = 1
+                                            myArray4.push(keyValuePair)
                                         }
                                     }
                                     else if (result2 === 'Akkermansia muciniphila'){
                                         if (myArray.includes('239935')){
-
+                                            for (let obj of myArray4) {
+                                                if (obj.hasOwnProperty('239935')){
+                                                    obj['239935'] += 1
+                                                }
+                                            }
                                         }
                                         else{
                                             myArray.push('239935')
+                                            if (parseFloat(number2) > 0){
+                                                myArray2.push('239935')
+                                            }
+                                            else if (parseFloat(number2) < 0){
+                                                myArray3.push('239935')
+                                            }
+                                            if (parseFloat(number2) === 0){
+                                                if (number2.length === 3){
+                                                    myArray2.push('239935')
+                                                }
+                                                else if (number2.length === 4){
+                                                    myArray3.push('239935')
+                                                }
+                                                // console.log(number2.length)
+                                            }
+                                            let keyValuePair = {}
+                                            keyValuePair['239935'] = 1
+                                            myArray4.push(keyValuePair)
                                         }
                                     }
                                     else if (result2 === 'Bifidobacterium bifidum'){
                                         if (myArray.includes('1681')){
-
+                                            for (let obj of myArray4) {
+                                                if (obj.hasOwnProperty('1681')){
+                                                    obj['1681'] += 1
+                                                }
+                                            }
                                         }
                                         else{
                                             myArray.push('1681')
+                                            if (parseFloat(number2) > 0){
+                                                myArray2.push('1681')
+                                            }
+                                            else if (parseFloat(number2) < 0){
+                                                myArray3.push('1681')
+                                            }
+                                            if (parseFloat(number2) === 0){
+                                                if (number2.length === 3){
+                                                    myArray2.push('1681')
+                                                }
+                                                else if (number2.length === 4){
+                                                    myArray3.push('1681')
+                                                }
+                                                // console.log(number2.length)
+                                            }
+                                            let keyValuePair = {}
+                                            keyValuePair['1681'] = 1
+                                            myArray4.push(keyValuePair)
                                         }
                                     }
                                     else if (result2 === 'Bifidobacterium breve'){
                                         if (myArray.includes('1685')){
-
+                                            for (let obj of myArray4) {
+                                                if (obj.hasOwnProperty('1685')){
+                                                    obj['1685'] += 1
+                                                }
+                                            }
                                         }
                                         else{
                                             myArray.push('1685')
+                                            if (parseFloat(number2) > 0){
+                                                myArray2.push('1685')
+                                            }
+                                            else if (parseFloat(number2) < 0){
+                                                myArray3.push('1685')
+                                            }
+                                            if (parseFloat(number2) === 0){
+                                                if (number2.length === 3){
+                                                    myArray2.push('1685')
+                                                }
+                                                else if (number2.length === 4){
+                                                    myArray3.push('1685')
+                                                }
+                                                // console.log(number2.length)
+                                            }
+                                            let keyValuePair = {}
+                                            keyValuePair['1685'] = 1
+                                            myArray4.push(keyValuePair)
                                         }
                                     }
                                     else if (result2 === 'Bifidobacterium longum subsp. infantis'){
                                         if (myArray.includes('1682')){
-
+                                            for (let obj of myArray4) {
+                                                if (obj.hasOwnProperty('1682')){
+                                                    obj['1682'] += 1
+                                                }
+                                            }
                                         }
                                         else{
                                             myArray.push('1682')
+                                            if (parseFloat(number2) > 0){
+                                                myArray2.push('1682')
+                                            }
+                                            else if (parseFloat(number2) < 0){
+                                                myArray3.push('1682')
+                                            }
+                                            if (parseFloat(number2) === 0){
+                                                if (number2.length === 3){
+                                                    myArray2.push('1682')
+                                                }
+                                                else if (number2.length === 4){
+                                                    myArray3.push('1682')
+                                                }
+                                                // console.log(number2.length)
+                                            }
+                                            let keyValuePair = {}
+                                            keyValuePair['1682'] = 1
+                                            myArray4.push(keyValuePair)
                                         }
                                     }
                                     else if (result2 === 'Bifidobacterium longum'){
                                         if (myArray.includes('216816')){
-
+                                            for (let obj of myArray4) {
+                                                if (obj.hasOwnProperty('216816')){
+                                                    obj['216816'] += 1
+                                                }
+                                            }
                                         }
                                         else{
                                             myArray.push('216816')
+                                            if (parseFloat(number2) > 0){
+                                                myArray2.push('216816')
+                                            }
+                                            else if (parseFloat(number2) < 0){
+                                                myArray3.push('216816')
+                                            }
+                                            if (parseFloat(number2) === 0){
+                                                if (number2.length === 3){
+                                                    myArray2.push('216816')
+                                                }
+                                                else if (number2.length === 4){
+                                                    myArray3.push('216816')
+                                                }
+                                                // console.log(number2.length)
+                                            }
+                                            let keyValuePair = {}
+                                            keyValuePair['216816'] = 1
+                                            myArray4.push(keyValuePair)
                                         }
                                     }
                                     else if (result2 === 'Bifidobacterium animalis'){
                                         if (myArray.includes('28025')){
-
+                                            for (let obj of myArray4) {
+                                                if (obj.hasOwnProperty('28025')){
+                                                    obj['28025'] += 1
+                                                }
+                                            }
                                         }
                                         else{
                                             myArray.push('28025')
+                                            if (parseFloat(number2) > 0){
+                                                myArray2.push('28025')
+                                            }
+                                            else if (parseFloat(number2) < 0){
+                                                myArray3.push('28025')
+                                            }
+                                            if (parseFloat(number2) === 0){
+                                                if (number2.length === 3){
+                                                    myArray2.push('28025')
+                                                }
+                                                else if (number2.length === 4){
+                                                    myArray3.push('28025')
+                                                }
+                                                // console.log(number2.length)
+                                            }
+                                            let keyValuePair = {}
+                                            keyValuePair['28025'] = 1
+                                            myArray4.push(keyValuePair)
                                         }
                                     }
                                     else if (result2 === 'Lactobacillus acidophilus'){
                                         if (myArray.includes('1579')){
-
+                                            for (let obj of myArray4) {
+                                                if (obj.hasOwnProperty('1579')){
+                                                    obj['1579'] += 1
+                                                }
+                                            }
                                         }
                                         else{
                                             myArray.push('1579')
+                                            if (parseFloat(number2) > 0){
+                                                myArray2.push('1579')
+                                            }
+                                            else if (parseFloat(number2) < 0){
+                                                myArray3.push('1579')
+                                            }
+                                            if (parseFloat(number2) === 0){
+                                                if (number2.length === 3){
+                                                    myArray2.push('1579')
+                                                }
+                                                else if (number2.length === 4){
+                                                    myArray3.push('1579')
+                                                }
+                                                // console.log(number2.length)
+                                            }
+                                            let keyValuePair = {}
+                                            keyValuePair['1579'] = 1
+                                            myArray4.push(keyValuePair)
                                         }
                                     }
                                     else if (result2 === 'Levilactobacillus brevis'){
                                         if (myArray.includes('1580')){
-
+                                            for (let obj of myArray4) {
+                                                if (obj.hasOwnProperty('1580')){
+                                                    obj['1580'] += 1
+                                                }
+                                            }
                                         }
                                         else{
                                             myArray.push('1580')
+                                            if (parseFloat(number2) > 0){
+                                                myArray2.push('1580')
+                                            }
+                                            else if (parseFloat(number2) < 0){
+                                                myArray3.push('1580')
+                                            }
+                                            if (parseFloat(number2) === 0){
+                                                if (number2.length === 3){
+                                                    myArray2.push('1580')
+                                                }
+                                                else if (number2.length === 4){
+                                                    myArray3.push('1580')
+                                                }
+                                                // console.log(number2.length)
+                                            }
+                                            let keyValuePair = {}
+                                            keyValuePair['1580'] = 1
+                                            myArray4.push(keyValuePair)
                                         }
                                     }
                                     else if (result2 === 'Pediococcus acidilactici'){
                                         if (myArray.includes('1254')){
-
+                                            for (let obj of myArray4) {
+                                                if (obj.hasOwnProperty('1254')){
+                                                    obj['1254'] += 1
+                                                }
+                                            }
                                         }
                                         else{
                                             myArray.push('1254')
+                                            if (parseFloat(number2) > 0){
+                                                myArray2.push('1254')
+                                            }
+                                            else if (parseFloat(number2) < 0){
+                                                myArray3.push('1254')
+                                            }
+                                            if (parseFloat(number2) === 0){
+                                                if (number2.length === 3){
+                                                    myArray2.push('1254')
+                                                }
+                                                else if (number2.length === 4){
+                                                    myArray3.push('1254')
+                                                }
+                                                // console.log(number2.length)
+                                            }
+                                            let keyValuePair = {}
+                                            keyValuePair['1254'] = 1
+                                            myArray4.push(keyValuePair)
                                         }
                                     }
                                     else if (result2 === 'Bifidobacterium animalis subsp. lactis Bl-04'){
                                         if (myArray.includes('580050')){
-
+                                            for (let obj of myArray4) {
+                                                if (obj.hasOwnProperty('580050')){
+                                                    obj['580050'] += 1
+                                                }
+                                            }
                                         }
                                         else{
                                             myArray.push('580050')
+                                            if (parseFloat(number2) > 0){
+                                                myArray2.push('580050')
+                                            }
+                                            else if (parseFloat(number2) < 0){
+                                                myArray3.push('580050')
+                                            }
+                                            if (parseFloat(number2) === 0){
+                                                if (number2.length === 3){
+                                                    myArray2.push('580050')
+                                                }
+                                                else if (number2.length === 4){
+                                                    myArray3.push('580050')
+                                                }
+                                                // console.log(number2.length)
+                                            }
+                                            let keyValuePair = {}
+                                            keyValuePair['580050'] = 1
+                                            myArray4.push(keyValuePair)
                                         }
                                     }
                                     else if (result2 === 'Ligilactobacillus salivarius'){
                                         if (myArray.includes('1624')){
-
+                                            for (let obj of myArray4) {
+                                                if (obj.hasOwnProperty('1624')){
+                                                    obj['1624'] += 1
+                                                }
+                                            }
                                         }
                                         else{
                                             myArray.push('1624')
+                                            if (parseFloat(number2) > 0){
+                                                myArray2.push('1624')
+                                            }
+                                            else if (parseFloat(number2) < 0){
+                                                myArray3.push('1624')
+                                            }
+                                            if (parseFloat(number2) === 0){
+                                                if (number2.length === 3){
+                                                    myArray2.push('1624')
+                                                }
+                                                else if (number2.length === 4){
+                                                    myArray3.push('1624')
+                                                }
+                                                // console.log(number2.length)
+                                            }
+                                            let keyValuePair = {}
+                                            keyValuePair['1624'] = 1
+                                            myArray4.push(keyValuePair)
                                         }
                                     }
                                     else if (result2 === 'Streptococcus salivarius'){
                                         if (myArray.includes('1304')){
-
+                                            for (let obj of myArray4) {
+                                                if (obj.hasOwnProperty('1304')){
+                                                    obj['1304'] += 1
+                                                }
+                                            }
                                         }
                                         else{
                                             myArray.push('1304')
+                                            if (parseFloat(number2) > 0){
+                                                myArray2.push('1304')
+                                            }
+                                            else if (parseFloat(number2) < 0){
+                                                myArray3.push('1304')
+                                            }
+                                            if (parseFloat(number2) === 0){
+                                                if (number2.length === 3){
+                                                    myArray2.push('1304')
+                                                }
+                                                else if (number2.length === 4){
+                                                    myArray3.push('1304')
+                                                }
+                                                // console.log(number2.length)
+                                            }
+                                            let keyValuePair = {}
+                                            keyValuePair['1304'] = 1
+                                            myArray4.push(keyValuePair)
                                         }
                                     }
                                     else if (result2 === 'Campylobacter'){
                                         if (myArray.includes('194')){
-
+                                            for (let obj of myArray4) {
+                                                if (obj.hasOwnProperty('194')){
+                                                    obj['194'] += 1
+                                                }
+                                            }
                                         }
                                         else{
                                             myArray.push('194')
+                                            if (parseFloat(number2) > 0){
+                                                myArray2.push('194')
+                                            }
+                                            else if (parseFloat(number2) < 0){
+                                                myArray3.push('194')
+                                            }
+                                            if (parseFloat(number2) === 0){
+                                                if (number2.length === 3){
+                                                    myArray2.push('194')
+                                                }
+                                                else if (number2.length === 4){
+                                                    myArray3.push('194')
+                                                }
+                                                // console.log(number2.length)
+                                            }
+                                            let keyValuePair = {}
+                                            keyValuePair['194'] = 1
+                                            myArray4.push(keyValuePair)
                                         }
                                     }
                                     else if (result2 === 'Clostridioides difficile'){
                                         if (myArray.includes('1496')){
-
+                                            for (let obj of myArray4) {
+                                                if (obj.hasOwnProperty('1496')){
+                                                    obj['1496'] += 1
+                                                }
+                                            }
                                         }
                                         else{
                                             myArray.push('1496')
+                                            if (parseFloat(number2) > 0){
+                                                myArray2.push('1496')
+                                            }
+                                            else if (parseFloat(number2) < 0){
+                                                myArray3.push('1496')
+                                            }
+                                            if (parseFloat(number2) === 0){
+                                                if (number2.length === 3){
+                                                    myArray2.push('1496')
+                                                }
+                                                else if (number2.length === 4){
+                                                    myArray3.push('1496')
+                                                }
+                                                // console.log(number2.length)
+                                            }
+                                            let keyValuePair = {}
+                                            keyValuePair['1496'] = 1
+                                            myArray4.push(keyValuePair)
                                         }
                                     }
                                     else if (result2 === 'Latilactobacillus sakei'){
                                         if (myArray.includes('1599')){
-
+                                            for (let obj of myArray4) {
+                                                if (obj.hasOwnProperty('1599')){
+                                                    obj['1599'] += 1
+                                                }
+                                            }
                                         }
                                         else{
                                             myArray.push('1599')
+                                            if (parseFloat(number2) > 0){
+                                                myArray2.push('1599')
+                                            }
+                                            else if (parseFloat(number2) < 0){
+                                                myArray3.push('1599')
+                                            }
+                                            if (parseFloat(number2) === 0){
+                                                if (number2.length === 3){
+                                                    myArray2.push('1599')
+                                                }
+                                                else if (number2.length === 4){
+                                                    myArray3.push('1599')
+                                                }
+                                                // console.log(number2.length)
+                                            }
+                                            let keyValuePair = {}
+                                            keyValuePair['1599'] = 1
+                                            myArray4.push(keyValuePair)
                                         }
                                     }
                                     else if (result2 === 'Lactobacillus gasseri'){
                                         if (myArray.includes('1596')){
-
+                                            for (let obj of myArray4) {
+                                                if (obj.hasOwnProperty('1596')){
+                                                    obj['1596'] += 1
+                                                }
+                                            }
                                         }
                                         else{
                                             myArray.push('1596')
+                                            if (parseFloat(number2) > 0){
+                                                myArray2.push('1596')
+                                            }
+                                            else if (parseFloat(number2) < 0){
+                                                myArray3.push('1596')
+                                            }
+                                            if (parseFloat(number2) === 0){
+                                                if (number2.length === 3){
+                                                    myArray2.push('1596')
+                                                }
+                                                else if (number2.length === 4){
+                                                    myArray3.push('1596')
+                                                }
+                                                // console.log(number2.length)
+                                            }
+                                            let keyValuePair = {}
+                                            keyValuePair['1596'] = 1
+                                            myArray4.push(keyValuePair)
                                         }
                                     }
                                     else if (result2 === 'Klebsiella oxytoca'){
                                         if (myArray.includes('571')){
-
+                                            for (let obj of myArray4) {
+                                                if (obj.hasOwnProperty('571')){
+                                                    obj['571'] += 1
+                                                }
+                                            }
                                         }
                                         else{
                                             myArray.push('571')
+                                            if (parseFloat(number2) > 0){
+                                                myArray2.push('571')
+                                            }
+                                            else if (parseFloat(number2) < 0){
+                                                myArray3.push('571')
+                                            }
+                                            if (parseFloat(number2) === 0){
+                                                if (number2.length === 3){
+                                                    myArray2.push('571')
+                                                }
+                                                else if (number2.length === 4){
+                                                    myArray3.push('571')
+                                                }
+                                                // console.log(number2.length)
+                                            }
+                                            let keyValuePair = {}
+                                            keyValuePair['571'] = 1
+                                            myArray4.push(keyValuePair)
                                         }
                                     }
                                     else if (result2 === 'Lacticaseibacillus paracasei'){
                                         if (myArray.includes('1597')){
-
+                                            for (let obj of myArray4) {
+                                                if (obj.hasOwnProperty('1597')){
+                                                    obj['1597'] += 1
+                                                }
+                                            }
                                         }
                                         else{
                                             myArray.push('1597')
+                                            if (parseFloat(number2) > 0){
+                                                myArray2.push('1597')
+                                            }
+                                            else if (parseFloat(number2) < 0){
+                                                myArray3.push('1597')
+                                            }
+                                            if (parseFloat(number2) === 0){
+                                                if (number2.length === 3){
+                                                    myArray2.push('1597')
+                                                }
+                                                else if (number2.length === 4){
+                                                    myArray3.push('1597')
+                                                }
+                                                // console.log(number2.length)
+                                            }
+                                            let keyValuePair = {}
+                                            keyValuePair['1597'] = 1
+                                            myArray4.push(keyValuePair)
                                         }
                                     }
                                     else if (result2 === 'Lactiplantibacillus plantarum'){
                                         if (myArray.includes('1590')){
-
+                                            for (let obj of myArray4) {
+                                                if (obj.hasOwnProperty('1590')){
+                                                    obj['1590'] += 1
+                                                }
+                                            }
                                         }
                                         else{
                                             myArray.push('1590')
+                                            if (parseFloat(number2) > 0){
+                                                myArray2.push('1590')
+                                            }
+                                            else if (parseFloat(number2) < 0){
+                                                myArray3.push('1590')
+                                            }
+                                            if (parseFloat(number2) === 0){
+                                                if (number2.length === 3){
+                                                    myArray2.push('1590')
+                                                }
+                                                else if (number2.length === 4){
+                                                    myArray3.push('1590')
+                                                }
+                                                // console.log(number2.length)
+                                            }
+                                            let keyValuePair = {}
+                                            keyValuePair['1590'] = 1
+                                            myArray4.push(keyValuePair)
                                         }
                                     }
                                     else if (result2 === 'Streptococcus thermophilus'){
                                         if (myArray.includes('1308')){
-
+                                            for (let obj of myArray4) {
+                                                if (obj.hasOwnProperty('1308')){
+                                                    obj['1308'] += 1
+                                                }
+                                            }
                                         }
                                         else{
                                             myArray.push('1308')
+                                            if (parseFloat(number2) > 0){
+                                                myArray2.push('1308')
+                                            }
+                                            else if (parseFloat(number2) < 0){
+                                                myArray3.push('1308')
+                                            }
+                                            if (parseFloat(number2) === 0){
+                                                if (number2.length === 3){
+                                                    myArray2.push('1308')
+                                                }
+                                                else if (number2.length === 4){
+                                                    myArray3.push('1308')
+                                                }
+                                                // console.log(number2.length)
+                                            }
+                                            let keyValuePair = {}
+                                            keyValuePair['1308'] = 1
+                                            myArray4.push(keyValuePair)
                                         }
                                     }
                                     else if (result2 === 'Lactobacillus crispatus'){
                                         if (myArray.includes('47770')){
-
+                                            for (let obj of myArray4) {
+                                                if (obj.hasOwnProperty('47770')){
+                                                    obj['47770'] += 1
+                                                }
+                                            }
                                         }
                                         else{
                                             myArray.push('47770')
+                                            if (parseFloat(number2) > 0){
+                                                myArray2.push('47770')
+                                            }
+                                            else if (parseFloat(number2) < 0){
+                                                myArray3.push('47770')
+                                            }
+                                            if (parseFloat(number2) === 0){
+                                                if (number2.length === 3){
+                                                    myArray2.push('47770')
+                                                }
+                                                else if (number2.length === 4){
+                                                    myArray3.push('47770')
+                                                }
+                                                // console.log(number2.length)
+                                            }
+                                            let keyValuePair = {}
+                                            keyValuePair['47770'] = 1
+                                            myArray4.push(keyValuePair)
                                         }
                                     }
                                     else if (result2 === 'Bacillus subtilis'){
                                         if (myArray.includes('1423')){
-
+                                            for (let obj of myArray4) {
+                                                if (obj.hasOwnProperty('1423')){
+                                                    obj['1423'] += 1
+                                                }
+                                            }
                                         }
                                         else{
                                             myArray.push('1423')
+                                            if (parseFloat(number2) > 0){
+                                                myArray2.push('1423')
+                                            }
+                                            else if (parseFloat(number2) < 0){
+                                                myArray3.push('1423')
+                                            }
+                                            if (parseFloat(number2) === 0){
+                                                if (number2.length === 3){
+                                                    myArray2.push('1423')
+                                                }
+                                                else if (number2.length === 4){
+                                                    myArray3.push('1423')
+                                                }
+                                                // console.log(number2.length)
+                                            }
+                                            let keyValuePair = {}
+                                            keyValuePair['1423'] = 1
+                                            myArray4.push(keyValuePair)
                                         }
                                     }
                                     else if (result2 === 'Clostridium perfringens'){
                                         if (myArray.includes('1502')){
-
+                                            for (let obj of myArray4) {
+                                                if (obj.hasOwnProperty('1502')){
+                                                    obj['1502'] += 1
+                                                }
+                                            }
                                         }
                                         else{
                                             myArray.push('1502')
+                                            if (parseFloat(number2) > 0){
+                                                myArray2.push('1502')
+                                            }
+                                            else if (parseFloat(number2) < 0){
+                                                myArray3.push('1502')
+                                            }
+                                            if (parseFloat(number2) === 0){
+                                                if (number2.length === 3){
+                                                    myArray2.push('1502')
+                                                }
+                                                else if (number2.length === 4){
+                                                    myArray3.push('1502')
+                                                }
+                                                // console.log(number2.length)
+                                            }
+                                            let keyValuePair = {}
+                                            keyValuePair['1502'] = 1
+                                            myArray4.push(keyValuePair)
                                         }
                                     }
                                     else if (result2 === 'Staphylococcus aureus'){
                                         if (myArray.includes('1280')){
-
+                                            for (let obj of myArray4) {
+                                                if (obj.hasOwnProperty('1280')){
+                                                    obj['1280'] += 1
+                                                }
+                                            }
                                         }
                                         else{
                                             myArray.push('1280')
+                                            if (parseFloat(number2) > 0){
+                                                myArray2.push('1280')
+                                            }
+                                            else if (parseFloat(number2) < 0){
+                                                myArray3.push('1280')
+                                            }
+                                            if (parseFloat(number2) === 0){
+                                                if (number2.length === 3){
+                                                    myArray2.push('1280')
+                                                }
+                                                else if (number2.length === 4){
+                                                    myArray3.push('1280')
+                                                }
+                                                // console.log(number2.length)
+                                            }
+                                            let keyValuePair = {}
+                                            keyValuePair['1280'] = 1
+                                            myArray4.push(keyValuePair)
                                         }
                                     }
                                     else if (result2 === 'Lactococcus lactis'){
                                         if (myArray.includes('1358')){
-
+                                            for (let obj of myArray4) {
+                                                if (obj.hasOwnProperty('1358')){
+                                                    obj['1358'] += 1
+                                                }
+                                            }
                                         }
                                         else{
                                             myArray.push('1358')
+                                            if (parseFloat(number2) > 0){
+                                                myArray2.push('1358')
+                                            }
+                                            else if (parseFloat(number2) < 0){
+                                                myArray3.push('1358')
+                                            }
+                                            if (parseFloat(number2) === 0){
+                                                if (number2.length === 3){
+                                                    myArray2.push('1358')
+                                                }
+                                                else if (number2.length === 4){
+                                                    myArray3.push('1358')
+                                                }
+                                                // console.log(number2.length)
+                                            }
+                                            let keyValuePair = {}
+                                            keyValuePair['1358'] = 1
+                                            myArray4.push(keyValuePair)
                                         }
                                     }
                                     else if (result2 === 'Vibrio cholerae'){
                                         if (myArray.includes('666')){
-
+                                            for (let obj of myArray4) {
+                                                if (obj.hasOwnProperty('666')){
+                                                    obj['666'] += 1
+                                                }
+                                            }
                                         }
                                         else{
                                             myArray.push('666')
+                                            if (parseFloat(number2) > 0){
+                                                myArray2.push('666')
+                                            }
+                                            else if (parseFloat(number2) < 0){
+                                                myArray3.push('666')
+                                            }
+                                            if (parseFloat(number2) === 0){
+                                                if (number2.length === 3){
+                                                    myArray2.push('666')
+                                                }
+                                                else if (number2.length === 4){
+                                                    myArray3.push('666')
+                                                }
+                                                // console.log(number2.length)
+                                            }
+                                            let keyValuePair = {}
+                                            keyValuePair['666'] = 1
+                                            myArray4.push(keyValuePair)
                                         }
                                     }
                                     else if (result2 === 'Yersinia enterocolitica'){
                                         if (myArray.includes('630')){
-
+                                            for (let obj of myArray4) {
+                                                if (obj.hasOwnProperty('630')){
+                                                    obj['630'] += 1
+                                                }
+                                            }
                                         }
                                         else{
                                             myArray.push('630')
+                                            if (parseFloat(number2) > 0){
+                                                myArray2.push('630')
+                                            }
+                                            else if (parseFloat(number2) < 0){
+                                                myArray3.push('630')
+                                            }
+                                            if (parseFloat(number2) === 0){
+                                                if (number2.length === 3){
+                                                    myArray2.push('630')
+                                                }
+                                                else if (number2.length === 4){
+                                                    myArray3.push('630')
+                                                }
+                                                // console.log(number2.length)
+                                            }
+                                            let keyValuePair = {}
+                                            keyValuePair['630'] = 1
+                                            myArray4.push(keyValuePair)
                                         }
                                     }
                                     else if (result2 === 'Salmonella enterica'){
                                         if (myArray.includes('28901')){
-
+                                            for (let obj of myArray4) {
+                                                if (obj.hasOwnProperty('28901')){
+                                                    obj['28901'] += 1
+                                                }
+                                            }
                                         }
                                         else{
                                             myArray.push('28901')
+                                            if (parseFloat(number2) > 0){
+                                                myArray2.push('28901')
+                                            }
+                                            else if (parseFloat(number2) < 0){
+                                                myArray3.push('28901')
+                                            }
+                                            if (parseFloat(number2) === 0){
+                                                if (number2.length === 3){
+                                                    myArray2.push('28901')
+                                                }
+                                                else if (number2.length === 4){
+                                                    myArray3.push('28901')
+                                                }
+                                                // console.log(number2.length)
+                                            }
+                                            let keyValuePair = {}
+                                            keyValuePair['28901'] = 1
+                                            myArray4.push(keyValuePair)
                                         }
                                     }
                                     // else{
@@ -1281,12 +1825,8 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                       }
                     }
                 }
-                // console.log(myArray)
-                calculateLeafDescendantsAndNames(root, myArray);
 
-                console.log(root)
-
-
+                calculateLeafDescendantsAndNames(root, myArray, myArray2, myArray3, myArray4);
 
                 function findMaxValueNodeAtDepth1(root, key) {
                     let maxValueNode = null;
@@ -1302,51 +1842,55 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                   
                     return maxValueNode.data.name;
                 }
-                  
-                // Example usage
-                let maxNodeName = findMaxValueNodeAtDepth1(root, 'nameFound');
-                console.log(maxNodeName)
+                
+                let maxNodeName = findMaxValueNodeAtDepth1(root, 'nameFoundTotal');
 
-                function isDescendantOfFirstNodeAtDepthOne(node, maxNodeName){
-                    if (node.data.name === maxNodeName){
-                        // console.log('yes')
-                        return true
-                    }
-                    else{
-                        // console.log('no')
-                    }
-                    let parent = node.parent
-                    while (parent){
-                        if (parent.data.name === maxNodeName){
-                            // console.log(parent.data.name)
-                            return true
-                        }
-                        parent = parent.parent
-                    }
-                    return false
-                }
+                // function isDescendantOfFirstNodeAtDepthOne(node, maxNodeName){
+                //     if (node.data.name === maxNodeName){
+                //         // console.log('yes')
+                //         return true
+                //     }
+                //     else{
+                //         // console.log('no')
+                //     }
+                //     let parent = node.parent
+                //     while (parent){
+                //         if (parent.data.name === maxNodeName){
+                //             // console.log(parent.data.name)
+                //             return true
+                //         }
+                //         parent = parent.parent
+                //     }
+                //     return false
+                // }
 
 
                 function sortHierarchy(node, maxNodeName) {
                     // console.log(maxNodeName)
                     if (node.children) {               
-                        // if (node.depth >= 1){
-                            // if (isDescendantOfFirstNodeAtDepthOne(node, maxNodeName)){
-                            //     node.children.sort((a, b) => a.nameFound - b.nameFound);
-                            // }
-                            // else{
-                        //         node.children.sort((a, b) => b.nameFound - a.nameFound);
-                        //     }
-                        // }
-                        // else{
-                        node.children.sort((a, b) => b.nameFound - a.nameFound);
+                        // // if (node.depth >= 1){
+                        //     // if (isDescendantOfFirstNodeAtDepthOne(node, maxNodeName)){
+                        //     //     node.children.sort((a, b) => a.nameFound - b.nameFound);
+                        //     // }
+                        //     // else{
+                        // //         node.children.sort((a, b) => b.nameFound - a.nameFound);
+                        // //     }
+                        // // }
+                        // // else{
+                        // node.children.sort((a, b) => b.nameFound - a.nameFound);
+                        // // }
+                        // node.children.forEach(child => sortHierarchy(child, maxNodeName));
+
+
+                        node.children.sort((a, b) => b.nameFoundTotal - a.nameFoundTotal);
                         // }
                         node.children.forEach(child => sortHierarchy(child, maxNodeName));
                     }
                 }
 
                 sortHierarchy(root, maxNodeName);
-                console.log(root)
+
+                // console.log(root)
     
     
                 root.each(function(d) {
@@ -1388,24 +1932,23 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                         checkedLevels.push(parseInt(checkbox.id))
                     }
                 });
-                // console.log(checkedLevels)
     
                 let arc = d3.arc()
-                .startAngle(function(d) { 
-                    return d.x0; 
-                })
-                .endAngle(function(d) { 
-                    return d.x1; 
-                })
-                .innerRadius(function(d) { 
-                    let val = innerRadius(d, index, checkedLevels);
-                    return val; 
-                })
-                .outerRadius(function(d) { 
-                    let val = outerRadius(d, index, csvData, checkedLevels);
-                    return val; 
-                });
-    
+                            .startAngle(function(d) { 
+                                return d.x0; 
+                            })
+                            .endAngle(function(d) { 
+                                return d.x1; 
+                            })
+                            .innerRadius(function(d) { 
+                                let val = innerRadius(d, index, checkedLevels);
+                                return val; 
+                            })
+                            .outerRadius(function(d) { 
+                                let val = outerRadius(d, index, csvData, checkedLevels);
+                                return val; 
+                            });
+                
     
                 // let colorScaleLow = d3.scaleLinear.domain([])
                 let colorScaleLow = d3.scaleLinear()
@@ -1433,22 +1976,12 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                             .data(root.descendants().slice(1))
                             .enter().append("path")
                             .classed("sunburst-path", true) // Add a class to each path
-                            .attr("id", (d, i) => "path-" + d.data.name) // Add a unique ID to each path
+                            .attr("id", (d, i) => "path-" + d.data.name + "-" + index) // Add a unique ID to each path
                             .attr("d", arc)
                             .style("fill", function(d) { 
                                     let nodeName = d.data.name
-                                    let taxonID
-                                    if (d.data.hasOwnProperty('children')){
-                                        let lastIndex = nodeName.lastIndexOf('__')
-                                        taxonID = nodeName.substring(lastIndex + 2)
-                                    }
-                                    else{
-                                        let lastIndex = nodeName.lastIndexOf('?')
-                                        taxonID = nodeName.substring(lastIndex + 1)
-                                    }
-                                    // console.log(taxonID)
-
-
+                                    let lastIndex = nodeName.lastIndexOf('__')
+                                    let taxonID = nodeName.substring(lastIndex + 2)
                                     //part 1
                                     if (indicatorValue !== 'ao'){
                                         let myWeight = findTaxonWeightbyID(transformedData, taxonID)
@@ -1457,6 +1990,7 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                                         }
                                         else{
                                             let cdf = findTaxonCDFbyID(aggregatedData[0], taxonID)
+
                                             if (cdf === null){
                                                 return "white"
                                             }
@@ -1479,6 +2013,9 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                                             return "white"
                                         }
                                         else{
+
+                                            // console.log(taxonID)
+                                            // console.log(cdf)
                                             if (cdf < 0){
                                                 return colorScaleLow(0)
                                             }
@@ -1499,15 +2036,17 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                             })
                             .style("stroke", function(d){
                                 let nodeName = d.data.name
-                                let taxonID
-                                if (d.data.hasOwnProperty('children')){
-                                    let lastIndex = nodeName.lastIndexOf('__')
-                                    taxonID = nodeName.substring(lastIndex + 2)
-                                }
-                                else{
-                                    let lastIndex = nodeName.lastIndexOf('?')
-                                    taxonID = nodeName.substring(lastIndex + 1)
-                                }
+                                let lastIndex = nodeName.lastIndexOf('__')
+                                let taxonID = nodeName.substring(lastIndex + 2)
+
+                                // if (d.data.hasOwnProperty('children')){
+                                //     let lastIndex = nodeName.lastIndexOf('__')
+                                //     taxonID = nodeName.substring(lastIndex + 2)
+                                // }
+                                // else{
+                                //     let lastIndex = nodeName.lastIndexOf('?')
+                                //     taxonID = nodeName.substring(lastIndex + 1)
+                                // }
 
                                 //part 1
                                 if (indicatorValue !== 'ao'){
@@ -1540,15 +2079,18 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                             })
                             .style("opacity", function(d){
                                 let nodeName = d.data.name
-                                let taxonID
-                                if (d.data.hasOwnProperty('children')){
-                                    let lastIndex = nodeName.lastIndexOf('__')
-                                    taxonID = nodeName.substring(lastIndex + 2)
-                                }
-                                else{
-                                    let lastIndex = nodeName.lastIndexOf('?')
-                                    taxonID = nodeName.substring(lastIndex + 1)
-                                }
+                                let lastIndex = nodeName.lastIndexOf('__')
+                                let taxonID = nodeName.substring(lastIndex + 2)
+
+
+                                // if (d.data.hasOwnProperty('children')){
+                                //     let lastIndex = nodeName.lastIndexOf('__')
+                                //     taxonID = nodeName.substring(lastIndex + 2)
+                                // }
+                                // else{
+                                //     let lastIndex = nodeName.lastIndexOf('?')
+                                //     taxonID = nodeName.substring(lastIndex + 1)
+                                // }
 
 
                                  //part 1
@@ -1587,10 +2129,13 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                             }) 
                             .style("stroke-width", function(d){
                                 if (d.depth === 1){
-                                    return "10"
+                                    return "0.5"
+                                }
+                                else if (d.depth >= 6){
+                                    return "0.1"
                                 }
                                 else{
-                                    return "1"
+                                    return "0.2"
                                 }
                             })
                             .on("mouseover", function (event, d){
