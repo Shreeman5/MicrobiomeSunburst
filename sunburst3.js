@@ -3,8 +3,9 @@ let files = [
     "JSONswithStandardRanks/MergedJSONfile/taxonomy.json",
 
 
-    "JSONswithStandardRanks/BetterIndivJSONfiles/Jim_Walsh_before.json",
+    
     "JSONswithStandardRanks/BetterIndivJSONfiles/Jim_Walsh_after.json",
+    "JSONswithStandardRanks/BetterIndivJSONfiles/Jim_Walsh_before.json",
 
     "JSONswithStandardRanks/BetterIndivJSONfiles/Rainey_Dunham_1.json",
     "JSONswithStandardRanks/BetterIndivJSONfiles/Maclay_Ramsey_1.json",
@@ -66,22 +67,22 @@ let radius
 function innerRadius(d, index, checkedLevels){
     if (checkedLevels.length === 7){
         if (d.depth === 7){
-            return index === 0 ? 620 : 480
+            return index === 0 ? 620 : 1515
         }
-        if (d.depth === 6){
-            return index === 0 ? 550 : 430
+        else if (d.depth === 6){
+            return index === 0 ? 550 : 1304
         }
-        if (d.depth === 5){
-            return index === 0 ? 480 : 380
+        else if (d.depth === 5){
+            return index === 0 ? 480 : 1093
         }
-        if (d.depth === 4){
-            return index === 0 ? 400 : 330
+        else if (d.depth === 4){
+            return index === 0 ? 400 : 882
         }
-        if (d.depth === 3){
-            return index === 0 ? 320 : 280
+        else if (d.depth === 3){
+            return index === 0 ? 320 : 671
         }
         else if (d.depth === 2){
-            return index === 0 ? 230 : 230
+            return index === 0 ? 230 : 460
         }
         else if (d.depth === 1){
             return 30
@@ -89,19 +90,19 @@ function innerRadius(d, index, checkedLevels){
     }
     if (checkedLevels.length === 6){
         if (d.depth === checkedLevels[5]){
-            return index === 0 ? 600 : 470
+            return index === 0 ? 600 : 1487
         }
         if (d.depth === checkedLevels[4]){
-            return index === 0 ? 510 : 410
+            return index === 0 ? 510 : 1244
         }
         if (d.depth === checkedLevels[3]){
-            return index === 0 ? 420 : 350
+            return index === 0 ? 420 : 1001
         }
         if (d.depth === checkedLevels[2]){
-            return index === 0 ? 330 : 290
+            return index === 0 ? 330 : 758
         }
         if (d.depth === checkedLevels[1]){
-            return index === 0 ? 230 : 230
+            return index === 0 ? 230 : 515
         }
         else if (d.depth === checkedLevels[0]){
             return 30
@@ -109,16 +110,16 @@ function innerRadius(d, index, checkedLevels){
     }
     if (checkedLevels.length === 5){
         if (d.depth === checkedLevels[4]){
-            return index === 0 ? 590 : 470
+            return index === 0 ? 590 : 1449
         }
         if (d.depth === checkedLevels[3]){
-            return index === 0 ? 480 : 400
+            return index === 0 ? 480 : 1166
         }
         if (d.depth === checkedLevels[2]){
-            return index === 0 ? 360 : 320
+            return index === 0 ? 360 : 883
         }
         if (d.depth === checkedLevels[1]){
-            return index === 0 ? 230 : 230
+            return index === 0 ? 230 : 600
         }
         else if (d.depth === checkedLevels[0]){
             return 30
@@ -126,13 +127,13 @@ function innerRadius(d, index, checkedLevels){
     }
     if (checkedLevels.length === 4){
         if (d.depth === checkedLevels[3]){
-            return index === 0 ? 590 : 470
+            return index === 0 ? 590 : 1390
         }
         if (d.depth === checkedLevels[2]){
-            return index === 0 ? 480 : 400
+            return index === 0 ? 480 : 1050
         }
         if (d.depth === checkedLevels[1]){
-            return index === 0 ? 360 : 320
+            return index === 0 ? 360 : 710
         }
         if (d.depth === checkedLevels[0]){
             return 30
@@ -140,10 +141,10 @@ function innerRadius(d, index, checkedLevels){
     }
     if (checkedLevels.length === 3){
         if (d.depth === checkedLevels[2]){
-            return index === 0 ? 590 : 470
+            return index === 0 ? 590 : 1305
         }
         if (d.depth === checkedLevels[1]){
-            return index === 0 ? 480 : 400
+            return index === 0 ? 480 : 880
         }
         else if (d.depth === checkedLevels[0]){
             return 30
@@ -151,7 +152,7 @@ function innerRadius(d, index, checkedLevels){
     }
     if (checkedLevels.length === 2){
         if (d.depth === checkedLevels[1]){
-            return index === 0 ? 590 : 470
+            return index === 0 ? 590 : 1165
         }
         else if (d.depth === checkedLevels[0]){
             return 30
@@ -171,100 +172,100 @@ function innerRadius(d, index, checkedLevels){
 function outerRadius(d, index, csvData, checkedLevels){
     if (checkedLevels.length === 7){
         if (d.depth === 7){
-            return index === 0 ? 690 : 530
+            return index === 0 ? 690 : 1730 //530
         }
-        if (d.depth === 6){
-            return index === 0 ? 620 : 480
+        else if (d.depth === 6){
+            return index === 0 ? 620 : 1515 //510
         }
-        if (d.depth === 5){
-            return index === 0 ? 550 : 430
+        else if (d.depth === 5){
+            return index === 0 ? 550 : 1304 //310
         }
-        if (d.depth === 4){
-            return index === 0 ? 480 : 380
+        else if (d.depth === 4){
+            return index === 0 ? 480 : 1093 //290
         }
-        if (d.depth === 3){
-            return index === 0 ? 400 : 330
+        else if (d.depth === 3){
+            return index === 0 ? 400 : 882 //270
         }
         else if (d.depth === 2){
-            return index === 0 ? 320 : 280
+            return index === 0 ? 320 : 671 //250
         }
         else if (d.depth === 1){
-            return index === 0 ? 230 : 230
+            return index === 0 ? 230 : 460 //230
         }
     }
     if (checkedLevels.length === 6){
         if (d.depth === checkedLevels[5]){
-            return index === 0 ? 690 : 530
+            return index === 0 ? 690 : 1730 //530
         }
         if (d.depth === checkedLevels[4]){
-            return index === 0 ? 600 : 470
+            return index === 0 ? 600 : 1487 //470
         }
         if (d.depth === checkedLevels[3]){
-            return index === 0 ? 510 : 410
+            return index === 0 ? 510 : 1244 //410
         }
         if (d.depth === checkedLevels[2]){
-            return index === 0 ? 420 : 350
+            return index === 0 ? 420 : 1001 //350
         }
         if (d.depth === checkedLevels[1]){
-            return index === 0 ? 330 : 290
+            return index === 0 ? 330 : 758 //290
         }
         else if (d.depth === checkedLevels[0]){
-            return index === 0 ? 230 : 230
+            return index === 0 ? 230 : 515 //230
         }
     }
     if (checkedLevels.length === 5){
         if (d.depth === checkedLevels[4]){
-            return index === 0 ? 690 : 530
+            return index === 0 ? 690 : 1730 //530
         }
         if (d.depth === checkedLevels[3]){
-            return index === 0 ? 590 : 470
+            return index === 0 ? 590 : 1449 //470
         }
         if (d.depth === checkedLevels[2]){
-            return index === 0 ? 480 : 400
+            return index === 0 ? 480 : 1166 //400
         }
         if (d.depth === checkedLevels[1]){
-            return index === 0 ? 360 : 320
+            return index === 0 ? 360 : 883 //320
         }
         else if (d.depth === checkedLevels[0]){
-            return index === 0 ? 230 : 230
+            return index === 0 ? 230 : 600 //230
         }
     }
     if (checkedLevels.length === 4){
         if (d.depth === checkedLevels[3]){
-            return index === 0 ? 690 : 530
+            return index === 0 ? 690 : 1730 //530
         }
         if (d.depth === checkedLevels[2]){
-            return index === 0 ? 590 : 470
+            return index === 0 ? 590 : 1390 //470
         }
         if (d.depth === checkedLevels[1]){
-            return index === 0 ? 480 : 400
+            return index === 0 ? 480 : 1050 //400
         }
         if (d.depth === checkedLevels[0]){
-            return index === 0 ? 360 : 320
+            return index === 0 ? 360 : 710 //320
         }
     }
     if (checkedLevels.length === 3){
         if (d.depth === checkedLevels[2]){
-            return index === 0 ? 690 : 530
+            return index === 0 ? 690 : 1730 //530
         }
         if (d.depth === checkedLevels[1]){
-            return index === 0 ? 590 : 470
+            return index === 0 ? 590 : 1305 //470
         }
         else if (d.depth === checkedLevels[0]){
-            return index === 0 ? 480 : 400
+            return index === 0 ? 480 : 880 //400
         }
     }
     if (checkedLevels.length === 2){
         if (d.depth === checkedLevels[1]){
-            return index === 0 ? 690 : 530
+            return index === 0 ? 690 : 1730 //530
         }
         else if (d.depth === checkedLevels[0]){
-            return index === 0 ? 590 : 470
+            return index === 0 ? 590 : 1165 //470
         }
     }
     if (checkedLevels.length === 1){
         if (d.depth === checkedLevels[0]){
-            return index === 0 ? 690 : 530
+            return index === 0 ? 690 : 1730 //530
         }
     }
     if (checkedLevels.length === 0){
@@ -502,7 +503,7 @@ function rendering(sliderMin, sliderMax, indicatorValue){
         }
         
         
-        for (let i = 0; i < files.length - 39; i++) {
+        for (let i = 0; i < files.length - 40; i++) {
             // Using an IIFE (Immediately Invoked Function Expression) to create a closure
             await (async function(index) {
                 let data = await d3.json(files[index]);
@@ -513,8 +514,8 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                     radius = 100;
                 }
                 else{
-                    width = 1150;
-                    height = 1220;
+                    width = 5700; //1150
+                    height = 3600; //1220
                     radius = 100;
                 }
     
@@ -809,7 +810,7 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                 else{
                     svg.append("text")
                     .attr("x", -352)
-                    .attr("y", -565)
+                    .attr("y", -1750)
                     .attr("font-size", "58")
                     .attr("fill", "black")
                     .text(word)
@@ -2132,18 +2133,20 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                                     return "0.5"
                                 }
                                 else if (d.depth >= 6){
-                                    return "0.1"
+                                    return "0.5" //"0.1"
                                 }
                                 else{
-                                    return "0.2"
+                                    return "0.5"//"0.1"
                                 }
                             })
                             .on("mouseover", function (event, d){
                                 let nodeName = d.data.name
                                 handleMouseOver(event, index, d, givenDataRoot, nodeName, aggregatedData[0])
                             })
-                            .on("mouseout", mouseout);
-
+                            .on("mouseout", mouseout)
+                            // .on("click", function(event, p){
+                            //     clicked(event, p, root, svg)
+                            // })
 
                             d3.selectAll(".sunburst-path").each(function(d, i) {
                                 var element = d3.select(this);
@@ -2158,6 +2161,31 @@ function rendering(sliderMin, sliderMax, indicatorValue){
             })(i);
         }
     })();
+}
+
+
+function clicked(event, p, root, svg){
+    console.log('here')
+    console.log()
+    root.each(d => d.target = {
+        x0: Math.max(0, Math.min(1, (d.x0 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,
+        x1: Math.max(0, Math.min(1, (d.x1 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,
+        y0: Math.max(0, d.y0 - p.depth),
+        y1: Math.max(0, d.y1 - p.depth)
+    });
+
+    const t = svg.transition().duration(750);
+
+    svg.selectAll("path")
+        .transition(t)
+        .attrTween("d", d => () => arc(d.target));
+
+    removeExistingContainers()
+    removeSlider()
+    renderSlider()
+    removeCheckBoxes()
+    renderCheckboxes()
+    rendering(35, 65, 'ao')
 }
 
 
@@ -2294,78 +2322,78 @@ function removeExistingContainers(){
 
     const elements2 = document.querySelector('.svg-container-2');
     elements2.innerHTML = ''
-    const elements3 = document.querySelector('.svg-container-3');
-    elements3.innerHTML = ''
-    const elements4 = document.querySelector('.svg-container-4');
-    elements4.innerHTML = ''
-    const elements5 = document.querySelector('.svg-container-5');
-    elements5.innerHTML = ''
-    const elements6 = document.querySelector('.svg-container-6');
-    elements6.innerHTML = ''
+    // const elements3 = document.querySelector('.svg-container-3');
+    // elements3.innerHTML = ''
+    // const elements4 = document.querySelector('.svg-container-4');
+    // elements4.innerHTML = ''
+    // const elements5 = document.querySelector('.svg-container-5');
+    // elements5.innerHTML = ''
+    // const elements6 = document.querySelector('.svg-container-6');
+    // elements6.innerHTML = ''
     
-    const elements7 = document.querySelector('.svg-container-7');
-    elements7.innerHTML = ''
-    const elements8 = document.querySelector('.svg-container-8');
-    elements8.innerHTML = ''
-    const elements9 = document.querySelector('.svg-container-9');
-    elements9.innerHTML = ''
-    const elements10 = document.querySelector('.svg-container-10');
-    elements10.innerHTML = ''
-    const elements11 = document.querySelector('.svg-container-11');
-    elements11.innerHTML = ''
-    const elements12 = document.querySelector('.svg-container-12');
-    elements12.innerHTML = ''
+    // const elements7 = document.querySelector('.svg-container-7');
+    // elements7.innerHTML = ''
+    // const elements8 = document.querySelector('.svg-container-8');
+    // elements8.innerHTML = ''
+    // const elements9 = document.querySelector('.svg-container-9');
+    // elements9.innerHTML = ''
+    // const elements10 = document.querySelector('.svg-container-10');
+    // elements10.innerHTML = ''
+    // const elements11 = document.querySelector('.svg-container-11');
+    // elements11.innerHTML = ''
+    // const elements12 = document.querySelector('.svg-container-12');
+    // elements12.innerHTML = ''
 
-    const elements13 = document.querySelector('.svg-container-13');
-    elements13.innerHTML = ''
-    const elements14 = document.querySelector('.svg-container-14');
-    elements14.innerHTML = ''
-    const elements15 = document.querySelector('.svg-container-15');
-    elements15.innerHTML = ''
-    const elements16 = document.querySelector('.svg-container-16');
-    elements16.innerHTML = ''
-    const elements17 = document.querySelector('.svg-container-17');
-    elements17.innerHTML = ''
-    const elements18 = document.querySelector('.svg-container-18');
-    elements18.innerHTML = ''
+    // const elements13 = document.querySelector('.svg-container-13');
+    // elements13.innerHTML = ''
+    // const elements14 = document.querySelector('.svg-container-14');
+    // elements14.innerHTML = ''
+    // const elements15 = document.querySelector('.svg-container-15');
+    // elements15.innerHTML = ''
+    // const elements16 = document.querySelector('.svg-container-16');
+    // elements16.innerHTML = ''
+    // const elements17 = document.querySelector('.svg-container-17');
+    // elements17.innerHTML = ''
+    // const elements18 = document.querySelector('.svg-container-18');
+    // elements18.innerHTML = ''
 
-    const elements19 = document.querySelector('.svg-container-19');
-    elements19.innerHTML = ''
-    const elements20 = document.querySelector('.svg-container-20');
-    elements20.innerHTML = ''
+    // const elements19 = document.querySelector('.svg-container-19');
+    // elements19.innerHTML = ''
+    // const elements20 = document.querySelector('.svg-container-20');
+    // elements20.innerHTML = ''
 
-    const elements21 = document.querySelector('.svg-container-21');
-    elements21.innerHTML = ''
-    const elements22 = document.querySelector('.svg-container-22');
-    elements22.innerHTML = ''
-    const elements23 = document.querySelector('.svg-container-23');
-    elements23.innerHTML = ''
-    const elements24 = document.querySelector('.svg-container-24');
-    elements24.innerHTML = ''
-    const elements25 = document.querySelector('.svg-container-25');
-    elements25.innerHTML = ''
+    // const elements21 = document.querySelector('.svg-container-21');
+    // elements21.innerHTML = ''
+    // const elements22 = document.querySelector('.svg-container-22');
+    // elements22.innerHTML = ''
+    // const elements23 = document.querySelector('.svg-container-23');
+    // elements23.innerHTML = ''
+    // const elements24 = document.querySelector('.svg-container-24');
+    // elements24.innerHTML = ''
+    // const elements25 = document.querySelector('.svg-container-25');
+    // elements25.innerHTML = ''
 
-    const elements26 = document.querySelector('.svg-container-26');
-    elements26.innerHTML = ''
-    const elements27 = document.querySelector('.svg-container-27');
-    elements27.innerHTML = ''
-    const elements28 = document.querySelector('.svg-container-28');
-    elements28.innerHTML = ''
-    const elements29 = document.querySelector('.svg-container-29');
-    elements29.innerHTML = ''
-    const elements30 = document.querySelector('.svg-container-30');
-    elements30.innerHTML = ''
+    // const elements26 = document.querySelector('.svg-container-26');
+    // elements26.innerHTML = ''
+    // const elements27 = document.querySelector('.svg-container-27');
+    // elements27.innerHTML = ''
+    // const elements28 = document.querySelector('.svg-container-28');
+    // elements28.innerHTML = ''
+    // const elements29 = document.querySelector('.svg-container-29');
+    // elements29.innerHTML = ''
+    // const elements30 = document.querySelector('.svg-container-30');
+    // elements30.innerHTML = ''
 
-    const elements31 = document.querySelector('.svg-container-31');
-    elements31.innerHTML = ''
-    const elements32 = document.querySelector('.svg-container-32');
-    elements32.innerHTML = ''
-    const elements33 = document.querySelector('.svg-container-33');
-    elements33.innerHTML = ''
-    const elements34 = document.querySelector('.svg-container-34');
-    elements34.innerHTML = ''
-    const elements35 = document.querySelector('.svg-container-35');
-    elements35.innerHTML = ''
+    // const elements31 = document.querySelector('.svg-container-31');
+    // elements31.innerHTML = ''
+    // const elements32 = document.querySelector('.svg-container-32');
+    // elements32.innerHTML = ''
+    // const elements33 = document.querySelector('.svg-container-33');
+    // elements33.innerHTML = ''
+    // const elements34 = document.querySelector('.svg-container-34');
+    // elements34.innerHTML = ''
+    // const elements35 = document.querySelector('.svg-container-35');
+    // elements35.innerHTML = ''
 }
 
 
