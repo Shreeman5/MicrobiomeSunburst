@@ -4,21 +4,23 @@ let currentName
 let files = [
     // "JSONswithStandardRanks/MergedJSONfile/merged_tree.json",
     "JSONswithStandardRanks/MergedJSONfile/taxonomy.json",
-
-
     
-    "JSONswithStandardRanks/BetterIndivJSONfiles/Jim_Walsh_after.json",
     "JSONswithStandardRanks/BetterIndivJSONfiles/Jim_Walsh_before.json",
-
+    "JSONswithStandardRanks/BetterIndivJSONfiles/Jim_Walsh_after.json",
+    "JSONswithStandardRanks/BetterIndivJSONfiles/Leo_Grady_1.json",
+    "JSONswithStandardRanks/BetterIndivJSONfiles/Leo_Grady_2.json",
     "JSONswithStandardRanks/BetterIndivJSONfiles/Rainey_Dunham_1.json",
     "JSONswithStandardRanks/BetterIndivJSONfiles/Maclay_Ramsey_1.json",
-    "JSONswithStandardRanks/BetterIndivJSONfiles/Leo_Grady_2.json",
-    "JSONswithStandardRanks/BetterIndivJSONfiles/Leo_Grady_1.json",
     "JSONswithStandardRanks/BetterIndivJSONfiles/Jill_Sue_1.json",
     "JSONswithStandardRanks/BetterIndivJSONfiles/Jaclyn_Kawwas_1.json",
     "JSONswithStandardRanks/BetterIndivJSONfiles/Audra_Walker_1.json",
 
 
+    "JSONswithStandardRanks/BetterIndivJSONfiles/ERR1912974_Parkinson's Disease.json",
+    "JSONswithStandardRanks/BetterIndivJSONfiles/ERR1913019_Parkinson's Disease.json", 
+    "JSONswithStandardRanks/BetterIndivJSONfiles/ERR1913069_Parkinson's Disease.json",  
+    "JSONswithStandardRanks/BetterIndivJSONfiles/ERR1913124_Parkinson's Disease.json",
+    "JSONswithStandardRanks/BetterIndivJSONfiles/ERR1913188_Parkinson's Disease.json",
 
     "JSONswithStandardRanks/BetterIndivJSONfiles/SRR1215593_Crohn's Disease.json", 
     "JSONswithStandardRanks/BetterIndivJSONfiles/SRR5936079_Crohn's Disease.json",
@@ -53,11 +55,6 @@ let files = [
     "JSONswithStandardRanks/BetterIndivJSONfiles/ERR532392_Liver Cirrhosis.json",
     "JSONswithStandardRanks/BetterIndivJSONfiles/ERR532623_Liver Cirrhosis.json",
 
-    "JSONswithStandardRanks/BetterIndivJSONfiles/ERR1912974_Parkinson's Disease.json",
-    "JSONswithStandardRanks/BetterIndivJSONfiles/ERR1913019_Parkinson's Disease.json", 
-    "JSONswithStandardRanks/BetterIndivJSONfiles/ERR1913069_Parkinson's Disease.json",  
-    "JSONswithStandardRanks/BetterIndivJSONfiles/ERR1913124_Parkinson's Disease.json",
-    "JSONswithStandardRanks/BetterIndivJSONfiles/ERR1913188_Parkinson's Disease.json",
 ]
 
 
@@ -70,22 +67,22 @@ let radius
 function innerRadius(d, index, checkedLevels){
     if (checkedLevels.length === 7){
         if (d.depth === 7){
-            return index === 0 ? 620 : 1515
+            return index === 0 ? 620 : 468//1515
         }
         else if (d.depth === 6){
-            return index === 0 ? 550 : 1304
+            return index === 0 ? 550 : 403//1304
         }
         else if (d.depth === 5){
-            return index === 0 ? 480 : 1093
+            return index === 0 ? 480 : 341//1093
         }
         else if (d.depth === 4){
-            return index === 0 ? 400 : 882
+            return index === 0 ? 400 : 279//882
         }
         else if (d.depth === 3){
-            return index === 0 ? 320 : 671
+            return index === 0 ? 320 : 217//671
         }
         else if (d.depth === 2){
-            return index === 0 ? 230 : 460
+            return index === 0 ? 230 : 155//460
         }
         else if (d.depth === 1){
             return 30
@@ -93,19 +90,19 @@ function innerRadius(d, index, checkedLevels){
     }
     if (checkedLevels.length === 6){
         if (d.depth === checkedLevels[5]){
-            return index === 0 ? 600 : 1487
+            return index === 0 ? 600 : 459
         }
         if (d.depth === checkedLevels[4]){
-            return index === 0 ? 510 : 1244
+            return index === 0 ? 510 : 388
         }
         if (d.depth === checkedLevels[3]){
-            return index === 0 ? 420 : 1001
+            return index === 0 ? 420 : 317
         }
         if (d.depth === checkedLevels[2]){
-            return index === 0 ? 330 : 758
+            return index === 0 ? 330 : 246
         }
         if (d.depth === checkedLevels[1]){
-            return index === 0 ? 230 : 515
+            return index === 0 ? 230 : 175
         }
         else if (d.depth === checkedLevels[0]){
             return 30
@@ -113,16 +110,16 @@ function innerRadius(d, index, checkedLevels){
     }
     if (checkedLevels.length === 5){
         if (d.depth === checkedLevels[4]){
-            return index === 0 ? 590 : 1449
+            return index === 0 ? 590 : 447
         }
         if (d.depth === checkedLevels[3]){
-            return index === 0 ? 480 : 1166
+            return index === 0 ? 480 : 364
         }
         if (d.depth === checkedLevels[2]){
-            return index === 0 ? 360 : 883
+            return index === 0 ? 360 : 281
         }
         if (d.depth === checkedLevels[1]){
-            return index === 0 ? 230 : 600
+            return index === 0 ? 230 : 198
         }
         else if (d.depth === checkedLevels[0]){
             return 30
@@ -130,13 +127,13 @@ function innerRadius(d, index, checkedLevels){
     }
     if (checkedLevels.length === 4){
         if (d.depth === checkedLevels[3]){
-            return index === 0 ? 590 : 1390
+            return index === 0 ? 590 : 430
         }
         if (d.depth === checkedLevels[2]){
-            return index === 0 ? 480 : 1050
+            return index === 0 ? 480 : 330
         }
         if (d.depth === checkedLevels[1]){
-            return index === 0 ? 360 : 710
+            return index === 0 ? 360 : 230
         }
         if (d.depth === checkedLevels[0]){
             return 30
@@ -144,10 +141,10 @@ function innerRadius(d, index, checkedLevels){
     }
     if (checkedLevels.length === 3){
         if (d.depth === checkedLevels[2]){
-            return index === 0 ? 590 : 1305
+            return index === 0 ? 590 : 405
         }
         if (d.depth === checkedLevels[1]){
-            return index === 0 ? 480 : 880
+            return index === 0 ? 480 : 280
         }
         else if (d.depth === checkedLevels[0]){
             return 30
@@ -155,7 +152,7 @@ function innerRadius(d, index, checkedLevels){
     }
     if (checkedLevels.length === 2){
         if (d.depth === checkedLevels[1]){
-            return index === 0 ? 590 : 1165
+            return index === 0 ? 590 : 365
         }
         else if (d.depth === checkedLevels[0]){
             return 30
@@ -175,100 +172,100 @@ function innerRadius(d, index, checkedLevels){
 function outerRadius(d, index, csvData, checkedLevels){
     if (checkedLevels.length === 7){
         if (d.depth === 7){
-            return index === 0 ? 690 : 1730 //530
+            return index === 0 ? 690 : 530 //1730
         }
         else if (d.depth === 6){
-            return index === 0 ? 620 : 1515 //510
+            return index === 0 ? 620 : 468 //1515
         }
         else if (d.depth === 5){
-            return index === 0 ? 550 : 1304 //310
+            return index === 0 ? 550 : 403 //1304
         }
         else if (d.depth === 4){
-            return index === 0 ? 480 : 1093 //290
+            return index === 0 ? 480 : 341 //1093
         }
         else if (d.depth === 3){
-            return index === 0 ? 400 : 882 //270
+            return index === 0 ? 400 : 279 //882
         }
         else if (d.depth === 2){
-            return index === 0 ? 320 : 671 //250
+            return index === 0 ? 320 : 217 //671
         }
         else if (d.depth === 1){
-            return index === 0 ? 230 : 460 //230
+            return index === 0 ? 230 : 155 //460
         }
     }
     if (checkedLevels.length === 6){
         if (d.depth === checkedLevels[5]){
-            return index === 0 ? 690 : 1730 //530
+            return index === 0 ? 690 : 530 //1730
         }
         if (d.depth === checkedLevels[4]){
-            return index === 0 ? 600 : 1487 //470
+            return index === 0 ? 600 : 459 //1487
         }
         if (d.depth === checkedLevels[3]){
-            return index === 0 ? 510 : 1244 //410
+            return index === 0 ? 510 : 388 //1244
         }
         if (d.depth === checkedLevels[2]){
-            return index === 0 ? 420 : 1001 //350
+            return index === 0 ? 420 : 317 //1001
         }
         if (d.depth === checkedLevels[1]){
-            return index === 0 ? 330 : 758 //290
+            return index === 0 ? 330 : 246 //758
         }
         else if (d.depth === checkedLevels[0]){
-            return index === 0 ? 230 : 515 //230
+            return index === 0 ? 230 : 175 //515
         }
     }
     if (checkedLevels.length === 5){
         if (d.depth === checkedLevels[4]){
-            return index === 0 ? 690 : 1730 //530
+            return index === 0 ? 690 : 530 //1730
         }
         if (d.depth === checkedLevels[3]){
-            return index === 0 ? 590 : 1449 //470
+            return index === 0 ? 590 : 447 //1449
         }
         if (d.depth === checkedLevels[2]){
-            return index === 0 ? 480 : 1166 //400
+            return index === 0 ? 480 : 364 //1166
         }
         if (d.depth === checkedLevels[1]){
-            return index === 0 ? 360 : 883 //320
+            return index === 0 ? 360 : 281 //883
         }
         else if (d.depth === checkedLevels[0]){
-            return index === 0 ? 230 : 600 //230
+            return index === 0 ? 230 : 198 //600
         }
     }
     if (checkedLevels.length === 4){
         if (d.depth === checkedLevels[3]){
-            return index === 0 ? 690 : 1730 //530
+            return index === 0 ? 690 : 530 //1730
         }
         if (d.depth === checkedLevels[2]){
-            return index === 0 ? 590 : 1390 //470
+            return index === 0 ? 590 : 430 //1390
         }
         if (d.depth === checkedLevels[1]){
-            return index === 0 ? 480 : 1050 //400
+            return index === 0 ? 480 : 330 //1050
         }
         if (d.depth === checkedLevels[0]){
-            return index === 0 ? 360 : 710 //320
+            return index === 0 ? 360 : 230 //710
         }
     }
     if (checkedLevels.length === 3){
         if (d.depth === checkedLevels[2]){
-            return index === 0 ? 690 : 1730 //530
+            return index === 0 ? 690 : 530 //1730
         }
         if (d.depth === checkedLevels[1]){
-            return index === 0 ? 590 : 1305 //470
+            return index === 0 ? 590 : 405 //1305
         }
         else if (d.depth === checkedLevels[0]){
-            return index === 0 ? 480 : 880 //400
+            return index === 0 ? 480 : 280 //880
         }
     }
     if (checkedLevels.length === 2){
         if (d.depth === checkedLevels[1]){
-            return index === 0 ? 690 : 1730 //530
+            return index === 0 ? 690 : 530 //1730
         }
         else if (d.depth === checkedLevels[0]){
-            return index === 0 ? 590 : 1165 //470
+            return index === 0 ? 590 : 365 //1165
         }
     }
     if (checkedLevels.length === 1){
         if (d.depth === checkedLevels[0]){
-            return index === 0 ? 690 : 1730 //530
+            return index === 0 ? 690 : 530 //1730
         }
     }
     if (checkedLevels.length === 0){
@@ -307,6 +304,24 @@ function nameMapping(val){
     return ""
 }
 
+function applyStrokeToDescendants(nodeData) {
+    // Ensure the node has an id and select it
+    // console.log(this)
+    if (this) {
+        console.log(this);
+        d3.select(this)
+            .style("stroke", "black")
+            .style("stroke-width", 3);
+    }
+
+    // Apply stroke to all descendants if children exist and are non-empty
+    if (Array.isArray(nodeData.children) && nodeData.children.length > 0) {
+        nodeData.children.forEach(childData => {
+            applyStrokeToDescendants(childData);
+        });
+    }
+
+}
 
 function handleMouseOver(event, fileIndex, p, givenDataRoot, nodeName, cdfContainerData) {
 
@@ -319,12 +334,23 @@ function handleMouseOver(event, fileIndex, p, givenDataRoot, nodeName, cdfContai
         .style("stroke-width", 0);
 
     // // Apply the style to the hovered path only
+
     d3.selectAll(".sunburst-path")
         .filter(function(d) {
             return this.id === hoveredPathId;
         })
         .style("stroke", "black")
         .style("stroke-width", 3);
+
+    // d3.selectAll(".sunburst-path")
+    //     .filter(function(d) {
+    //         return this.id === hoveredPathId;
+    //     })
+    //     .each(function(d) {
+    //         console.log(d)
+    //         applyStrokeToDescendants(d);
+    //     });
+        
     
     let myVar = p.data.name
     let myNames = myVar.split("__")
@@ -546,7 +572,7 @@ function rendering(sliderMin, sliderMax, indicatorValue, rootName){
         }
         
         
-        for (let i = 0; i < files.length - 40; i++) {
+        for (let i = 0; i < files.length - 39; i++) {
             // Using an IIFE (Immediately Invoked Function Expression) to create a closure
             await (async function(index) {
                 let data = await d3.json(files[index]);
@@ -558,8 +584,8 @@ function rendering(sliderMin, sliderMax, indicatorValue, rootName){
                     radius = 100;
                 }
                 else{
-                    width = 5700; //1150
-                    height = 3600; //1220
+                    width = 1150; //5700
+                    height = 1220; //3600
                     radius = 100;
                 }
     
@@ -579,6 +605,8 @@ function rendering(sliderMin, sliderMax, indicatorValue, rootName){
                     '.svg-container-37', '.svg-container-38', '.svg-container-39',
                     '.svg-container-40', '.svg-container-41', '.svg-container-42',
                 ];
+
+
     
                 // console.log('D:', data)
     
@@ -689,7 +717,7 @@ function rendering(sliderMin, sliderMax, indicatorValue, rootName){
                                 .text(("Non-Indicator Organism"))
 
                             svg.append("circle")
-                                .attr("cx", 302)    // x position of the rectangle
+                                .attr("cx", -252)    // x position of the rectangle
                                 .attr("cy", -185)    // y position of the rectangle
                                 .attr("r", 30) // width of the rectangle
                                 .attr("fill", "black") // fill color of the rectangle using the gradient
@@ -697,28 +725,45 @@ function rendering(sliderMin, sliderMax, indicatorValue, rootName){
                                 // .attr("stroke-width", "1")
     
                             svg.append("text")
-                                .attr("x", 262)
+                                .attr("x", -727)
                                 .attr("y", -170)
                                 .attr("font-size", "58")
                                 .attr("fill", "Black")
-                                .attr("text-anchor", "end")
-                                .text("Go Back Button + Current Root")
+                                // .attr("text-anchor", "end")
+                                .text("Go Up Hierarchy")
+
+                            svg.append("text")
+                                .attr("x", -217)
+                                .attr("y", -170)
+                                .attr("font-size", "58")
+                                .attr("fill", "Black")
+                                // .attr("text-anchor", "end")
+                                .text("Current Root")
                             
                             svg.append("text")
                                 .attr("x", 572)
-                                .attr("y", -305)
+                                .attr("y", -320)
                                 .attr("font-size", "58")
                                 .attr("fill", "Black")
                                 .attr("text-anchor", "end")
                                 .text("Click on any node in graph to make that node root.")
-    
+
+                            let renderVal = rootName.split('__')
                             svg.append("text")
-                                .attr("x", 572)
+                                .attr("x", -727)
                                 .attr("y", -245)
                                 .attr("font-size", "58")
                                 .attr("fill", "Black")
-                                .attr("text-anchor", "end")
-                                .text("By default/Initially, root is Bacteria.")
+                                // .attr("text-anchor", "end")
+                                .text("Current Root = " + renderVal[1] + "[" + nameMapping(renderVal[0]) + "]")
+    
+                            // svg.append("text")
+                            //     .attr("x", 572)
+                            //     .attr("y", -245)
+                            //     .attr("font-size", "58")
+                            //     .attr("fill", "Black")
+                            //     .attr("text-anchor", "end")
+                            //     .text("By default/Initially, root is Bacteria.")
                     }
                     else{
                         svg.append("text")
@@ -883,7 +928,7 @@ function rendering(sliderMin, sliderMax, indicatorValue, rootName){
                             .text("Organism Absent")
 
                         svg.append("circle")
-                            .attr("cx", 112)    // x position of the rectangle
+                            .attr("cx", -252)    // x position of the rectangle
                             .attr("cy", 345)    // y position of the rectangle
                             .attr("r", 30) // width of the rectangle
                             .attr("fill", "black") // fill color of the rectangle using the gradient
@@ -891,12 +936,21 @@ function rendering(sliderMin, sliderMax, indicatorValue, rootName){
                             // .attr("stroke-width", "1")
 
                         svg.append("text")
-                            .attr("x", 72)
+                            .attr("x", -727)
                             .attr("y", 365)
                             .attr("font-size", "58")
                             .attr("fill", "Black")
-                            .attr("text-anchor", "end")
-                            .text("Go Back Button + Current Root")
+                            // .attr("text-anchor", "end")
+                            .text("Go Up Hierarchy")
+
+                        
+                        svg.append("text")
+                            .attr("x", -212)
+                            .attr("y", 365)
+                            .attr("font-size", "58")
+                            .attr("fill", "Black")
+                            // .attr("text-anchor", "end")
+                            .text("Current Root")
                         
                         svg.append("text")
                             .attr("x", 572)
@@ -906,19 +960,20 @@ function rendering(sliderMin, sliderMax, indicatorValue, rootName){
                             .attr("text-anchor", "end")
                             .text("Click on any node in graph to make that node root.")
 
+                        let renderVal = rootName.split('__')
                         svg.append("text")
-                            .attr("x", 572)
+                            .attr("x", -727)
                             .attr("y", 525)
                             .attr("font-size", "58")
                             .attr("fill", "Black")
-                            .attr("text-anchor", "end")
-                            .text("By default/Initially, root is Bacteria.")
+                            // .attr("text-anchor", "end")
+                            .text("Current Root = " + renderVal[1] + "[" + nameMapping(renderVal[0]) + "]")
                     }
                 }
                 else{
                     svg.append("text")
-                    .attr("x", -352)
-                    .attr("y", -1750)
+                    .attr("x", -350)
+                    .attr("y", -550)
                     .attr("font-size", "58")
                     .attr("fill", "black")
                     .text(word)
@@ -928,8 +983,8 @@ function rendering(sliderMin, sliderMax, indicatorValue, rootName){
                 if (rootName !== 'sk__Bacteria__2'){
                     mainData = findChildByName(mainData, rootName)
                 }
-                console.log(rootName)
-                console.log(mainData)
+                // console.log(rootName)
+                // console.log(mainData)
 
                 
                 let partition = d3.partition()
@@ -2053,9 +2108,64 @@ function rendering(sliderMin, sliderMax, indicatorValue, rootName){
                 const checkboxes = document.querySelectorAll('input[type="checkbox"]');
                 checkboxes.forEach(function(checkbox) {
                     if (checkbox.checked) {
-                        checkedLevels.push(parseInt(checkbox.id))
+                        checkedLevels.push(parseInt(checkbox.value))
                     }
                 });
+
+                // console.log(checkedLevels)
+                // console.log("Length: ", checkedLevels.length)
+                // console.log(rootName)
+                if(rootName !== 'sk__Bacteria__2'){
+                    let checkbox1 = d3.select('#checkbox1')
+                    checkbox1.property("checked", true)
+                    checkbox1.property("disabled", true)
+
+
+                    let checkbox2 = d3.select('#checkbox2')
+                    checkbox2.property("checked", true)
+                    checkbox2.property("disabled", true)
+
+
+                    let checkbox3 = d3.select('#checkbox3')
+                    checkbox3.property("checked", true)
+                    checkbox3.property("disabled", true)
+
+
+                    let checkbox4 = d3.select('#checkbox4')
+                    checkbox4.property("checked", true)
+                    checkbox4.property("disabled", true)
+
+
+                    let checkbox5 = d3.select('#checkbox5')
+                    checkbox5.property("checked", true)
+                    checkbox5.property("disabled", true)
+
+
+                    let checkbox6 = d3.select('#checkbox6')
+                    checkbox6.property("checked", true)
+                    checkbox6.property("disabled", true)
+
+
+                    let checkbox7 = d3.select('#checkbox7')
+                    checkbox7.property("checked", true)
+                    checkbox7.property("disabled", true)
+                }
+                else{
+                    let checkbox1 = d3.select('#checkbox1')
+                    checkbox1.property("disabled", false)
+                    let checkbox2 = d3.select('#checkbox2')
+                    checkbox2.property("disabled", false)
+                    let checkbox3 = d3.select('#checkbox3')
+                    checkbox3.property("disabled", false)
+                    let checkbox4 = d3.select('#checkbox4')
+                    checkbox4.property("disabled", false)
+                    let checkbox5 = d3.select('#checkbox5')
+                    checkbox5.property("disabled", false)
+                    let checkbox6 = d3.select('#checkbox6')
+                    checkbox6.property("disabled", false)
+                    let checkbox7 = d3.select('#checkbox7')
+                    checkbox7.property("disabled", false)
+                }
     
                 let arc = createArc(index, csvData, checkedLevels, 'positive')
                 
@@ -2240,13 +2350,13 @@ function rendering(sliderMin, sliderMax, indicatorValue, rootName){
                             .style("stroke-width", function(d){
                                 // console.log('here')
                                 if (d.depth === 1){
-                                    return "0.5"
+                                    return "1"
                                 }
-                                else if (d.depth >= 6){
-                                    return "0.5" //"0.1"
+                                else if (d.depth >= 4){
+                                    return "0.1" //"0.5"
                                 }
                                 else{
-                                    return "0.5"//"0.1"
+                                    return "0.5"//"0.5"
                                 }
                             })
                             .on("mouseover", function (event, d){
@@ -2259,9 +2369,21 @@ function rendering(sliderMin, sliderMax, indicatorValue, rootName){
                                 // console.log(value)
                                 // goBackName = value.data.name
                                 // console.log('A:', goBackName)
-                                currentName = p.data.name
-                                // console.log('X:', currentName)
-                                clicked(p.data.name, sliderMin*100, sliderMax*100, indicatorValue)
+                                console.log('Y: ', p.children)
+
+                                let found = 0
+                                let myArr = p.children
+                                for (let i = 0; i < myArr.length; i++) {
+                                    if (myArr[i].hasOwnProperty('children')) {
+                                      found = 1
+                                      break
+                                    }
+                                } 
+                                if (found = 1){
+                                    currentName = p.data.name
+                                    console.log('X:', currentName)
+                                    clicked(p.data.name, sliderMin*100, sliderMax*100, indicatorValue)
+                                }
                             })
 
                             d3.selectAll(".sunburst-path").each(function(d, i) {
@@ -2278,13 +2400,36 @@ function rendering(sliderMin, sliderMax, indicatorValue, rootName){
                                 .attr("fill", "black") // fill color of the circle
                                 .on("click", function(event, p){
                                     // console.log('B:', unChangingData)
-                                    // console.log('D:', currentName)
+                                    console.log('D:', currentName)
                                     if (currentName !== undefined){
-                                        let parent = findParentByName(unChangingData, currentName);
-                                        // console.log('E: ', parent.name)
-                                        currentName = parent.name
-                                        clicked(parent.name, sliderMin*100, sliderMax*100, indicatorValue)
+                                        if (currentName === 'sk__Bacteria__2'){
+                                            clicked('sk__Bacteria__2', sliderMin*100, sliderMax*100, indicatorValue)
+                                        }
+                                        else{
+                                            let parent = findParentByName(unChangingData, currentName);
+                                            // console.log('E: ', parent.name)
+                                            currentName = parent.name
+                                            clicked(parent.name, sliderMin*100, sliderMax*100, indicatorValue)
+                                        } 
                                     }
+                                    else{
+                                        let checkbox1 = d3.select('#checkbox1')
+                                        checkbox1.property("checked", true)
+                                        let checkbox2 = d3.select('#checkbox2')
+                                        checkbox2.property("checked", true)
+                                        let checkbox3 = d3.select('#checkbox3')
+                                        checkbox3.property("checked", true)
+                                        let checkbox4 = d3.select('#checkbox4')
+                                        checkbox4.property("checked", true)
+                                        let checkbox5 = d3.select('#checkbox5')
+                                        checkbox5.property("checked", true)
+                                        let checkbox6 = d3.select('#checkbox6')
+                                        checkbox6.property("checked", true)
+                                        let checkbox7 = d3.select('#checkbox7')
+                                        checkbox7.property("checked", true)
+                                        clicked('sk__Bacteria__2', sliderMin*100, sliderMax*100, indicatorValue)
+                                    }
+
                                     // if (goBackName !== undefined){
                                     //     console.log('B:', unChangingData)
                                     //     // clicked(goBackName)
@@ -2484,78 +2629,78 @@ function removeExistingContainers(){
 
     const elements2 = document.querySelector('.svg-container-2');
     elements2.innerHTML = ''
-    // const elements3 = document.querySelector('.svg-container-3');
-    // elements3.innerHTML = ''
-    // const elements4 = document.querySelector('.svg-container-4');
-    // elements4.innerHTML = ''
-    // const elements5 = document.querySelector('.svg-container-5');
-    // elements5.innerHTML = ''
-    // const elements6 = document.querySelector('.svg-container-6');
-    // elements6.innerHTML = ''
+    const elements3 = document.querySelector('.svg-container-3');
+    elements3.innerHTML = ''
+    const elements4 = document.querySelector('.svg-container-4');
+    elements4.innerHTML = ''
+    const elements5 = document.querySelector('.svg-container-5');
+    elements5.innerHTML = ''
+    const elements6 = document.querySelector('.svg-container-6');
+    elements6.innerHTML = ''
     
-    // const elements7 = document.querySelector('.svg-container-7');
-    // elements7.innerHTML = ''
-    // const elements8 = document.querySelector('.svg-container-8');
-    // elements8.innerHTML = ''
-    // const elements9 = document.querySelector('.svg-container-9');
-    // elements9.innerHTML = ''
-    // const elements10 = document.querySelector('.svg-container-10');
-    // elements10.innerHTML = ''
-    // const elements11 = document.querySelector('.svg-container-11');
-    // elements11.innerHTML = ''
-    // const elements12 = document.querySelector('.svg-container-12');
-    // elements12.innerHTML = ''
+    const elements7 = document.querySelector('.svg-container-7');
+    elements7.innerHTML = ''
+    const elements8 = document.querySelector('.svg-container-8');
+    elements8.innerHTML = ''
+    const elements9 = document.querySelector('.svg-container-9');
+    elements9.innerHTML = ''
+    const elements10 = document.querySelector('.svg-container-10');
+    elements10.innerHTML = ''
+    const elements11 = document.querySelector('.svg-container-11');
+    elements11.innerHTML = ''
+    const elements12 = document.querySelector('.svg-container-12');
+    elements12.innerHTML = ''
 
-    // const elements13 = document.querySelector('.svg-container-13');
-    // elements13.innerHTML = ''
-    // const elements14 = document.querySelector('.svg-container-14');
-    // elements14.innerHTML = ''
-    // const elements15 = document.querySelector('.svg-container-15');
-    // elements15.innerHTML = ''
-    // const elements16 = document.querySelector('.svg-container-16');
-    // elements16.innerHTML = ''
-    // const elements17 = document.querySelector('.svg-container-17');
-    // elements17.innerHTML = ''
-    // const elements18 = document.querySelector('.svg-container-18');
-    // elements18.innerHTML = ''
+    const elements13 = document.querySelector('.svg-container-13');
+    elements13.innerHTML = ''
+    const elements14 = document.querySelector('.svg-container-14');
+    elements14.innerHTML = ''
+    const elements15 = document.querySelector('.svg-container-15');
+    elements15.innerHTML = ''
+    const elements16 = document.querySelector('.svg-container-16');
+    elements16.innerHTML = ''
+    const elements17 = document.querySelector('.svg-container-17');
+    elements17.innerHTML = ''
+    const elements18 = document.querySelector('.svg-container-18');
+    elements18.innerHTML = ''
 
-    // const elements19 = document.querySelector('.svg-container-19');
-    // elements19.innerHTML = ''
-    // const elements20 = document.querySelector('.svg-container-20');
-    // elements20.innerHTML = ''
+    const elements19 = document.querySelector('.svg-container-19');
+    elements19.innerHTML = ''
+    const elements20 = document.querySelector('.svg-container-20');
+    elements20.innerHTML = ''
 
-    // const elements21 = document.querySelector('.svg-container-21');
-    // elements21.innerHTML = ''
-    // const elements22 = document.querySelector('.svg-container-22');
-    // elements22.innerHTML = ''
-    // const elements23 = document.querySelector('.svg-container-23');
-    // elements23.innerHTML = ''
-    // const elements24 = document.querySelector('.svg-container-24');
-    // elements24.innerHTML = ''
-    // const elements25 = document.querySelector('.svg-container-25');
-    // elements25.innerHTML = ''
+    const elements21 = document.querySelector('.svg-container-21');
+    elements21.innerHTML = ''
+    const elements22 = document.querySelector('.svg-container-22');
+    elements22.innerHTML = ''
+    const elements23 = document.querySelector('.svg-container-23');
+    elements23.innerHTML = ''
+    const elements24 = document.querySelector('.svg-container-24');
+    elements24.innerHTML = ''
+    const elements25 = document.querySelector('.svg-container-25');
+    elements25.innerHTML = ''
 
-    // const elements26 = document.querySelector('.svg-container-26');
-    // elements26.innerHTML = ''
-    // const elements27 = document.querySelector('.svg-container-27');
-    // elements27.innerHTML = ''
-    // const elements28 = document.querySelector('.svg-container-28');
-    // elements28.innerHTML = ''
-    // const elements29 = document.querySelector('.svg-container-29');
-    // elements29.innerHTML = ''
-    // const elements30 = document.querySelector('.svg-container-30');
-    // elements30.innerHTML = ''
+    const elements26 = document.querySelector('.svg-container-26');
+    elements26.innerHTML = ''
+    const elements27 = document.querySelector('.svg-container-27');
+    elements27.innerHTML = ''
+    const elements28 = document.querySelector('.svg-container-28');
+    elements28.innerHTML = ''
+    const elements29 = document.querySelector('.svg-container-29');
+    elements29.innerHTML = ''
+    const elements30 = document.querySelector('.svg-container-30');
+    elements30.innerHTML = ''
 
-    // const elements31 = document.querySelector('.svg-container-31');
-    // elements31.innerHTML = ''
-    // const elements32 = document.querySelector('.svg-container-32');
-    // elements32.innerHTML = ''
-    // const elements33 = document.querySelector('.svg-container-33');
-    // elements33.innerHTML = ''
-    // const elements34 = document.querySelector('.svg-container-34');
-    // elements34.innerHTML = ''
-    // const elements35 = document.querySelector('.svg-container-35');
-    // elements35.innerHTML = ''
+    const elements31 = document.querySelector('.svg-container-31');
+    elements31.innerHTML = ''
+    const elements32 = document.querySelector('.svg-container-32');
+    elements32.innerHTML = ''
+    const elements33 = document.querySelector('.svg-container-33');
+    elements33.innerHTML = ''
+    const elements34 = document.querySelector('.svg-container-34');
+    elements34.innerHTML = ''
+    const elements35 = document.querySelector('.svg-container-35');
+    elements35.innerHTML = ''
 }
 
 
@@ -2594,7 +2739,7 @@ function renderCheckboxes(){
             d3.select(this)
                 .append('input')
                 .attr('type', 'checkbox')
-                .attr('id', d.value)
+                .attr('id', "checkbox"+d.value)
                 .attr('value', d.value)
                 .attr('checked', true)  // Set the checkbox to be checked by default
                 .on('change', function() {
