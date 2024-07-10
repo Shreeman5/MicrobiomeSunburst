@@ -1,3 +1,6 @@
+let unChangingData
+let currentName
+
 let files = [
     // "JSONswithStandardRanks/MergedJSONfile/merged_tree.json",
     "JSONswithStandardRanks/MergedJSONfile/taxonomy.json",
@@ -418,7 +421,47 @@ function findTaxonRAbyID(dataArray, taxonId){
     return element ? element.relative_abundance : 0; // Return the taxon_rank_level if found, else return null
 }
 
-function rendering(sliderMin, sliderMax, indicatorValue){
+function findChildByName(node, targetName) {
+    // Base case: if the current node's name matches the target name, return the node
+    if (node.name === targetName) {
+        return node;
+    }
+    
+    // If the node has children, search each child recursively
+    if (node.children && node.children.length > 0) {
+        for (let child of node.children) {
+            let result = findChildByName(child, targetName);
+            if (result) {
+                return result;  // Return the found child
+            }
+        }
+    }
+    
+    // If the child is not found, return null
+    return null;
+}
+
+function findParentByName(node, targetName, parent = null) {
+    // Base case: if the current node's name matches the target name, return the parent
+    if (node.name === targetName) {
+        return parent;
+    }
+    
+    // If the node has children, search each child recursively
+    if (node.children && node.children.length > 0) {
+        for (let child of node.children) {
+            let result = findParentByName(child, targetName, node);
+            if (result) {
+                return result;  // Return the found parent
+            }
+        }
+    }
+    
+    // If the parent is not found, return null
+    return null;
+}
+
+function rendering(sliderMin, sliderMax, indicatorValue, rootName){
     (async function () {
         sliderMin = sliderMin/100
         sliderMax = sliderMax/100
@@ -508,6 +551,7 @@ function rendering(sliderMin, sliderMax, indicatorValue){
             await (async function(index) {
                 let data = await d3.json(files[index]);
                 if (index === 0){
+                    unChangingData = data
                     mainData = data
                     width = 1500;
                     height = 1500;
@@ -643,6 +687,38 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                                 .attr("fill", "Black")
                                 .attr("text-anchor", "end")
                                 .text(("Non-Indicator Organism"))
+
+                            svg.append("circle")
+                                .attr("cx", 302)    // x position of the rectangle
+                                .attr("cy", -185)    // y position of the rectangle
+                                .attr("r", 30) // width of the rectangle
+                                .attr("fill", "black") // fill color of the rectangle using the gradient
+                                // .attr("stroke", "black")
+                                // .attr("stroke-width", "1")
+    
+                            svg.append("text")
+                                .attr("x", 262)
+                                .attr("y", -170)
+                                .attr("font-size", "58")
+                                .attr("fill", "Black")
+                                .attr("text-anchor", "end")
+                                .text("Go Back Button + Current Root")
+                            
+                            svg.append("text")
+                                .attr("x", 572)
+                                .attr("y", -305)
+                                .attr("font-size", "58")
+                                .attr("fill", "Black")
+                                .attr("text-anchor", "end")
+                                .text("Click on any node in graph to make that node root.")
+    
+                            svg.append("text")
+                                .attr("x", 572)
+                                .attr("y", -245)
+                                .attr("font-size", "58")
+                                .attr("fill", "Black")
+                                .attr("text-anchor", "end")
+                                .text("By default/Initially, root is Bacteria.")
                     }
                     else{
                         svg.append("text")
@@ -673,7 +749,7 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                         // Append a rectangle to the SVG container and apply the gradient
                         svg.append("rect")
                         .attr("x", 82)    // x position of the rectangle
-                        .attr("y", -350)    // y position of the rectangle
+                        .attr("y", -420)    // y position of the rectangle
                         .attr("width", 400) // width of the rectangle
                         .attr("height", 100) // height of the rectangle
                         .attr("fill", "url(#gradient)") // fill color of the rectangle using the gradient
@@ -682,14 +758,14 @@ function rendering(sliderMin, sliderMax, indicatorValue){
 
                         svg.append("text")
                         .attr("x", 82)
-                        .attr("y", -200)
+                        .attr("y", -270)
                         .attr("font-size", "58")
                         .attr("fill", "Black")
                         .text("0")
 
                         svg.append("text")
                         .attr("x", 482)
-                        .attr("y", -200)
+                        .attr("y", -270)
                         .attr("font-size", "58")
                         .attr("fill", "Black")
                         .attr("text-anchor", "end")
@@ -697,7 +773,7 @@ function rendering(sliderMin, sliderMax, indicatorValue){
 
                         svg.append("text")
                         .attr("x", 72)
-                        .attr("y", -275)
+                        .attr("y", -345)
                         .attr("font-size", "58")
                         .attr("fill", "Black")
                         .attr("text-anchor", "end")
@@ -706,7 +782,7 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                         // Append a rectangle to the SVG container and apply the gradient
                         svg.append("rect")
                             .attr("x", 82)    // x position of the rectangle
-                            .attr("y", -100)    // y position of the rectangle
+                            .attr("y", -220)    // y position of the rectangle
                             .attr("width", 400) // width of the rectangle
                             .attr("height", 100) // height of the rectangle
                             .attr("fill", "purple") // fill color of the rectangle using the gradient
@@ -715,14 +791,14 @@ function rendering(sliderMin, sliderMax, indicatorValue){
 
                         svg.append("text")
                         .attr("x", 82)
-                        .attr("y", 50)
+                        .attr("y", -70)
                         .attr("font-size", "58")
                         .attr("fill", "Black")
                         .text((sliderMin*100).toFixed(0))
 
                         svg.append("text")
                         .attr("x", 482)
-                        .attr("y", 50)
+                        .attr("y", -70)
                         .attr("font-size", "58")
                         .attr("fill", "Black")
                         .attr("text-anchor", "end")
@@ -730,7 +806,7 @@ function rendering(sliderMin, sliderMax, indicatorValue){
 
                         svg.append("text")
                         .attr("x", 72)
-                        .attr("y", -25)
+                        .attr("y", -145)
                         .attr("font-size", "58")
                         .attr("fill", "Black")
                         .attr("text-anchor", "end")
@@ -758,7 +834,7 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                         // Append a rectangle to the SVG container and apply the gradient
                         svg.append("rect")
                             .attr("x", 82)    // x position of the rectangle
-                            .attr("y", 150)    // y position of the rectangle
+                            .attr("y", -20)    // y position of the rectangle
                             .attr("width", 400) // width of the rectangle
                             .attr("height", 100) // height of the rectangle
                             .attr("fill", "url(#gradient3)") // fill color of the rectangle using the gradient
@@ -767,14 +843,14 @@ function rendering(sliderMin, sliderMax, indicatorValue){
 
                         svg.append("text")
                             .attr("x", 82)
-                            .attr("y", 300)
+                            .attr("y", 130)
                             .attr("font-size", "58")
                             .attr("fill", "Black")
                             .text((sliderMax*100).toFixed(0))
     
                         svg.append("text")
                             .attr("x", 482)
-                            .attr("y", 300)
+                            .attr("y", 130)
                             .attr("font-size", "58")
                             .attr("fill", "Black")
                             .attr("text-anchor", "end")
@@ -782,7 +858,7 @@ function rendering(sliderMin, sliderMax, indicatorValue){
 
                         svg.append("text")
                             .attr("x", 72)
-                            .attr("y", 225)
+                            .attr("y", 55)
                             .attr("font-size", "58")
                             .attr("fill", "Black")
                             .attr("text-anchor", "end")
@@ -791,7 +867,7 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                         
                         svg.append("rect")
                             .attr("x", 82)    // x position of the rectangle
-                            .attr("y", 400)    // y position of the rectangle
+                            .attr("y", 180)    // y position of the rectangle
                             .attr("width", 400) // width of the rectangle
                             .attr("height", 100) // height of the rectangle
                             .attr("fill", "white") // fill color of the rectangle using the gradient
@@ -800,11 +876,43 @@ function rendering(sliderMin, sliderMax, indicatorValue){
 
                         svg.append("text")
                             .attr("x", 72)
-                            .attr("y", 475)
+                            .attr("y", 255)
                             .attr("font-size", "58")
                             .attr("fill", "Black")
                             .attr("text-anchor", "end")
                             .text("Organism Absent")
+
+                        svg.append("circle")
+                            .attr("cx", 112)    // x position of the rectangle
+                            .attr("cy", 345)    // y position of the rectangle
+                            .attr("r", 30) // width of the rectangle
+                            .attr("fill", "black") // fill color of the rectangle using the gradient
+                            // .attr("stroke", "black")
+                            // .attr("stroke-width", "1")
+
+                        svg.append("text")
+                            .attr("x", 72)
+                            .attr("y", 365)
+                            .attr("font-size", "58")
+                            .attr("fill", "Black")
+                            .attr("text-anchor", "end")
+                            .text("Go Back Button + Current Root")
+                        
+                        svg.append("text")
+                            .attr("x", 572)
+                            .attr("y", 445)
+                            .attr("font-size", "58")
+                            .attr("fill", "Black")
+                            .attr("text-anchor", "end")
+                            .text("Click on any node in graph to make that node root.")
+
+                        svg.append("text")
+                            .attr("x", 572)
+                            .attr("y", 525)
+                            .attr("font-size", "58")
+                            .attr("fill", "Black")
+                            .attr("text-anchor", "end")
+                            .text("By default/Initially, root is Bacteria.")
                     }
                 }
                 else{
@@ -815,13 +923,21 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                     .attr("fill", "black")
                     .text(word)
                 }
+
+                // let targetname = "p__Bacillota__1239"
+                if (rootName !== 'sk__Bacteria__2'){
+                    mainData = findChildByName(mainData, rootName)
+                }
+                console.log(rootName)
+                console.log(mainData)
+
                 
                 let partition = d3.partition()
                     .size([2 * Math.PI, radius]);
     
                 let hierarchy
                 if (index === 0){
-                    hierarchy = d3.hierarchy(data)
+                    hierarchy = d3.hierarchy(mainData)
                     .sum(function(d) { 
                         return d.value; 
                     })
@@ -839,14 +955,21 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                 }
     
                 let root = partition(hierarchy);
-                console.log(root)
+                // console.log(root)
+                // console.log(root.data.name)
+
+
+                // let newRootname = "p__Pseudomonadota__1224"
+                // root = setNewRoot(root, newRootname);
+                // console.log(root)
     
                 function calculateLeafDescendantsAndNames(node, namesArray, namesArray2, namesArray3, namesArray4) {
                     if (!node.children || node.children.length === 0) {
                         node.totalLeafDescendants = 1; // Leaf node has 1 leaf descendant (itself)
 
                         let myVal = node.data.name
-                        let myNames = myVal.split('?')
+                        let myNames = myVal.split('__')
+                        // console.log(myNames)
                         node.nameFound = namesArray.includes(myNames[2]) ? 1 : 0; // Check if the leaf node's name is in the names array
                         // node.positiveInd = namesArray2.includes(myNames[2]) ? 1 : 0; // Check if the leaf node's name is in the names array
                         // node.negativeInd = namesArray3.includes(myNames[2]) ? 1 : 0; // Check if the leaf node's name is in the names array
@@ -1934,21 +2057,7 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                     }
                 });
     
-                let arc = d3.arc()
-                            .startAngle(function(d) { 
-                                return d.x0; 
-                            })
-                            .endAngle(function(d) { 
-                                return d.x1; 
-                            })
-                            .innerRadius(function(d) { 
-                                let val = innerRadius(d, index, checkedLevels);
-                                return val; 
-                            })
-                            .outerRadius(function(d) { 
-                                let val = outerRadius(d, index, csvData, checkedLevels);
-                                return val; 
-                            });
+                let arc = createArc(index, csvData, checkedLevels, 'positive')
                 
     
                 // let colorScaleLow = d3.scaleLinear.domain([])
@@ -2129,6 +2238,7 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                                 // return "1"
                             }) 
                             .style("stroke-width", function(d){
+                                // console.log('here')
                                 if (d.depth === 1){
                                     return "0.5"
                                 }
@@ -2144,15 +2254,62 @@ function rendering(sliderMin, sliderMax, indicatorValue){
                                 handleMouseOver(event, index, d, givenDataRoot, nodeName, aggregatedData[0])
                             })
                             .on("mouseout", mouseout)
-                            // .on("click", function(event, p){
-                            //     clicked(event, p, root, svg)
-                            // })
+                            .on("click", function(event, p){
+                                // let value = p.parent
+                                // console.log(value)
+                                // goBackName = value.data.name
+                                // console.log('A:', goBackName)
+                                currentName = p.data.name
+                                // console.log('X:', currentName)
+                                clicked(p.data.name, sliderMin*100, sliderMax*100, indicatorValue)
+                            })
 
                             d3.selectAll(".sunburst-path").each(function(d, i) {
                                 var element = d3.select(this);
                                 element.attr("original-stroke", element.style("stroke"));
                                 element.attr("original-stroke-width", element.style("stroke-width"));
                             });
+
+
+                            circle = svg.append("circle")
+                                .attr("cx", 0) // x-coordinate of the center
+                                .attr("cy", 0) // y-coordinate of the center
+                                .attr("r", 30)   // radius of the circle
+                                .attr("fill", "black") // fill color of the circle
+                                .on("click", function(event, p){
+                                    // console.log('B:', unChangingData)
+                                    // console.log('D:', currentName)
+                                    if (currentName !== undefined){
+                                        let parent = findParentByName(unChangingData, currentName);
+                                        // console.log('E: ', parent.name)
+                                        currentName = parent.name
+                                        clicked(parent.name, sliderMin*100, sliderMax*100, indicatorValue)
+                                    }
+                                    // if (goBackName !== undefined){
+                                    //     console.log('B:', unChangingData)
+                                    //     // clicked(goBackName)
+                                    // }
+                                })
+                                // .on("mouseover", function (event, d){
+                                //     if (currentName === undefined){
+                                //         let nodeName = 'sk_bacteria_2'
+                                //         handleMouseOver(event, index, d, givenDataRoot, nodeName, aggregatedData[0])
+                                //     }
+                                //     else{
+                                //         let nodeName = d.data.name
+                                //         handleMouseOver(event, index, d, givenDataRoot, nodeName, aggregatedData[0])
+                                //     }
+                                // })
+                                .append("title")
+                                .text(function(){
+                                    if (currentName === undefined){
+                                        return "Root = bacteria\n Rank = Kingdom\n NCBI Taxon ID = 2"
+                                    }
+                                    else{
+                                        let myNames = currentName.split('__')
+                                        return "Root = " + myNames[1] + "\n Rank = " + nameMapping(myNames[0]) + "\n NCBI Taxon ID = " + myNames[2]
+                                    }
+                                })
                     })
     
                     
@@ -2164,28 +2321,13 @@ function rendering(sliderMin, sliderMax, indicatorValue){
 }
 
 
-function clicked(event, p, root, svg){
-    console.log('here')
-    console.log()
-    root.each(d => d.target = {
-        x0: Math.max(0, Math.min(1, (d.x0 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,
-        x1: Math.max(0, Math.min(1, (d.x1 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,
-        y0: Math.max(0, d.y0 - p.depth),
-        y1: Math.max(0, d.y1 - p.depth)
-    });
-
-    const t = svg.transition().duration(750);
-
-    svg.selectAll("path")
-        .transition(t)
-        .attrTween("d", d => () => arc(d.target));
-
+function clicked(clickedName, sliderMin, sliderMax, indicatorValue){
     removeExistingContainers()
-    removeSlider()
-    renderSlider()
-    removeCheckBoxes()
-    renderCheckboxes()
-    rendering(35, 65, 'ao')
+    // removeSlider()
+    // renderSlider()
+    // removeCheckBoxes()
+    // renderCheckboxes()
+    rendering(sliderMin, sliderMax, indicatorValue, clickedName)
 }
 
 
@@ -2309,12 +2451,32 @@ function renderSlider(){
 
         // Select all elements with the class 'your-class-name'
         removeExistingContainers()
-        rendering(minValue, maxValue, 'ao')
+        if (currentName === undefined){
+            currentName = 'sk__Bacteria__2'
+        }
+        rendering(minValue, maxValue, 'ao', currentName)
     }
 }
 
 
-
+function createArc(index, csvData, checkedLevels, value){
+    return d3.arc()
+            .startAngle(function(d) { 
+                return d.x0; 
+            })
+            .endAngle(function(d) { 
+                return d.x1; 
+            })
+            .innerRadius(function(d) { 
+                // console.log(value, d)
+                let val = innerRadius(d, index, checkedLevels);
+                return val; 
+            })
+            .outerRadius(function(d) { 
+                let val = outerRadius(d, index, csvData, checkedLevels);
+                return val; 
+            });
+}
 
 function removeExistingContainers(){
     const elements = document.querySelector('.svg-container')
@@ -2466,27 +2628,27 @@ function checkboxClicked(value, isChecked) {
         cxValue1 = (((cxValue1 - linex1)/(linex2 - linex1)) * 100).toFixed(2)
         cxValue2 = (((cxValue2 - linex1)/(linex2 - linex1)) * 100).toFixed(2)
         removeExistingContainers()
-        rendering(cxValue1, cxValue2, 'ao')
+        rendering(cxValue1, cxValue2, 'ao', "sk__Bacteria__2")
     }
     else if (activeTab.textContent === 'Diarrhea Indicator Organisms'){
         removeExistingContainers()
-        rendering(35, 65, 'dio')
+        rendering(35, 65, 'dio', "sk__Bacteria__2")
     }
     else if (activeTab.textContent === 'Crohns Indicator Organisms'){
         removeExistingContainers()
-        rendering(35, 65, 'cio')
+        rendering(35, 65, 'cio', "sk__Bacteria__2")
     }
     else if (activeTab.textContent === 'Bowel Cancer Indicator Organisms'){
         removeExistingContainers()
-        rendering(35, 65, 'bcio')
+        rendering(35, 65, 'bcio', "sk__Bacteria__2")
     }
     else if (activeTab.textContent === 'Parkinsons Indicator Organisms'){
         removeExistingContainers()
-        rendering(35, 65, 'pio')
+        rendering(35, 65, 'pio', "sk__Bacteria__2")
     }
     else if (activeTab.textContent === 'Cirrhosis Indicator Organisms'){
         removeExistingContainers()
-        rendering(35, 65, 'lcio')
+        rendering(35, 65, 'lcio', "sk__Bacteria__2")
     }
 }
 
@@ -2534,7 +2696,7 @@ tabsData.forEach((tab, i) => {
                 // renderSlider()
                 removeCheckBoxes()
                 renderCheckboxes()
-                rendering(35, 65, 'dio')
+                rendering(35, 65, 'dio', "sk__Bacteria__2")
             }
             else if (tabValue === 'tab2'){
                 removeExistingContainers()
@@ -2542,7 +2704,7 @@ tabsData.forEach((tab, i) => {
                 renderSlider()
                 removeCheckBoxes()
                 renderCheckboxes()
-                rendering(35, 65, 'ao')
+                rendering(35, 65, 'ao', "sk__Bacteria__2")
             }
             else if (tabValue === 'tab3'){
                 removeExistingContainers()
@@ -2550,7 +2712,7 @@ tabsData.forEach((tab, i) => {
                 // renderSlider()
                 removeCheckBoxes()
                 renderCheckboxes()
-                rendering(35, 65, 'cio')
+                rendering(35, 65, 'cio', "sk__Bacteria__2")
             }   
             else if (tabValue === 'tab4'){
                 removeExistingContainers()
@@ -2558,7 +2720,7 @@ tabsData.forEach((tab, i) => {
                 // renderSlider()
                 removeCheckBoxes()
                 renderCheckboxes()
-                rendering(35, 65, 'bcio')
+                rendering(35, 65, 'bcio', "sk__Bacteria__2")
             }   
             else if (tabValue === 'tab5'){
                 removeExistingContainers()
@@ -2566,7 +2728,7 @@ tabsData.forEach((tab, i) => {
                 // renderSlider()
                 removeCheckBoxes()
                 renderCheckboxes()
-                rendering(35, 65, 'pio')
+                rendering(35, 65, 'pio', "sk__Bacteria__2")
             }  
             else if (tabValue === 'tab6'){
                 removeExistingContainers()
@@ -2574,7 +2736,7 @@ tabsData.forEach((tab, i) => {
                 // renderSlider()
                 removeCheckBoxes()
                 renderCheckboxes()
-                rendering(35, 65, 'lcio')
+                rendering(35, 65, 'lcio', "sk__Bacteria__2")
             }  
     });
 });
@@ -2582,7 +2744,7 @@ tabsData.forEach((tab, i) => {
 
 renderSlider()
 renderCheckboxes()
-rendering(35, 65, 'ao')
+rendering(35, 65, 'ao', "sk__Bacteria__2")
 
 
 
